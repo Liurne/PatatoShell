@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/06/28 11:00:42 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/06/28 11:52:42 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int ac, char** av, char **envp)
 		prompt.line = readline(RED"patate> "END);
 		if (!prompt.line)
 		{
+			printf("exit");
 			printf(RED"\nbye bye patate!!\n"END);
 			free(prompt.line);
 			return (0);
