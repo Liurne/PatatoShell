@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strbdup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 22:18:56 by jcoquard          #+#    #+#             */
-/*   Updated: 2022/11/17 17:52:38 by jcoquard         ###   ########.fr       */
+/*   Created: 2023/09/06 00:44:04 by liurne            #+#    #+#             */
+/*   Updated: 2023/09/06 00:53:32 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strbdup(char *line, size_t s, size_t e)
 {
+	size_t		len;
 	char	*res;
-	size_t	l;
-	size_t	i;
+	size_t		i;
 
-	l = 0;
-	while (s[l])
-		l++;
-	res = (char *)malloc(sizeof(char) * (l + 1));
-	if (res == NULL)
+	len = e - s + 1;
+	if (!line || len < 2 || s > e || ft_strlen(line) < e)
 		return (NULL);
-	i = -1;
-	while (s[++i] && l != 0)
-		res[i] = s[i];
-	res[i] = '\0';
+	res = ft_calloc(len, sizeof(char));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (i + s < e)
+	{
+		res[i] = line[e + i];
+		i++;
+	}
 	return (res);
 }

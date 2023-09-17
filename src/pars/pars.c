@@ -3,39 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   pars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:06:21 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/06/28 14:14:00 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/09/06 01:27:12 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	count_cmd(t_data *prompt)
+int	pars(t_data *prompt)
 {
-	int	res;
-	int	i;
-
-	res = 1;
-	i = -1;
-	while (prompt->line[++i])
-		if (prompt->line[i] == '|')
-			res++;
-	return (res);
-}
-
-int	count_quote(t_data *prompt)
-{
-	int	dquote;
-	int	squote;
-	int	i;
-
-	i = -1;
-	dquote = 0;
-	squote = 0;
-	while (prompt->line[++i])
+	unsigned int	i;
+	if (ft_split_cmd(prompt, prompt->line.line))
+		printf("error split\n");
+	i = 0;
+	while (i < prompt->line.nb_cmds)
 	{
-		if (prompt->line[i] == '\'' && )
+		if (prompt->line.cmds[i].cmd)
+			printf("%s\n", prompt->line.cmds[i].cmd);
+		else
+			printf("\n");
+		i++;
 	}
+	return(0);
 }

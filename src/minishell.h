@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/06/28 14:08:54 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/09/17 15:59:31 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,48 @@
 //quand meme)
 //message d'erreur pour cd si HOME unset
 //guillemets et quotes, ne pas conter les quote entre guillemet et inversement
+//limite 3333 pipe !!
+//
 
 typedef struct s_cmd
 {
-	char	**cmd;
-	bool	heredocs;
+	char	*cmd;
+	char	**args;
+	int		nb_args;
+	int		nb_pipes;
+	int		heredocs;
 	char	*d_heredocs;
+	int		built_in;
+	bool	redir;
 	int		infile;
 	int		outfile;
 	int		fd[2];
-	bool	redir;
 }	t_cmd;
+
+typedef struct s_line
+{
+	char			*line;
+	unsigned int	nb_cmds;
+	t_cmd			*cmds;
+	int				heredocs;
+} t_line;
 
 typedef struct s_data
 {
-	char	*line;
-	t_cmd	*cmds;
+	char	**env;
+	t_line	line;
 }	t_data;
 
 /* -----utils----- */
+
+/* -----pars----- */
+void	free_cmd(t_data *prompt);
+int	ft_split_cmd(t_data *prompt, char *line);
+int	pars(t_data *prompt);
+
+/* -----built-in----- */
+void	ft_pwd(t_data *prompt);
+void	ft_cd(t_data *promt);
 
 /* -----minishell-----*/
 
