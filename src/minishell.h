@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/06/28 14:08:54 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:20:34 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,20 @@
 # define UNDERLINE "\001\033[4m\002"
 # define DEL_LINE "\001\033[2K\r\002"
 
+# define ERR_SYNTAX "patate: syntax error near unexpected token"
+
+
+//si ' pas interpreter $ si " interpreter
+//heredocs lancé en premier puis commandes
+//separer au pipe ; en bonus
+//si eof heredocs entre "" pas interpreter $ sinon interpreter
+//si << et commande la commande s'execute peut importe l'ordre d'apelle
 //penser au char spe : " ' * $ | <<
 //si "" bien copier tout le contenu
 //si '%2 = 1 || "%2 = 1 planter (ne pas conter le contenue entre guillemet)
 //<< si 0 mot apres planter (le mot peut etre une commande)
 //retirer tout les espaces n'etant pas entre guillemet
 //$ a gerer meme entre quote ($$ pas a gerer)
-// fonction aui detecte les $ et les exands directe peut importe la situation
 //utiliser getenv() pour obtenir les variable d'environement
 // < > redirection !!
 // export si export test=test = pas cole resultat vide
@@ -56,25 +63,48 @@
 //quand meme)
 //message d'erreur pour cd si HOME unset
 //guillemets et quotes, ne pas conter les quote entre guillemet et inversement
+//limite 3333 pipe !!
+//
 
 typedef struct s_cmd
 {
-	char	**cmd;
-	bool	heredocs;
+	char	*cmd;
+	//char	**args;
+	t_list	*args;
+	int		nb_args;
+	int		heredocs;
 	char	*d_heredocs;
+	int		built_in;
+	int		redir;
 	int		infile;
 	int		outfile;
 	int		fd[2];
-	bool	redir;
 }	t_cmd;
+
+typedef struct s_line
+{
+	char			*line;
+	unsigned int	nb_cmds;
+	t_cmd			*cmds;
+	int				heredocs;
+} t_line;
 
 typedef struct s_data
 {
-	char	*line;
-	t_cmd	*cmds;
+	char	**env;
+	t_line	line;
 }	t_data;
 
 /* -----utils----- */
+
+/* -----pars----- */
+void	free_cmd(t_data *prompt);
+int	ft_split_cmd(t_data *prompt, char *line);
+int	pars(t_data *prompt);
+
+/* -----built-in----- */
+void	ft_pwd(t_data *prompt);
+void	ft_cd(t_data *promt);
 
 /* -----minishell-----*/
 

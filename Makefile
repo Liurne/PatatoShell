@@ -6,7 +6,7 @@
 #    By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/06/28 10:56:15 by jcoquard         ###   ########.fr        #
+#    Updated: 2023/10/02 14:22:20 by jcoquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,10 +32,11 @@ END = \033[0m
 
 NAME = minishell
 
-FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address 
 
 SRCS = main.c \
-		src/minishell.c
+		src/pars/pars.c \
+		src/pars/split_line.c
 
 OBJS = ${SRCS:.c=.o}
 
