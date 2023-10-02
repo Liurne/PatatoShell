@@ -6,10 +6,21 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 23:34:25 by liurne            #+#    #+#             */
-/*   Updated: 2023/09/06 00:47:22 by liurne           ###   ########.fr       */
+/*   Updated: 2023/09/17 16:12:56 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+ft_is_builtin(t_cmd *cmd)
+{
+	if ()
+	
+	else if()
 
+	else if()
+
+	else if()
+	
+	else if()
+}

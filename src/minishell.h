@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/09/17 15:59:31 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/02 01:36:22 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,18 @@
 # define UNDERLINE "\001\033[4m\002"
 # define DEL_LINE "\001\033[2K\r\002"
 
+
+//si ' pas interpreter $ si " interpreter
+//heredocs lancé en premier puis commandes
+//separer au pipe ; en bonus
+//si eof heredocs entre "" pas interpreter $ sinon interpreter
+//si << et commande la commande s'execute peut importe l'ordre d'apelle
 //penser au char spe : " ' * $ | <<
 //si "" bien copier tout le contenu
 //si '%2 = 1 || "%2 = 1 planter (ne pas conter le contenue entre guillemet)
 //<< si 0 mot apres planter (le mot peut etre une commande)
 //retirer tout les espaces n'etant pas entre guillemet
 //$ a gerer meme entre quote ($$ pas a gerer)
-// fonction aui detecte les $ et les exands directe peut importe la situation
 //utiliser getenv() pour obtenir les variable d'environement
 // < > redirection !!
 // export si export test=test = pas cole resultat vide
