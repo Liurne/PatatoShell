@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 14:25:42 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/02 15:40:49 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/10/02 17:17:55 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	pars_chevron(t_data *line, t_cmd *cmd, unsigned int i)
 
 	while (cmd->cmd[i] == '<')
 		chevron++;
+	//diviser les args et si >> couper + mots en 1case !!
 	if (chevron > 3)
 	{
 		ft_dprintf(2, "patate: %s \'",ERR_SYNTAX);
