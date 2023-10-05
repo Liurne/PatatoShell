@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pars_utils.c                                       :+:      :+:    :+:   */
+/*   pars_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/03 23:34:25 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/04 15:59:16 by liurne           ###   ########.fr       */
+/*   Created: 2023/10/02 14:25:42 by jcoquard          #+#    #+#             */
+/*   Updated: 2023/10/03 14:24:00 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *ft_addchar(char *str, char c)
+	//diviser les args et si >> couper + mots en 1case !!
+
+int	pars_cmd(t_data *line, t_cmd *cmd)
 {
-	int	len;
-	char *res;
+	unsigned int	i;
+	int				squote;
+	int				dquote;
 
-	len = 0;
-	if (str)
-		len = ft_strlen(str);
-	res = ft_calloc(len + 2, sizeof(char));
-	if (!res)
-		return(ft_dprintf(2, "%s",  ERR_MALLOC), NULL);
-	if (str)
-		ft_strlcpy(res, str, len);
-	res[len] = c;
-	if (str)
-		free (str);
-	return(res);
+	i = 0;
+	while (cmd->cmd[i])
+	{
+		while (ft_iswhitespace(cmd->cmd[i]))
+			i++;
+		while (cmd->cmd[i] == '<' || cmd->cmd[i] == '>')
+			chevron++;
+		
+		i++;
+	}
 }
-

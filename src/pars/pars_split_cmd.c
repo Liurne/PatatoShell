@@ -6,39 +6,60 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 16:14:12 by liurne            #+#    #+#             */
-/*   Updated: 2023/09/17 16:58:36 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/03 16:03:52 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+static void	split_redir(t_cmd *cmd, char *str, char redir)
+{
+	int	i;
+
+	i = 0
+	while (str[i] == redir)
+		i++;
+	if (redir == '<' && i == 3)
+		return (1, ft_dprintf(2, "patate: we don't manage this option\n"));
+	if ((redir == '<' && i > 3) || (redir == '>' && i > 2)
+	{
+		ft_dprintf(2, "patate: syntax error near unexpected token '")
+		while (i-- - 2)
+			ft_putchar_fd(redir, 2);
+		return(1, ft_dprintf(2, "'\n");
+	}
+	while (ft_iswhitespace(*str))
+		str++;
+	if (!*str)
+		ft_dprintf("patate: syntax error near unexpected token \'newline\'\n");
+	
+}
+
 static void	nb_arg(t_cmd *cmd, char *str)
 {
-	int	nb;
 	int	squote;
 	int	dquote;
 
 	squote = 0;
 	dquote = 0;
-	nb = 0;
 	while (*str)
 	{
 		while (*str && ft_iswhitespace(*str))
 			str++;
 		if(*str)
 		{
-			nb++;
+			cmd->nb_args++;
 			while (*str && (!ft_iswhitespace(*str) || squote || dquote ))
 			{
 				if(*str == '\'' && !dquote)
 					squote = -squote + 1;
 				if(*str == '"' && !squote)
 					dquote = -dquote + 1;
+				if(*str == '<' || *str == '>')
 				str++;
 			}
 		}
 	}
-	cmd->nb_args = nb;
 }
 
 int	len_arg(char *str)

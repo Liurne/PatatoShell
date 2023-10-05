@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:55:56 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/09/06 00:53:57 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/04 17:39:43 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdint.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <stdio.h>
 
 typedef struct s_list
 {

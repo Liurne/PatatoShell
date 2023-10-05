@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/02 01:36:22 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/04 16:07:05 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@
 # define ITALIC "\001\033[3m\002"
 # define UNDERLINE "\001\033[4m\002"
 # define DEL_LINE "\001\033[2K\r\002"
+
+# define ERR_SYNTAX "patate: syntax error near unexpected token"
+# define ERR_NEWLINE "patate: syntax error near unexpected token 'newline'\n"
+# define ERR_MALLOC "patate: malloc failed"
 
 
 //si ' pas interpreter $ si " interpreter
@@ -67,13 +71,13 @@
 typedef struct s_cmd
 {
 	char	*cmd;
-	char	**args;
+	//char	**args;
+	t_list	*args;
 	int		nb_args;
-	int		nb_pipes;
 	int		heredocs;
 	char	*d_heredocs;
 	int		built_in;
-	bool	redir;
+	int		redir;
 	int		infile;
 	int		outfile;
 	int		fd[2];
@@ -94,11 +98,13 @@ typedef struct s_data
 }	t_data;
 
 /* -----utils----- */
+char	*ft_addchar(char *str, char c);
 
 /* -----pars----- */
+int	is_redir(t_cmd *cmd, char *str, char c);
 void	free_cmd(t_data *prompt);
-int	ft_split_cmd(t_data *prompt, char *line);
-int	pars(t_data *prompt);
+int		ft_split_cmd(t_data *prompt, char *line);
+int		pars(t_data *prompt);
 
 /* -----built-in----- */
 void	ft_pwd(t_data *prompt);
