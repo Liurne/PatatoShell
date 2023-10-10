@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 16:12:00 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/04 19:11:30 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/05 17:19:06 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ char *get_word(char *str)
 	int		dquote;
 	char	*word;
 
-	i = 0;
+	i = -1;
 	squote = 0;
 	dquote = 0;
-	while (*str && ((!ft_iswhitespace(str[i]) && str[i] != '<' && str[i]
+	word = NULL;
+	while (str[++i] && ((!ft_iswhitespace(str[i]) && str[i] != '<' && str[i]
 		!= '>' && str[i] != '|') || dquote || squote))
 	{
 		if (str[i] == '"' && !squote)
@@ -43,7 +44,7 @@ char *get_word(char *str)
 			if (!word)
 				return (NULL);
 		}
-		i++;
+		str[i] = ' ';
 	}
 	return (word);
 }
@@ -69,15 +70,14 @@ char *get_redir(t_cmd *cmd, char *str)
 	return (get_word(str));
 }
 
-int	is_redir(t_cmd *cmd, char *str, char c)
+int	is_redir(t_data *prompt, t_cmd *cmd, char *str, char c)
 {
 	int		i;
 	char	*word;
 
-	i = 0;
-	(void)cmd;
-	while (str[i] == c)
-		i++;
+	i = -1;
+	while (str[++i] == c)
+		str[i] = ' ';
 	if (c == '<' && i == 3)
 		return (ft_dprintf(2, "patate: we don't manage this option\n"), 1);
 	if (c == '<' && i > 3)
@@ -85,9 +85,17 @@ int	is_redir(t_cmd *cmd, char *str, char c)
 	if (c == '>' && i > 2)
 		return (error_syntax_too_much(i - 2, c));
 	if (!*(str + i))
-		return(ft_dprintf(2, "%s\n", ERR_NEWLINE), 1);
-	printf("yes yep, c:'%c'\n", *(str+i));
+		return(ft_dprintf(2, "%s", ERR_NEWLINE), 1);
 	word = get_redir(cmd, str + i);
+	if (c == '>' && i == 1)
+	
+	if (c == '>' && i == 2)
+	
+	if (c == '<' && i == 1)
+	
+	if (c == '<' && i == 2)
+	
+	printf("word :'%s'\n", word);
 	free(word);
 	return (0);
 }

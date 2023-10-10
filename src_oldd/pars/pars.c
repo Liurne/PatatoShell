@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 18:06:21 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/04 18:27:59 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/05 17:12:27 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ void	pars_cmd(t_data *line, t_cmd *cmd)
 	{
 		if (cmd->cmd[i] == '<' || cmd->cmd[i] == '>')
 		{
-			is_redir(&line->line.cmds[0], line->line.cmds[0].cmd + i, cmd->cmd[i]);
-			return;
+			line->line.cmds->redir = 1;
+			if (is_redir(cmd, cmd->cmd + i, cmd->cmd[i]))
+				return;
+			printf("command then:'%s'\n", cmd->cmd);
 		}
-			
 		i++;
 	}
 }
@@ -39,7 +40,8 @@ void	pars_cmd(t_data *line, t_cmd *cmd)
 int	pars(t_data *prompt)
 {
 	unsigned int	i;
-
+	if (ft_striswhitespace(prompt->line.line))
+		return (0);
 	if (ft_split_cmd(prompt, prompt->line.line))
 		ft_dprintf(2, "error split\n");
 	i = 0;
@@ -52,5 +54,6 @@ int	pars(t_data *prompt)
 		i++;
 	}
 	pars_cmd(prompt, &prompt->line.cmds[0]);
+	free_cmd(prompt);
 	return (0);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_line.c                                       :+:      :+:    :+:   */
+/*   ft_split_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 00:47:02 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/03 14:11:10 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/05 17:24:27 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	find_semicolon(char *line)
 	return (-1);
 }
 
-void	free_cmd(t_data *prompt)
+void	free_cmds(t_data *prompt)
 {
 	unsigned int	i;
 
@@ -69,7 +69,7 @@ void	free_cmd(t_data *prompt)
 	free(prompt->line.cmds);
 }
 
-int	ft_split_cmd(t_data *prompt, char *line)
+int	ft_split_cmds(t_data *prompt, char *line)
 {
 	unsigned int	i;
 	int				j;
@@ -89,6 +89,8 @@ int	ft_split_cmd(t_data *prompt, char *line)
 					ft_strlen(line + j));
 		else
 			prompt->line.cmds[i].cmd = ft_strndup(line + j, tmp);
+		if (!prompt->line.cmds[i].cmd)
+			return(free_cmds(prompt), 1);
 		j += tmp + 1;
 		i++;
 	}

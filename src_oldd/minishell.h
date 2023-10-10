@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/06 17:08:34 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/06 16:52:15 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,44 @@
 # define DEL_LINE "\001\033[2K\r\002"
 
 # define ERR_SYNTAX "patate: syntax error near unexpected token"
-# define ERR_SQUOTE "patate: ' isn't closed\n"
-# define ERR_DQUOTE "patate: \" isn't closed\n"
-# define ERR_PIPE1 "patate: syntax error near unexpected token '|'\n"
-# define ERR_PIPE2 "patate: there missing something after '|'\n"
 # define ERR_NEWLINE "patate: syntax error near unexpected token 'newline'\n"
 # define ERR_MALLOC "patate: malloc failed"
-# define ERR_MANAGE "patate: this option isn't managed\n"
 
-extern int r_value;
+
+//si ' pas interpreter $ si " interpreter
+//heredocs lancé en premier puis commandes
+//separer au pipe ; en bonus
+//si eof heredocs entre "" pas interpreter $ sinon interpreter
+//si << et commande la commande s'execute peut importe l'ordre d'apelle
+//penser au char spe : " ' * $ | <<
+//si "" bien copier tout le contenu
+//si '%2 = 1 || "%2 = 1 planter (ne pas conter le contenue entre guillemet)
+//<< si 0 mot apres planter (le mot peut etre une commande)
+//retirer tout les espaces n'etant pas entre guillemet
+//$ a gerer meme entre quote ($$ pas a gerer)
+//utiliser getenv() pour obtenir les variable d'environement
+// < > redirection !!
+// export si export test=test = pas cole resultat vide
+//cd use chdir();
+//pwd use getcwd(NULL, 0);
+//echo refaire printf en dprintf avec generation de toute la ligne avant printf
+//trouver les binaires avec acces (penser au ./ ou commande)
+//cd use chdir (cas a gerer si rien mi faire chdir(getenv("HOME"));)
+//cd ne marche pas dans des pipes (car le cd ce fait dans le child mais executer
+//quand meme)
+//message d'erreur pour cd si HOME unset
+//guillemets et quotes, ne pas conter les quote entre guillemet et inversement
+//limite 3333 pipe !!
+//
 
 typedef struct s_cmd
 {
 	char	*cmd;
-	int		not_valid;
-	char	**args;
+	//char	**args;
+	t_list	*args;
 	int		nb_args;
+	int		heredocs;
+	char	*d_heredocs;
 	int		built_in;
 	int		redir;
 	int		infile;
@@ -75,14 +97,25 @@ typedef struct s_data
 	t_line	prompt;
 }	t_data;
 
-/*     parsing     */
-int 	pars(t_data *shell);
-int		ft_striswspace(char *str);
-int		is_emptybpipe(char *line);
-void 	manage_quote(char c, int *squote, int *dquote);
+/* -----utils----- */
+char	*ft_addchar(char *str, char c);
+int		ft_striswhitespace(char *str);
 int		is_bracketvalid(char *str, char c, int *tmp);
-int		error_syntax_too_much(char *str, char c);
-int		ft_splitcmds(t_data *prompt, char *line);
+int		is_bracketvalid(char *str, char c, int *tmp);
+
+/* -----pars----- */
+int		pars(t_data *prompt);
+int		ft_split_cmds(t_data *prompt, char *line);
 void	free_cmds(t_data *prompt);
+int 	ft_isredir(t_data *prompt, t_cmd *cmd, char *str, char c)
+int		is_redir(t_data *prompt, t_cmd *cmd, char *str, char c);
+
+/* -----built-in----- */
+void	ft_pwd(t_data *prompt);
+void	ft_cd(t_data *promt);
+
+/* -----minishell-----*/
+
+/* ------heredoc----- */
 
 #endif
