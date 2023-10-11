@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:55:16 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/06 16:39:56 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/10 18:16:30 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,23 @@ int	is_emptybpipe(char *line)
 	return (0);
 }
 
-void manage_quote(char c, int *squote, int *dquote)
+int manage_quote(char c, int *squote, int *dquote)
 {
 	if (c == '\'' && !*dquote)
 		*squote = -(*squote) + 1;
 	if (c == '"' && !*squote)
 		*dquote = -(*dquote) + 1;
+	if ((c == '\'' && !dquote) || (c == '"' && !squote))
+		return (1);
+	return (0);
 }
 int	error_syntax_too_much(char *str, char c)
 {
 	ft_dprintf(2, "patate: syntax error near unexpected token '");
+	if (c == '<')
+		str += 3;
+	if (c == '>')
+		str += 2;
 	while (*str && *str == c)
 	{
 		ft_putchar_fd(c, 2);

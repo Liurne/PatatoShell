@@ -6,13 +6,14 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/06 17:08:34 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/10 16:51:48 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
+#include <signal.h>
 #include <stdbool.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -77,12 +78,46 @@ typedef struct s_data
 
 /*     parsing     */
 int 	pars(t_data *shell);
+int		pars_redir(t_cmd *cmd);
 int		ft_striswspace(char *str);
 int		is_emptybpipe(char *line);
-void 	manage_quote(char c, int *squote, int *dquote);
+int		manage_quote(char c, int *squote, int *dquote);
 int		is_bracketvalid(char *str, char c, int *tmp);
 int		error_syntax_too_much(char *str, char c);
 int		ft_splitcmds(t_data *prompt, char *line);
 void	free_cmds(t_data *prompt);
+char 	*ft_addchar(char *str, char c);
+
+/*     environment     */
+void	clear_env(t_data *shell);
+int		init_env(t_data *shell, char **envp);
+char	*get_env_var(t_data *shell, char *var);
+
+//faire l'expand avant les redirections !!
+//si ' pas interpreter $ si " interpreter
+//heredocs lancé en premier puis commandes
+//separer au pipe ; en bonus
+//si eof heredocs entre "" pas interpreter $ sinon interpreter
+//si << et commande la commande s'execute peut importe l'ordre d'apelle
+//penser au char spe : " ' * $ | <<
+//si "" bien copier tout le contenu
+//si '%2 = 1 || "%2 = 1 planter (ne pas conter le contenue entre guillemet)
+//<< si 0 mot apres planter (le mot peut etre une commande)
+//retirer tout les espaces n'etant pas entre guillemet
+//$ a gerer meme entre quote ($$ pas a gerer)
+//utiliser getenv() pour obtenir les variable d'environement
+// < > redirection !!
+// export si export test=test = pas cole resultat vide
+//cd use chdir();
+//pwd use getcwd(NULL, 0);
+//echo refaire printf en dprintf avec generation de toute la ligne avant printf
+//trouver les binaires avec acces (penser au ./ ou commande)
+//cd use chdir (cas a gerer si rien mi faire chdir(getenv("HOME"));)
+//cd ne marche pas dans des pipes (car le cd ce fait dans le child mais executer
+//quand meme)
+//message d'erreur pour cd si HOME unset
+//guillemets et quotes, ne pas conter les quote entre guillemet et inversement
+//limite 3333 pipe !!
+//$? a remplacer en valeur de retour pas une variable
 
 #endif

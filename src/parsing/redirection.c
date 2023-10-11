@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:50:22 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/06 17:56:27 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/10 14:47:57 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,30 @@ static int	get_redir(t_cmd *cmd, char *str, char c)
 		str[i] = ' ';
 	if (c == '<' && i == 3)
 		return (ft_dprintf(2, "patate: we don't manage this option\n"), 1);
-	while (*str + i && ft_iswhitespace(*str + i))
+	while (*(str + i) && ft_iswhitespace(*(str + i)))
 		str++;
 	word = get_word(str + i);
 	if (c == '<' && i == 1)
-	
+		printf("infile '%s'\n", word);
 	if (c == '<' && i == 2)
-
+		printf("heredoc delimiter:'%s'\n", word);
 	if (c == '>' && i == 1)
-	
+		printf("outfile '%s'\n", word);
 	if (c == '>' && i == 2)
-
-	printf("word :'%s'\n", word);
+		printf("outfile append '%s'\n", word);
 	free(word);
 	return (0);
 }
 int	pars_redir(t_cmd *cmd)
 {
-	while(*(cmd->cmd))
+	int	i;
+
+	i = 0;
+	while(cmd->cmd[i])
 	{
-		if (*(cmd->cmd) == '<' || *(cmd->cmd) == '>')
-			get_redir()
-		*(cmd->cmd)++;
+		if (cmd->cmd[i] == '<' || cmd->cmd[i] == '>')
+			get_redir(cmd, cmd->cmd + i, *(cmd->cmd + i));
+		i++;
 	}
 	return (0);
 }

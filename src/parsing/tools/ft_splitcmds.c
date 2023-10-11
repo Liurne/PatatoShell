@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:48:14 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/06 17:26:05 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/10 13:49:10 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_splitcmds(t_data *shell, char *line)
 	int				j;
 	int				tmp;
 
-	tmp = alloc_cmds(shell, line)
+	tmp = alloc_cmds(shell, line);
 	if (tmp)
 		return (tmp);
 	i = 0;

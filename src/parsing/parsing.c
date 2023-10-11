@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:53:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/06 17:35:21 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/10 14:59:13 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,20 @@ int	find_error(char *line)
 
 int	pars(t_data *shell)
 {
-	int	i;
+	unsigned int	i;
 	
 	i = 0;
+	if (ft_striswspace(shell->prompt.line))
+		return (0);
 	if (find_error(shell->prompt.line))
 		return (2);
 	if (ft_splitcmds(shell, shell->prompt.line))
 		return (1);
+	(void)i;
 	while (i < shell->prompt.nb_cmds)
 	{
-		
+		pars_redir(&(shell->prompt.cmds[i]));
+		i++;
 	}
 	free_cmds(shell);
 	return (0);
