@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 16:14:12 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/10 15:32:50 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:41:56 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static void	nb_arg(t_cmd *cmd, char *str)
 	{
 		while (*str && ft_iswhitespace(*str))
 			str++;
-		if(*str)
+		if (*str)
 		{
 			cmd->nb_args++;
-			while (*str && (!ft_iswhitespace(*str) || squote || dquote ))
+			while (*str && (!ft_iswhitespace(*str) || squote || dquote))
 			{
 				manage_quote(*str, &squote, &dquote);
 				str++;
@@ -44,7 +44,7 @@ int	len_arg(char *str)
 	len = 0;
 	squote = 0;
 	dquote = 0;
-	while (*str && (!ft_iswhitespace(*str) || squote || dquote ))
+	while (*str && (!ft_iswhitespace(*str) || squote || dquote))
 	{
 		if (!manage_quote(*str, &squote, &dquote))
 			len++;
@@ -60,7 +60,7 @@ void	free_arg(t_data *prompt)
 	i = 0;
 	while (i < prompt->line.nb_cmds)
 	{
-		if(prompt->line.cmds[i].cmd)
+		if (prompt->line.cmds[i].cmd)
 			free(prompt->line.cmds[i].cmd);
 		i++;
 	}
@@ -70,8 +70,8 @@ void	free_arg(t_data *prompt)
 int	ft_splitargs(t_cmd *cmd, char *line)
 {
 	unsigned int	i;
-	int	j;
-	int	tmp;
+	int				j;
+	int				tmp;
 
 	cmd->nb_args = count_cmd(cmd, line);
 	cmd->args = (char **)ft_calloc(cmd->nb_args, sizeof(char *));

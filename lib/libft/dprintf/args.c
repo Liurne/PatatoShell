@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 15:13:00 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/04 17:42:06 by liurne           ###   ########.fr       */
+/*   Created: 2023/10/19 18:54:18 by liurne            #+#    #+#             */
+/*   Updated: 2023/10/19 18:54:40 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 static char	*get_char(char c)
 {
-	char *res;
+	char	*res;
 
 	res = (char *)malloc(sizeof(char) * 2);
 	if (!res)
-		return(NULL);
+		return (NULL);
 	res[0] = c;
-	res[1] ='\0';
+	res[1] = '\0';
 	return (res);
 }
 
 static unsigned int	rec_hexa(unsigned int nb)
 {
 	unsigned int	len;
-	
+
 	len = 0;
 	if (nb > 15)
 	{
@@ -36,10 +36,10 @@ static unsigned int	rec_hexa(unsigned int nb)
 	}
 	else
 		len++;
-	return(len);
+	return (len);
 }
 
-static void fill_hexa(unsigned int nb, char *base, char *res)
+static void	fill_hexa(unsigned int nb, char *base, char *res)
 {
 	if (nb > 15)
 	{

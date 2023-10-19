@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:48:14 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/10 13:49:10 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:38:36 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static unsigned int	count_cmd(char *line)
 {
 	int	res;
-	int				quote;
-	int				dquote;
+	int	quote;
+	int	dquote;
 
 	res = 1;
 	quote = 0;
@@ -62,7 +62,8 @@ static int	alloc_cmds(t_data *shell, char *line)
 	shell->prompt.nb_cmds = count_cmd(line);
 	if (!shell->prompt.nb_cmds)
 		return (ft_dprintf(2, ERR_PIPE1), 2);
-	shell->prompt.cmds = (t_cmd *)ft_calloc(shell->prompt.nb_cmds, sizeof(t_cmd));
+	shell->prompt.cmds = (t_cmd *)ft_calloc(shell->prompt.nb_cmds,
+			sizeof(t_cmd));
 	if (!shell->prompt.cmds)
 		return (ft_dprintf(2, ERR_MALLOC), 1);
 	return (0);
@@ -102,7 +103,7 @@ int	ft_splitcmds(t_data *shell, char *line)
 		else
 			shell->prompt.cmds[i].cmd = ft_strndup(line + j, tmp);
 		if (!shell->prompt.cmds[i].cmd)
-			return(free_cmds(shell), 1);
+			return (free_cmds(shell), 1);
 		j += tmp + 1;
 		i++;
 	}

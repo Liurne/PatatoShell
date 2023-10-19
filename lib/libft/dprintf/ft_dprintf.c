@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:58:59 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/04 17:43:47 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:52:35 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static char	*append_str(char *s1, char *s2)
 {
-	char *res;
+	char	*res;
 
 	res = NULL;
 	res = ft_strjoin(s1, s2);
@@ -24,7 +24,6 @@ static char	*append_str(char *s1, char *s2)
 	if (!res)
 		return (NULL);
 	return (res);
-	
 }
 
 int	ft_dprintf(int fd, const char *str, ...)
@@ -55,6 +54,5 @@ int	ft_dprintf(int fd, const char *str, ...)
 	if (!res)
 		return (va_end(ap), -1);
 	i = write(fd, res, ft_strlen(res));
-	va_end(ap);
-	return (free(res), (int)i);
+	return (va_end(ap), free(res), (int)i);
 }

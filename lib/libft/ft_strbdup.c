@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 00:44:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/09/06 00:53:32 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:56:17 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*ft_strbdup(char *line, size_t s, size_t e)
 {
-	size_t		len;
+	size_t	len;
 	char	*res;
-	size_t		i;
+	size_t	i;
 
 	len = e - s + 1;
 	if (!line || len < 2 || s > e || ft_strlen(line) < e)

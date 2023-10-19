@@ -6,15 +6,15 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/10 16:51:48 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:25:21 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 # include <stdio.h>
-#include <signal.h>
-#include <stdbool.h>
+# include <signal.h>
+# include <stdbool.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdint.h>
@@ -47,7 +47,13 @@
 # define ERR_MALLOC "patate: malloc failed"
 # define ERR_MANAGE "patate: this option isn't managed\n"
 
-extern int r_value;
+extern int	g_rvalue;
+
+typedef struct s_quote
+{
+	int	s;
+	int	d;
+}	t_quote;
 
 typedef struct s_cmd
 {
@@ -68,7 +74,7 @@ typedef struct s_line
 	unsigned int	nb_cmds;
 	t_cmd			*cmds;
 	int				heredocs;
-} t_line;
+}	t_line;
 
 typedef struct s_data
 {
@@ -77,22 +83,28 @@ typedef struct s_data
 }	t_data;
 
 /*     parsing     */
-int 	pars(t_data *shell);
+int		pars(t_data *shell);
 int		pars_redir(t_cmd *cmd);
+char	*trim(t_data *shell, t_cmd *cmd, char *line);
 int		ft_striswspace(char *str);
 int		is_emptybpipe(char *line);
-int		manage_quote(char c, int *squote, int *dquote);
+int		manage_quote(char c, t_quote *quote);
 int		is_bracketvalid(char *str, char c, int *tmp);
 int		error_syntax_too_much(char *str, char c);
 int		ft_splitcmds(t_data *prompt, char *line);
 void	free_cmds(t_data *prompt);
-char 	*ft_addchar(char *str, char c);
+char	*ft_addchar(char *str, char c);
+char	*get_varname(char *str);
+int		get_len_var(t_data *shell, char *str, int *len);
+int		put_var(t_data *shell, char *str, char *res, int *len_var);
 
 /*     environment     */
 void	clear_env(t_data *shell);
 int		init_env(t_data *shell, char **envp);
 char	*get_env_var(t_data *shell, char *var);
 
+//pour les exports le nom devariable commence par _ ou 
+//alphachar puis on peut mettre desn ombres
 //faire l'expand avant les redirections !!
 //si ' pas interpreter $ si " interpreter
 //heredocs lancé en premier puis commandes

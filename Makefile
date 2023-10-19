@@ -6,7 +6,7 @@
 #    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/10 17:43:37 by liurne           ###   ########.fr        #
+#    Updated: 2023/10/19 17:04:50 by liurne           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,11 @@ FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 SRCS = main.c \
 		src/parsing/parsing.c \
 		src/parsing/redirection.c \
-		src/parsing/trim.c \
+		src/parsing/expand.c \
 		src/parsing/tools/pars_utils.c \
-		src/parsing/tools/ft_splitcmds.c \
 		src/parsing/tools/redir_utils.c \
+		src/parsing/tools/expand_utils.c \
+		src/parsing/tools/ft_splitcmds.c \
 		src/environment/environment.c
 
 OBJS = ${SRCS:.c=.o}

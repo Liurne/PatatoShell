@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:55:16 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/10 18:16:30 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:36:47 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_striswspace(char *str)
 {
-	while(*str)
+	while (*str)
 	{
 		if (!ft_iswhitespace(*str))
 			return (0);
@@ -25,26 +25,28 @@ int	ft_striswspace(char *str)
 
 int	is_emptybpipe(char *line)
 {
-	while(*line && *line != '|')
+	while (*line && *line != '|')
 	{
 		if (!ft_iswhitespace(*line))
 			return (0);
+		line++;
 	}
 	if (*line == '|')
 		return (1);
 	return (0);
 }
 
-int manage_quote(char c, int *squote, int *dquote)
+int	manage_quote(char c, t_quote *quote)
 {
-	if (c == '\'' && !*dquote)
-		*squote = -(*squote) + 1;
-	if (c == '"' && !*squote)
-		*dquote = -(*dquote) + 1;
-	if ((c == '\'' && !dquote) || (c == '"' && !squote))
+	if (c == '\'' && !quote->d)
+		quote->s = -(quote->s) + 1;
+	if (c == '"' && !quote->s)
+		quote->d = -(quote->d) + 1;
+	if ((c == '\'' && !quote->d) || (c == '"' && !quote->s))
 		return (1);
 	return (0);
 }
+
 int	error_syntax_too_much(char *str, char c)
 {
 	ft_dprintf(2, "patate: syntax error near unexpected token '");
@@ -60,12 +62,12 @@ int	error_syntax_too_much(char *str, char c)
 	return (ft_dprintf(2, "'\n"), 1);
 }
 
-int is_bracketvalid(char *str, char c, int *tmp)
+int	is_bracketvalid(char *str, char c, int *tmp)
 {
 	int	i;
 
 	*tmp = 0;
-	while(str[*tmp] == c)
+	while (str[*tmp] == c)
 		*tmp += 1;
 	if (c == '<' && *tmp == 3)
 		return (ft_dprintf(2, ERR_MANAGE), 1);
@@ -76,7 +78,7 @@ int is_bracketvalid(char *str, char c, int *tmp)
 	while (*str && ft_iswhitespace(*str))
 		str++;
 	if (!*str)
-		return (ft_dprintf(2, ERR_NEWLINE), 1);
+		return (ft_dprintf(2, ERR_NEWLINE), g_rvalue = 2, 1);
 	if (*str == '|' || *str == '<' || *str == '>')
 	{
 		c = *str;

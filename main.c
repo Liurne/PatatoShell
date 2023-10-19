@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/10 17:40:35 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/19 18:47:42 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include <signal.h>
 #include <stdio.h>
 
-void sigint_handler(int signal)
+int	g_rvalue;
+
+void	sigint_handler(int signal)
 {
 	if (signal == SIGINT)
 		printf(RED"\npatate> "END);
-	
-	return;
 }
 
 void	set_signal_action(void)
@@ -32,7 +32,7 @@ void	set_signal_action(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-void say_hello(t_data *shell, char **envp)
+void	say_hello(t_data *shell, char **envp)
 {
 	printf(YELLOW"===========================\n||"END);
 	printf(RED" minishell !! patate ! "END);
@@ -40,21 +40,22 @@ void say_hello(t_data *shell, char **envp)
 	init_env(shell, envp);
 }
 
-void say_bye(t_data *shell)
+void	say_bye(t_data *shell)
 {
 	clear_env(shell);
 	printf(RED"\nbye bye patate!!\n"END);
 }
 
-int	main(int ac, char** av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_data	shell;
 
 	(void)ac;
 	(void)av;
 	ft_bzero(&shell, sizeof(t_data));
+	g_rvalue = 0;
 	say_hello(&shell, envp);
-	set_signal_action();
+	//set_signal_action();
 	while (ft_strcmp(shell.prompt.line, "exit"))
 	{
 		if (shell.prompt.line)
@@ -67,8 +68,6 @@ int	main(int ac, char** av, char **envp)
 		}
 		if (shell.prompt.line[0] && !ft_striswspace(shell.prompt.line))
 			add_history(shell.prompt.line);
-		if (!ft_strcmp(shell.prompt.line, "test"))
-			printf("HOME=%s\n", get_env_var(&shell, "HOME"));
 		pars(&shell);
 	}
 	return (say_bye(&shell), free(shell.prompt.line), 0);
