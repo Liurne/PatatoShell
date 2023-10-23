@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/19 18:47:42 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/20 17:04:33 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	set_signal_action(void)
 	sigaction(SIGINT, &sa, NULL);
 }
 
-void	say_hello(t_data *shell, char **envp)
+int	say_hello(t_data *shell, char **envp)
 {
 	printf(YELLOW"===========================\n||"END);
 	printf(RED" minishell !! patate ! "END);
 	printf(YELLOW"||\n===========================\n"END);
-	init_env(shell, envp);
+	return (init_env(shell, envp));
 }
 
 void	say_bye(t_data *shell)
@@ -54,7 +54,8 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	ft_bzero(&shell, sizeof(t_data));
 	g_rvalue = 0;
-	say_hello(&shell, envp);
+	if (say_hello(&shell, envp))
+		return (1);
 	//set_signal_action();
 	while (ft_strcmp(shell.prompt.line, "exit"))
 	{

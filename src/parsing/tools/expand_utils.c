@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:37:59 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/19 18:24:13 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/20 13:56:17 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int	get_len_var(t_data *shell, char *str, int *len)
 	if (!tmp)
 		return (free(var), res);
 	*len = *len + ft_strlen(tmp);
+	if (*var == '?')
+		free(tmp);
 	free(var);
 	return (res);
 }
@@ -81,11 +83,8 @@ int	put_var(t_data *shell, char *str, char *dst, int *i)
 	if (!tmp)
 		return ((*i)--, free(var), res);
 	*i += ft_strlen(tmp) - 1;
-	while (*tmp)
-	{
-		*dst = *tmp;
-		tmp++;
-		dst++;
-	}
+	ft_strlcpy(dst, tmp, ft_strlen(tmp) + 1);
+	if (*var == '?')
+		free(tmp);
 	return (free(var), res);
 }

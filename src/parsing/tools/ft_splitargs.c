@@ -6,84 +6,93 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/17 16:14:12 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/19 18:41:56 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/23 18:24:03 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	nb_arg(t_cmd *cmd, char *str)
+static int	count_arg(char *line)
 {
-	int	squote;
-	int	dquote;
-
-	squote = 0;
-	dquote = 0;
-	while (*str)
+	int		res;
+	t_quote	quote;
+	
+	res = 1;
+	ft_bzero(&quote, sizeof(t_quote));
+	while (*line)
 	{
-		while (*str && ft_iswhitespace(*str))
-			str++;
-		if (*str)
+		if (ft_iswhitespace(*line) && !quote.s && !quote.d)
 		{
-			cmd->nb_args++;
-			while (*str && (!ft_iswhitespace(*str) || squote || dquote))
-			{
-				manage_quote(*str, &squote, &dquote);
-				str++;
-			}
+			while(*line && ft_iswhitespace(*line))
+				line++;
+			if(!*line)
+				return (res);
+			if (*line)
+				res++;
 		}
+		line++;
 	}
+	return (res);
 }
 
-int	len_arg(char *str)
+static int alloc_arg(t_cmd *cmd, char *line, int arg)
 {
-	int	len;
-	int	squote;
-	int	dquote;
+	int		len;
+	t_quote	quote;
 
 	len = 0;
-	squote = 0;
-	dquote = 0;
-	while (*str && (!ft_iswhitespace(*str) || squote || dquote))
+	ft_bzero(&quote, sizeof(t_quote));
+	while (line[len] && (!ft_iswhitespace(line[len]) || quote.s || quote.d))
 	{
-		if (!manage_quote(*str, &squote, &dquote))
-			len++;
-		str++;
+		if (manage_quote(line[len], &quote))
+		{
+			line++;
+			len--;
+		}
+		len++;
 	}
-	return (len);
+	cmd->args[arg] = ft_calloc(len + 1, sizeof(char));
+	if (!cmd->args[arg])
+		return (ft_dprintf(2, ERR_MALLOC), free_dtab(cmd->args), 1);
+	return (0);
 }
 
-void	free_arg(t_data *prompt)
+int	split_cpy(char *line, char *arg)
 {
-	unsigned int	i;
+	t_quote	quote;
+	int		tmp;
+	int		i;
 
+	ft_bzero(&quote, sizeof(t_quote));
 	i = 0;
-	while (i < prompt->line.nb_cmds)
+	tmp = 0;
+	while (line[tmp] && (!ft_iswhitespace(line[tmp]) || quote.s || quote.d))
 	{
-		if (prompt->line.cmds[i].cmd)
-			free(prompt->line.cmds[i].cmd);
-		i++;
+		if(!manage_quote(line[tmp], &quote))
+		{
+			arg[i] = line[tmp];
+			i++;
+		}
+		tmp++;
 	}
-	free(prompt->line.cmds);
+	return (tmp);
 }
-
 int	ft_splitargs(t_cmd *cmd, char *line)
 {
-	unsigned int	i;
-	int				j;
-	int				tmp;
+	int		i;
 
-	cmd->nb_args = count_cmd(cmd, line);
-	cmd->args = (char **)ft_calloc(cmd->nb_args, sizeof(char *));
+	cmd->nb_args = count_arg(line) + 1;
+	cmd->args = ft_calloc(cmd->nb_args, sizeof(char *));
 	if (!cmd->args)
-		return (1);
+		return (ft_dprintf(2, ERR_MALLOC), 1);
 	i = 0;
-	j = 0;
-	while (i < cmd->nb_args && j < (int)ft_strlen(line))
+	while (i < cmd->nb_args && *line)
 	{
-		tmp = find_semicolon(line + j);
-		cmd->args[i] = ft_strndup(line + j, tmp);
-		j += tmp + 1;
+		if (alloc_arg(cmd, line, i))
+			return (1);
+		line += split_cpy(line, cmd->args[i]);
+		while (*line && ft_iswhitespace(*line))
+			line++;
 		i++;
 	}
 	return (0);

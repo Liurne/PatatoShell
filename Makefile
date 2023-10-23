@@ -6,7 +6,7 @@
 #    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/19 17:04:50 by liurne           ###   ########.fr        #
+#    Updated: 2023/10/23 18:07:28 by liurne           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,11 @@ SRCS = main.c \
 		src/parsing/tools/pars_utils.c \
 		src/parsing/tools/redir_utils.c \
 		src/parsing/tools/expand_utils.c \
+		src/parsing/tools/error_utils.c \
 		src/parsing/tools/ft_splitcmds.c \
+		src/parsing/tools/ft_splitargs.c \
+		src/execution/execution.c \
+		src/execution/exec_utils.c \
 		src/environment/environment.c
 
 OBJS = ${SRCS:.c=.o}
@@ -97,4 +101,4 @@ sus:
 		@echo "$(IBLUE)         ░▀▀█░█░█░▀▀█         ${END}"
 		@echo "$(IBLUE)         ░▀▀▀░▀▀▀░▀▀▀         ${END}"
 
-.PHONY: all clean fclean re bonussh-5.1$
+.PHONY: all clean fclean re 

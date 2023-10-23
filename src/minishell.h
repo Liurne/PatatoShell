@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/19 18:25:21 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/23 18:07:14 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <stdarg.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -46,6 +47,7 @@
 # define ERR_NEWLINE "patate: syntax error near unexpected token 'newline'\n"
 # define ERR_MALLOC "patate: malloc failed"
 # define ERR_MANAGE "patate: this option isn't managed\n"
+# define ERR_PATH "patate: "
 
 extern int	g_rvalue;
 
@@ -58,6 +60,7 @@ typedef struct s_quote
 typedef struct s_cmd
 {
 	char	*cmd;
+	char	*exec;
 	int		not_valid;
 	char	**args;
 	int		nb_args;
@@ -92,7 +95,9 @@ int		manage_quote(char c, t_quote *quote);
 int		is_bracketvalid(char *str, char c, int *tmp);
 int		error_syntax_too_much(char *str, char c);
 int		ft_splitcmds(t_data *prompt, char *line);
-void	free_cmds(t_data *prompt);
+void	free_cmds(t_data *shell);
+int		ft_splitargs(t_cmd *cmd, char *line);
+void	free_dtab(char **tab);
 char	*ft_addchar(char *str, char c);
 char	*get_varname(char *str);
 int		get_len_var(t_data *shell, char *str, int *len);
@@ -102,6 +107,10 @@ int		put_var(t_data *shell, char *str, char *res, int *len_var);
 void	clear_env(t_data *shell);
 int		init_env(t_data *shell, char **envp);
 char	*get_env_var(t_data *shell, char *var);
+
+/*     exec     */
+int	exec(t_data *shell, t_cmd *cmd);
+char	*get_cmd(t_data *shell, char *cmd);
 
 //pour les exports le nom devariable commence par _ ou 
 //alphachar puis on peut mettre desn ombres

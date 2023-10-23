@@ -6,11 +6,14 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:53:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/19 18:31:14 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/23 18:25:13 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+
+//Mettre un pointeur sur env dans les cmd!!
 
 int	find_error(char *line)
 {
@@ -54,10 +57,11 @@ int	pars(t_data *shell)
 	{
 		shell->prompt.cmds[i].cmd = trim(shell, &(shell->prompt.cmds[i]),
 				shell->prompt.cmds[i].cmd);
-		printf("%s\n", shell->prompt.cmds[i].cmd);
+		//printf("%s\n", shell->prompt.cmds[i].cmd);
 		pars_redir(&(shell->prompt.cmds[i]));
 		i++;
 	}
+	exec(shell, &(shell->prompt.cmds[0]));
 	free_cmds(shell);
 	return (0);
 }
