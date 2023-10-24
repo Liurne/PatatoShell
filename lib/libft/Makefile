@@ -3,16 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/24 14:14:23 by edecoste         ###   ########.fr        #
+#    Created: 2022/11/15 13:46:33 by jcoquard          #+#    #+#              #
+#    Updated: 2023/09/06 00:44:54 by liurne           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-# $@ : NAME de la regle
-# $^ : tous les OBJS
-# $< : premiere dependance
 
 GREY = \033[30m
 RED = \033[31m
@@ -30,56 +26,80 @@ IPURPLE=\033[45m
 
 END = \033[0m
 
-NAME = minishell
+NAME = libft.a 
 
-FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address 
+FLAGS = -Wall -Wextra -Werror -I .
 
-SRCS = main.c \
-		src/parsing/parsing.c \
-		src/parsing/redirection.c \
-		src/parsing/expand.c \
-		src/parsing/tools/pars_utils.c \
-		src/parsing/tools/redir_utils.c \
-		src/parsing/tools/expand_utils.c \
-		src/parsing/tools/error_utils.c \
-		src/parsing/tools/ft_splitcmds.c \
-		src/parsing/tools/ft_splitargs.c \
-		src/execution/execution.c \
-		src/execution/exec_utils.c \
-		src/environment/environment.c
+SRCS =	ft_atoi.c \
+		ft_bzero.c \
+		ft_calloc.c \
+		ft_isalnum.c \
+		ft_isalpha.c \
+		ft_isascii.c \
+		ft_isdigit.c \
+		ft_isprint.c \
+		ft_iswhitespace.c \
+		ft_itoa.c \
+		ft_memchr.c \
+		ft_memcmp.c \
+		ft_memcpy.c \
+		ft_memmove.c \
+		ft_memset.c \
+		ft_putchar_fd.c \
+		ft_putendl_fd.c \
+		ft_putnbr_fd.c \
+		ft_putstr_fd.c \
+		ft_putnbrhexa_fd.c \
+		ft_split.c \
+		ft_strchr.c \
+		ft_strdup.c \
+		ft_strndup.c \
+		ft_strbdup.c \
+		ft_striteri.c \
+		ft_strjoin.c \
+		ft_strlcat.c \
+		ft_strlcpy.c \
+		ft_strlen.c \
+		ft_strmapi.c \
+		ft_strcmp.c \
+		ft_strncmp.c \
+		ft_strnstr.c \
+		ft_strrchr.c \
+		ft_strtrim.c \
+		ft_substr.c \
+		ft_tolower.c \
+		ft_toupper.c \
+		ft_lstnew.c \
+		ft_lstadd_front.c \
+		ft_lstsize.c \
+		ft_lstlast.c \
+		ft_lstadd_back.c \
+		ft_lstdelone.c \
+		ft_lstclear.c \
+		ft_lstiter.c \
+		dprintf/ft_dprintf.c \
+		dprintf/args.c
 
 OBJS = ${SRCS:.c=.o}
 
-HEADER = src/minishell.h
+HEADER = libft.h
 
-LEAKS = valgrind --suppressions=ignorerl.txt --leak-check=full --track-fds=yes
+all :	${NAME}
 
-all:	 libs ${NAME}
-
-${NAME}: ${OBJS}
-		@ ${CC} ${FLAGS} ${OBJS} -o $@ -lreadline lib/libft/libft.a && echo "${GREEN}\n* ${NAME} compilation completed !!!\n${END}"
-
-libs:
-	${MAKE} -C lib/libft
+${NAME}:	${OBJS}
+		@ ${AR} rcs $@ $^ && echo "${GREEN}\n* ${NAME} compilation completed !!!\n${END}"
 
 %.o:	%.c ${HEADER}
-		@ ${CC} ${FLAGS} -c $< -o $@  && echo "  $@"
+		@ ${CC} ${FLAGS} -c $< -o $@ && echo "  $@"
 
 clean:
-		${MAKE} -C lib/libft clean
 		@ ${RM} ${OBJS} && echo "${RED} * object cleared...${END}"
 
 fclean: clean
-		${MAKE} -C lib/libft fclean
 		@ ${RM} ${NAME} && echo "${RED} * everything is cleared...${END}"
 
-re: fclean
-	${MAKE} all
-
-leaks:
-	clear
-	$(MAKE) -j VALGRIND=yes
-	$(LEAKS) ./minishell
+re:	fclean
+		@ ${MAKE} all
 
 sus:
 		@echo "${BLUE}           ⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀        ${END}"
@@ -101,4 +121,4 @@ sus:
 		@echo "$(IBLUE)         ░▀▀█░█░█░▀▀█         ${END}"
 		@echo "$(IBLUE)         ░▀▀▀░▀▀▀░▀▀▀         ${END}"
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re
