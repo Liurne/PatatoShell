@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/20 17:04:33 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/25 15:57:43 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	g_rvalue;
 void	sigint_handler(int signal)
 {
 	if (signal == SIGINT)
-		printf(RED"\npatate> "END);
+		printf(RED"patate> "END);
 }
 
 void	set_signal_action(void)

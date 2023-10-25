@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitcmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:48:14 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/23 18:06:47 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/24 14:22:20 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	find_semicolon(char *line)
 	int	dquote;
 	int	i;
 
+	i = 0;
 	quote = 0;
 	dquote = 0;
 	while (line[i])

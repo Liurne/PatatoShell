@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:50:22 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/19 18:35:36 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/25 15:39:38 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ static int	get_redir(t_cmd *cmd, char *str, char c)
 	if (c == '<' && i == 1)
 		printf("infile '%s'\n", word);
 	if (c == '<' && i == 2)
-		printf("heredoc delimiter:'%s'\n", word);
+	{
+		heredoc(1, word);
+		// printf("heredoc delimiter:'%s'\n", word);
+	}
 	if (c == '>' && i == 1)
 		printf("outfile '%s'\n", word);
 	if (c == '>' && i == 2)

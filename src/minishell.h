@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/23 18:07:14 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/25 15:58:23 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_cmd
 	int		infile;
 	int		outfile;
 	int		fd[2];
+	struct s_cmd *next;
 }	t_cmd;
 
 typedef struct s_line
@@ -111,6 +112,10 @@ char	*get_env_var(t_data *shell, char *var);
 /*     exec     */
 int	exec(t_data *shell, t_cmd *cmd);
 char	*get_cmd(t_data *shell, char *cmd);
+
+/*     heredoc     */
+void heredoc(int do_expend, char *eof);
+
 
 //pour les exports le nom devariable commence par _ ou 
 //alphachar puis on peut mettre desn ombres

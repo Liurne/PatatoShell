@@ -6,7 +6,7 @@
 #    By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/24 14:14:23 by edecoste         ###   ########.fr        #
+#    Updated: 2023/10/25 15:44:19 by edecoste         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ SRCS = main.c \
 		src/parsing/tools/ft_splitargs.c \
 		src/execution/execution.c \
 		src/execution/exec_utils.c \
-		src/environment/environment.c
+		src/environment/environment.c \
+		src/heredoc.c
 
 OBJS = ${SRCS:.c=.o}
 
