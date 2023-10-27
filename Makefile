@@ -6,7 +6,7 @@
 #    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/23 18:07:28 by liurne           ###   ########.fr        #
+#    Updated: 2023/10/26 17:52:15 by liurne           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,15 +38,20 @@ SRCS = main.c \
 		src/parsing/parsing.c \
 		src/parsing/redirection.c \
 		src/parsing/expand.c \
-		src/parsing/tools/pars_utils.c \
-		src/parsing/tools/redir_utils.c \
-		src/parsing/tools/expand_utils.c \
-		src/parsing/tools/error_utils.c \
-		src/parsing/tools/ft_splitcmds.c \
-		src/parsing/tools/ft_splitargs.c \
+		src/tools/pars_utils.c \
+		src/tools/redir_utils.c \
+		src/tools/expand_utils.c \
+		src/tools/error_utils.c \
+		src/tools/splitcmds.c \
+		src/tools/splitargs.c \
+		src/tools/strcpy_neg.c \
 		src/execution/execution.c \
 		src/execution/exec_utils.c \
-		src/environment/environment.c
+		src/environment/environment.c \
+		src/builtin/builtin.c \
+		src/builtin/ft_pwd.c \
+		src/builtin/ft_echo.c 
+#		src/builtin/ft_cd
 
 OBJS = ${SRCS:.c=.o}
 

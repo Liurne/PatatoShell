@@ -6,17 +6,17 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:55:16 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/23 17:10:40 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/25 15:24:51 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
-int	ft_striswspace(char *str)
+int	striswspace(char *str)
 {
 	while (*str)
 	{
-		if (!ft_iswhitespace(*str))
+		if (!ft_iswhitespace(get_pos(*str)))
 			return (0);
 		str++;
 	}
@@ -45,4 +45,11 @@ void	free_dtab(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+char	get_pos(char c)
+{
+	if (c < 0)
+		return (-c);
+	return (c);
 }

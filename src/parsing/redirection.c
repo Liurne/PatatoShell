@@ -6,13 +6,20 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:50:22 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/19 18:35:36 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/26 19:16:36 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*get_word(char *str)
+
+
+//pour outfile creer les fichier meme ceux qui seront pas utilisé
+//verifier si les fichier sont crée si la commande est erroné reponse oui meme si commande innexistante
+//commande plante sur les redirection first
+
+
+static char	*get_word(char *str, int *is_quote)
 {
 	int		i;
 	t_quote	quote;
@@ -21,14 +28,18 @@ static char	*get_word(char *str)
 	i = -1;
 	ft_bzero(&quote, sizeof(t_quote));
 	word = NULL;
-	while (str[++i] && ((!ft_iswhitespace(str[i]) && str[i] != '<' && str[i]
-				!= '>' && str[i] != '|') || quote.d || quote.s))
+	while (str[++i] && ((!ft_iswhitespace(get_pos(str[i]))
+				&& get_pos(str[i]) != '<' && get_pos(str[i]) != '>'
+				&& get_pos(str[i]) != '|') || quote.d || quote.s))
 	{
 		if (str[i] == '"' || str[i] == '\'')
-			manage_quote(str[i], &quote);
+		{
+			manage_quote(get_pos(str[i]), &quote);
+			*is_quote = 1;
+		}
 		else
 		{
-			word = ft_addchar(word, str[i]);
+			word = ft_addchar(word, get_pos(str[i]));
 			if (!word)
 				return (NULL);
 		}
@@ -41,8 +52,10 @@ static int	get_redir(t_cmd *cmd, char *str, char c)
 {
 	int		i;
 	char	*word;
+	int		is_quote;
 
 	(void)cmd;
+	is_quote = 0;
 	i = -1;
 	while (str[++i] == c)
 		str[i] = ' ';
@@ -50,11 +63,11 @@ static int	get_redir(t_cmd *cmd, char *str, char c)
 		return (ft_dprintf(2, "patate: we don't manage this option\n"), 1);
 	while (*(str + i) && ft_iswhitespace(*(str + i)))
 		str++;
-	word = get_word(str + i);
+	word = get_word(str + i, &is_quote);
 	if (c == '<' && i == 1)
 		printf("infile '%s'\n", word);
 	if (c == '<' && i == 2)
-		printf("heredoc delimiter:'%s'\n", word);
+		printf("heredoc delimiter:'%s' is quote ?:%d\n", word, is_quote);
 	if (c == '>' && i == 1)
 		printf("outfile '%s'\n", word);
 	if (c == '>' && i == 2)

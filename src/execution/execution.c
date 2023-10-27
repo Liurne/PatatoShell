@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:05:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/23 18:24:43 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/24 18:52:46 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,27 @@ void	free_child(t_data *shell, t_cmd *cmd)
 		free_dtab(cmd->args);
 	if (cmd->exec)
 		free(cmd->exec);
+	free(shell->prompt.line);
 	free_cmds(shell);
 	free_dtab(shell->env);
 }
 
 int	exec_child(t_data *shell, t_cmd *cmd)
 {
-	if (ft_splitargs(cmd, cmd->cmd))
+	if (splitargs(cmd, cmd->cmd))
 		return (free_child(shell, cmd), 1);
 	cmd->exec = get_cmd(shell, cmd->args[0]);
 	if (!cmd->exec)
+	{
+		ft_dprintf(2, "patate: command '%s' not found\n", cmd->args[0]);
 		return (free_child(shell, cmd), 1);
+	}
 	if (execve(cmd->exec, cmd->args, shell->env) == -1)
+	{
+		ft_dprintf(2, "patate: command '%s' not found\n", cmd->args[0]);
 		return (free_child(shell, cmd), 1);
-	return (free_child(shell, cmd), 0);
+	}
+	return (ft_dprintf(2, "patate: command '%s' not found\n", cmd->args[0]), free_child(shell, cmd), 0);
 }
 
 int	exec(t_data *shell, t_cmd *cmd)

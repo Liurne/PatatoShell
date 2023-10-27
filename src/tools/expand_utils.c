@@ -6,11 +6,11 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:37:59 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/20 13:56:17 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/25 15:24:46 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 char	*get_varname(char *str)
 {
@@ -83,7 +83,7 @@ int	put_var(t_data *shell, char *str, char *dst, int *i)
 	if (!tmp)
 		return ((*i)--, free(var), res);
 	*i += ft_strlen(tmp) - 1;
-	ft_strlcpy(dst, tmp, ft_strlen(tmp) + 1);
+	strcpy_neg(dst, tmp, ft_strlen(tmp) + 1);
 	if (*var == '?')
 		free(tmp);
 	return (free(var), res);

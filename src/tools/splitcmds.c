@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_splitcmds.c                                     :+:      :+:    :+:   */
+/*   splitcmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 static unsigned int	count_cmd(char *line)
 {
@@ -83,7 +83,7 @@ void	free_cmds(t_data *shell)
 	free(shell->prompt.cmds);
 }
 
-int	ft_splitcmds(t_data *shell, char *line)
+int	splitcmds(t_data *shell, char *line)
 {
 	unsigned int	i;
 	int				j;
