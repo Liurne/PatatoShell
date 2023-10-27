@@ -1,16 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_utils.c                                      :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 16:53:32 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/27 17:41:10 by jcoquard         ###   ########.fr       */
+/*   Created: 2023/10/27 17:45:02 by jcoquard          #+#    #+#             */
+/*   Updated: 2023/10/27 19:06:21 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	striswspace(char *str)
+{
+	while (*str)
+	{
+		if (!ft_iswhitespace(get_pos(*str)))
+			return (0);
+		str++;
+	}
+	return (1);
+}
 
 int	is_emptypipe(char *line)
 {
@@ -25,44 +36,39 @@ int	is_emptypipe(char *line)
 	return (0);
 }
 
-int	error_syntax_too_much(char *str, char c)
+int	error_syntax(char *str, char c)
 {
+	int	i;
+
 	ft_dprintf(2, "patate: syntax error near unexpected token '");
-	if (c == '<')
-		str += 3;
-	if (c == '>')
-		str += 2;
-	while (*str && *str == c)
+	i = 0;
+	while (str[i] && str[i] == c && (((c == '|' || c == '>') && i < 2)
+			|| (c == '<' && i < 3)))
 	{
 		ft_putchar_fd(c, 2);
-		str++;
+		i++;
 	}
-	return (ft_dprintf(2, "'\n"), 1);
+	ft_dprintf(2, "'\n");
+	return (set_rval(2, NULL));
 }
 
 int	is_bracketvalid(char *str, char c, int *tmp)
 {
-	int	i;
-
 	*tmp = 0;
-	while (str[*tmp] == c)
-		*tmp += 1;
+	while (*str == c)
+	{
+		*tmp++;
+		if ((c == '<' && *tmp > 3) || (c == '>' && *tmp > 2))
+			return (error_syntax(str, c));
+	}
 	if (c == '<' && *tmp == 3)
-		return (ft_dprintf(2, ERR_MANAGE), 1);
-	if ((c == '<' && *tmp > 3) || (c == '>' && *tmp > 2))
-		return (error_syntax_too_much(str, c));
-	str = str + *tmp;
-	i = 0;
+		return (set_rval(2, ERR_OPTION));
+	str += *tmp;
 	while (*str && ft_iswhitespace(*str))
 		str++;
 	if (!*str)
-		return (ft_dprintf(2, ERR_NEWLINE), g_rvalue = 2, 1);
+		return (set_rval(2, ERR_NEWLINE));
 	if (*str == '|' || *str == '<' || *str == '>')
-	{
-		c = *str;
-		while (str[i] == c)
-			i++;
-		return (error_syntax_too_much(str, c), 1);
-	}
+		return (error_syntax(str, *str));
 	return (0);
 }

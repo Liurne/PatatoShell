@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:05:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/24 18:52:46 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/27 16:33:42 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,3 +54,4 @@ int	exec(t_data *shell, t_cmd *cmd)
 		waitpid(pid, NULL, 0);
 	return (0);
 }
+

@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/27 16:36:24 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/10/27 19:42:38 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,13 @@
 # define UNDERLINE "\001\033[4m\002"
 # define DEL_LINE "\001\033[2K\r\002"
 
-# define ERR_SYNTAX "patate: syntax error near unexpected token"
+# define ERR_PIPE "patate: syntax error near unexpected token '|'\n"
+# define ERR_OPTION "patate: this option isn't managed\n"
 # define ERR_SQUOTE "patate: ' isn't closed\n"
 # define ERR_DQUOTE "patate: \" isn't closed\n"
-# define ERR_PIPE1 "patate: syntax error near unexpected token '|'\n"
-# define ERR_PIPE2 "patate: there missing something after '|'\n"
 # define ERR_NEWLINE "patate: syntax error near unexpected token 'newline'\n"
 # define ERR_MALLOC "patate: malloc failed"
-# define ERR_MANAGE "patate: this option isn't managed\n"
+
 # define ERR_PATH "patate: "
 # define ERR_CD1 "patate: ft_cd: too many arguments\n"
 
@@ -86,35 +85,30 @@ typedef struct s_data
 	t_line	prompt;
 }	t_data;
 
+/*     process     */
+int		process(t_data *shell);
+int		set_rval(int val, char *error);
+
 /*     parsing     */
-int		pars(t_data *shell);
-int		pars_redir(t_cmd *cmd);
-char	*trim(t_data *shell, t_cmd *cmd, char *line);
-int		striswspace(char *str);
-int		is_emptybpipe(char *line);
+int		pars_line(char *line);
 int		manage_quote(char c, t_quote *quote);
-int		is_bracketvalid(char *str, char c, int *tmp);
-int		error_syntax_too_much(char *str, char c);
-int		splitcmds(t_data *prompt, char *line);
-void	free_cmds(t_data *shell);
-int		splitargs(t_cmd *cmd, char *line);
 void	free_dtab(char **tab);
-char	*ft_addchar(char *str, char c);
-char	*get_varname(char *str);
-int		get_len_var(t_data *shell, char *str, int *len);
-int		put_var(t_data *shell, char *str, char *res, int *len_var);
-size_t	strcpy_neg(char *dst, const char *src, size_t size);
 char	get_pos(char c);
-void 	strnegorpos(char *str, char symbol);
+char	*ft_addchar(char *str, char c);
+int		striswspace(char *str);
+int		is_emptypipe(char *line);
+int		error_syntax(char *str, char c);
+int		is_bracketvalid(char *str, char c, int *tmp);
+char	*expand(t_data *shell, t_cmd *cmd, char *line);
 
 /*     environment     */
-void	clear_env(t_data *shell);
-int		init_env(t_data *shell, char **envp);
-char	*get_env_var(t_data *shell, char *var);
 
-/*     exec     */
-int	exec(t_data *shell, t_cmd *cmd);
-char	*get_cmd(t_data *shell, char *cmd);
+/*     execution     */
+
+/*     utils     */
+int		splitcmds(t_data *shell, char *line);
+void	free_cmds(t_data *shell);
+int		splitargs(t_cmd *cmd, char *line);
 
 //pour les exports le nom devariable commence par _ ou 
 //alphachar puis on peut mettre desn ombres

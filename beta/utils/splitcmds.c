@@ -37,9 +37,10 @@ static int	find_semicolon(char *line)
 	int		i;
 
 	ft_bzero(&quote, sizeof(t_quote));
+	i = 0;
 	while (line[i])
 	{
-		manage_quote(*line, &quote);
+		manage_quote(line[i], &quote);
 		if (line[i] == '|' && !quote.s && !quote.d)
 			return (i);
 		i++;
@@ -51,11 +52,11 @@ static int	alloc_cmds(t_data *shell, char *line)
 {
 	shell->prompt.nb_cmds = count_cmd(line);
 	if (!shell->prompt.nb_cmds)
-		return (ft_dprintf(2, ERR_PIPE1), 2);
+		return (set_rval(2, ERR_PIPE));
 	shell->prompt.cmds = (t_cmd *)ft_calloc(shell->prompt.nb_cmds,
 			sizeof(t_cmd));
 	if (!shell->prompt.cmds)
-		return (ft_dprintf(2, ERR_MALLOC), 1);
+		return (set_rval(2, ERR_MALLOC));
 	return (0);
 }
 
