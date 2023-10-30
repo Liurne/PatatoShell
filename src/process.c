@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/30 15:09:04 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:44:31 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int	process(t_data *shell)
 	while (++i < shell->prompt.nb_cmds)
 		shell->prompt.cmds[i].cmd = expand(shell, &(shell->prompt.cmds[i]),
 				shell->prompt.cmds[i].cmd);
+	i = -1;
+	while (++i < shell->prompt.nb_cmds)
+		pars_redir(&(shell->prompt.cmds[i]));
 	i = -1;
 	while (++i < shell->prompt.nb_cmds)
 		exec(shell, &(shell->prompt.cmds[i]));

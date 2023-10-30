@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:35:15 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/30 15:29:59 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:10:57 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ static char	*get_word(char *str, int *is_quote)
 	}
 	return (word);
 }
+
+int	set_redir(t_cmd *cmd, char *word, int redir);
 
 static int	get_redir(t_cmd *cmd, char *str, char c)
 {

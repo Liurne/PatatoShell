@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/30 15:21:03 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:05:58 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,13 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	*exec;
-	int		not_valid;
 	char	**args;
 	int		nb_args;
 	int		built_in;
-	int		redir;
+	int		redir_in;
 	int		infile;
 	int		outfile;
-	int		fd[2];
+	int		pipe[2];
 }	t_cmd;
 
 typedef struct s_line

@@ -6,11 +6,13 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:05:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/30 15:32:29 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/10/30 17:43:12 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+//executer les heredocs avant l'exec (avant le fork et le while)
 
 void	free_child(t_data *shell, t_cmd *cmd)
 {
@@ -25,11 +27,6 @@ void	free_child(t_data *shell, t_cmd *cmd)
 
 int	exec_child(t_data *shell, t_cmd *cmd)
 {
-	pars_redir(cmd);
-	if (striswspace(cmd->cmd))
-		return(free_child(shell, cmd), 1);
-	if (splitargs(cmd, cmd->cmd))
-		return (free_child(shell, cmd), 1);
 	cmd->exec = get_cmd(shell, cmd->args[0]);
 	if (!cmd->exec)
 	{
@@ -48,6 +45,12 @@ int	exec(t_data *shell, t_cmd *cmd)
 {
 	pid_t	pid;
 
+	if (striswspace(cmd->cmd))
+		return (free_child(shell, cmd), 1);
+	if (splitargs(cmd, cmd->cmd))
+		return (free_child(shell, cmd), 1);
+	if(shell->prompt.nb_cmds == 1)
+	
 	pid = fork();
 	if (pid == -1)
 		return (1);
