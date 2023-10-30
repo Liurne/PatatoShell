@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 17:50:22 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/26 19:16:36 by liurne           ###   ########.fr       */
+/*   Created: 2023/10/30 13:35:15 by jcoquard          #+#    #+#             */
+/*   Updated: 2023/10/30 15:29:59 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
-
-//pour outfile creer les fichier meme ceux qui seront pas utilisé
-//verifier si les fichier sont crée si la commande est erroné reponse oui meme si commande innexistante
-//commande plante sur les redirection first
-
 
 static char	*get_word(char *str, int *is_quote)
 {
@@ -29,12 +22,12 @@ static char	*get_word(char *str, int *is_quote)
 	ft_bzero(&quote, sizeof(t_quote));
 	word = NULL;
 	while (str[++i] && ((!ft_iswhitespace(get_pos(str[i]))
-				&& get_pos(str[i]) != '<' && get_pos(str[i]) != '>'
-				&& get_pos(str[i]) != '|') || quote.d || quote.s))
+				&& str[i] != '<' && str[i] != '>'
+				&& str[i] != '|') || quote.d || quote.s))
 	{
 		if (str[i] == '"' || str[i] == '\'')
 		{
-			manage_quote(get_pos(str[i]), &quote);
+			manage_quote(str[i], &quote);
 			*is_quote = 1;
 		}
 		else
@@ -59,9 +52,7 @@ static int	get_redir(t_cmd *cmd, char *str, char c)
 	i = -1;
 	while (str[++i] == c)
 		str[i] = ' ';
-	if (c == '<' && i == 3)
-		return (ft_dprintf(2, "patate: we don't manage this option\n"), 1);
-	while (*(str + i) && ft_iswhitespace(*(str + i)))
+	while (*(str + i) && ft_iswhitespace(get_pos(*(str + i))))
 		str++;
 	word = get_word(str + i, &is_quote);
 	if (c == '<' && i == 1)

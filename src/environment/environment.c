@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:03:11 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/24 19:34:46 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/27 19:26:39 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ int	init_env(t_data *shell, char **envp)
 		return (shell->env = NULL, 0);
 	shell->env = (char **)ft_calloc(i + 1, sizeof(char *));
 	if (!shell->env)
-		return (ft_dprintf(2, ERR_MALLOC), 1);
+		return (set_rval(2, ERR_MALLOC));
 	i = 0;
 	while (envp[i])
 	{
 		shell->env[i] = ft_strdup(envp[i]);
 		if (!shell->env[i])
-			return (clear_env(shell), ft_dprintf(2, ERR_MALLOC), 1);
+			return (clear_env(shell), set_rval(2, ERR_MALLOC));
 		i++;
 	}
 	shell->env[i] = NULL;

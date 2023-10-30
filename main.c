@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/26 15:36:18 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/30 14:44:02 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int ac, char **av, char **envp)
 			return (say_bye(&shell), free(shell.prompt.line), 0);
 		if (shell.prompt.line[0] && !striswspace(shell.prompt.line))
 			add_history(shell.prompt.line);
-		pars(&shell);
+		process(&shell);
 	}
 	return (say_bye(&shell), free(shell.prompt.line), 0);
 }

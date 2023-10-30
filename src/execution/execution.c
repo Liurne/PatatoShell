@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:05:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/27 16:33:42 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/10/30 15:32:29 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	free_child(t_data *shell, t_cmd *cmd)
 
 int	exec_child(t_data *shell, t_cmd *cmd)
 {
+	pars_redir(cmd);
+	if (striswspace(cmd->cmd))
+		return(free_child(shell, cmd), 1);
 	if (splitargs(cmd, cmd->cmd))
 		return (free_child(shell, cmd), 1);
 	cmd->exec = get_cmd(shell, cmd->args[0]);

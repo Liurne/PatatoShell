@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
+#    By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/26 17:52:15 by liurne           ###   ########.fr        #
+#    Updated: 2023/10/30 14:41:54 by jcoquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,16 +35,14 @@ NAME = minishell
 FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address 
 
 SRCS = main.c \
+		src/process.c \
 		src/parsing/parsing.c \
 		src/parsing/redirection.c \
 		src/parsing/expand.c \
-		src/tools/pars_utils.c \
-		src/tools/redir_utils.c \
-		src/tools/expand_utils.c \
-		src/tools/error_utils.c \
-		src/tools/splitcmds.c \
-		src/tools/splitargs.c \
-		src/tools/strcpy_neg.c \
+		src/parsing/error.c \
+		src/utils/splitcmds.c \
+		src/utils/splitargs.c \
+		src/utils/strcpy_neg.c \
 		src/execution/execution.c \
 		src/execution/exec_utils.c \
 		src/environment/environment.c \
