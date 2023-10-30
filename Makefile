@@ -6,7 +6,7 @@
 #    By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/25 15:44:19 by edecoste         ###   ########.fr        #
+#    Updated: 2023/10/26 14:27:34 by edecoste         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,8 @@ SRCS = main.c \
 		src/execution/execution.c \
 		src/execution/exec_utils.c \
 		src/environment/environment.c \
+		src/signals/signals_handlers.c \
+		src/signals/signals_hub.c \
 		src/heredoc.c
 
 OBJS = ${SRCS:.c=.o}
