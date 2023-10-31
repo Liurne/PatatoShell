@@ -6,7 +6,7 @@
 #    By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/26 14:27:34 by edecoste         ###   ########.fr        #
+#    Updated: 2023/10/31 11:57:21 by edecoste         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,8 @@ OBJS = ${SRCS:.c=.o}
 
 HEADER = src/minishell.h
 
-LEAKS = valgrind --suppressions=ignorerl.txt --leak-check=full --track-fds=yes
+LEAKS = valgrind --show-leak-kinds=all --leak-check=full --show-mismatched-frees=yes --suppressions=ignorerl.txt
+#valgrind --suppressions=ignorerl.txt --leak-check=full --track-fds=yes
 
 all:	 libs ${NAME}
 

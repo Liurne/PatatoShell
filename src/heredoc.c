@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:03:33 by edecoste          #+#    #+#             */
-/*   Updated: 2023/10/30 16:32:49 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/10/31 17:01:38 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 char	*update_string(int i, char *line, char *heredoc)
 {
 	char	*temp;
-	
-	
+
 	if (i == 0)
 	{
 		heredoc = ft_strjoin(line, "\n");
@@ -83,80 +82,52 @@ char	*update_string(int i, char *line, char *heredoc)
 	return (heredoc);
 }
 
-char	*capt_input(int *here_pipe, char *eof)
+void	capt_input(int *here_fd, char *eof)
 {
 	char	*line;
 	char	*heredoc;
 	int		i;
 
-	(void)here_pipe;
 	i = 0;
 	heredoc = NULL;
 	heredoc_signals();
 	while (g_rvalue != 130)
 	{
 		line = readline("heredoc> ");
-		if (ft_strlen(line) > 0 && !ft_strcmp(line, eof))
+		if ((ft_strlen(line) > 0 && !ft_strcmp(line, eof)) || !line)
 			break ;
-		heredoc = update_string(i, line, heredoc);
-		
-		i++;
+		heredoc = update_string(i++, line, heredoc);
 	}
-	return (heredoc);
+	ft_dprintf(here_fd[1], heredoc);
+	dup2(here_fd[0], STDIN_FILENO);
+	close(here_fd[1]);
+	close(here_fd[0]);
+	free(heredoc);
 }
 
 void heredoc(int do_expend, char *eof)
 {
-	int		here_pipe[2];
+	int		here_fd[2];
 	char	*input;
 
 	input = NULL;
-	pipe(here_pipe); // cree un lien en here_pipe[0] et here_pipe[1]
-
-	pid_t pid = fork(); // cree un nouveau processuse
-	if (pid == -1) // le fork n'as pas marche
+	if (pipe(here_fd) == -1)
+		return (putendl_fd("Error: heredoc pipe\n", 2));
+	pid_t pid = fork();
+	if (pid == -1)
 		putendl_fd("Error: fork\n", 2);
-	if (pid == 0) // si 0 je me trouve actuellement dans mon enfants
+	if (pid == 0)
 	{
-		input = capt_input(here_pipe, eof);
+		capt_input(here_fd, eof);
 		if (g_rvalue == 130)
-		{
-			putendl_fd(input, 0); // debug
-			if (input)
-				free(input);
-			free(eof);
-			// close heredoc
-			exit(1);
-		}
+			return (free(eof), exit(1));
 		if (do_expend)
 		{
-			// expendfonction(input)
+			// expendfonction()
 		}
-		if (input)
-		{
-			putendl_fd("--", 0); // debug
-			putendl_fd(input, 0); // debug
-			putendl_fd("--", 0); // debug
-		}
-		free(eof);
-		free(input);
-		exit(1);
+		return (free(eof), exit(1));
 	}
 	if (pid)
-	{
 		waitpid(pid, NULL, 0);
-		free(eof);
-	}
 	return ;
 }
-
-// int main(int argc, char **argv)
-// {
-// 	// t_data data;
-
-// 	// ft_bzero(&data, sizeof(t_data));
-// 	if (argc != 2)
-// 		return (0);
-// 	heredoc(argv[1]);
-// 	return (0);
-// }
