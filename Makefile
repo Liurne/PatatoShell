@@ -6,7 +6,7 @@
 #    By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/30 14:41:54 by jcoquard         ###   ########.fr        #
+#    Updated: 2023/10/31 15:38:47 by jcoquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS = main.c \
 		src/process.c \
 		src/parsing/parsing.c \
 		src/parsing/redirection.c \
+		src/parsing/heredoc.c \
 		src/parsing/expand.c \
 		src/parsing/error.c \
 		src/utils/splitcmds.c \

@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/30 18:05:58 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/10/31 15:36:06 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdint.h>
 # include <stdarg.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft.h"
@@ -57,6 +59,14 @@ typedef struct s_quote
 	int	d;
 }	t_quote;
 
+enum e_redir
+{
+	HEREDOC,
+	INFILE,
+	OUTFILE,
+	OUTAPPEND
+};
+
 typedef struct s_cmd
 {
 	char	*cmd;
@@ -65,6 +75,7 @@ typedef struct s_cmd
 	int		nb_args;
 	int		built_in;
 	int		redir_in;
+	e_redir	redir_in;
 	int		infile;
 	int		outfile;
 	int		pipe[2];
