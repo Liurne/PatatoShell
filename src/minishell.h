@@ -70,7 +70,6 @@ typedef struct s_cmd
 	int		infile;
 	int		outfile;
 	int		fd[2];
-	struct s_cmd *next;
 }	t_cmd;
 
 typedef struct s_line
