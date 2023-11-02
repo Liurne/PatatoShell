@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:03:33 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/02 15:44:46 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:46:17 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,25 @@ void	capt_input(int *here_fd, char *eof)
 	}
 	ft_dprintf(here_fd[1], heredoc);
 	if (dup2(here_fd[0], STDIN_FILENO) == -1)
-		ft_dprintf(2, "patate: heredoc stdin\n")
+		ft_dprintf(2, "patate: heredoc stdin\n");
 	close(here_fd[1]);
 	close(here_fd[0]);
 	free(heredoc);
 }
 
-void heredoc(int do_expend, char *eof)
+void	heredoc(int do_expend, char *eof)
 {
 	int		here_fd[2];
 	char	*input;
+	pid_t	pid;
 
 	input = NULL;
 	if (pipe(here_fd) == -1)
-		return (free(eof), ft_dprintf(2, "patate: heredoc pipe\n"));
-	pid_t pid = fork();
+	{
+		ft_dprintf(2, "patate: heredoc pipe\n");
+		return (free(eof));
+	}
+	pid = fork();
 	if (pid == -1)
 		ft_dprintf(2, "patate: heredoc fork\n");
 	if (pid == 0)
@@ -93,9 +97,7 @@ void heredoc(int do_expend, char *eof)
 		if (g_rvalue == 130)
 			return (free(eof), exit(1));
 		if (do_expend)
-		{
-			// expendfonction()
-		}
+		//	expendfonction()
 		return (free(eof), exit(1));
 	}
 	if (pid)
