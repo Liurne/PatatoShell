@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/26 15:30:49 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:03:55 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	say_hello(t_data *shell, char **envp)
 void	say_bye(t_data *shell)
 {
 	clear_env(shell);
+	ft_dprintf(2, "exit");
 	printf(RED"\nbye bye patate!!\n"END);
 }
 
@@ -47,11 +48,8 @@ int	main(int ac, char **av, char **envp)
 			free(shell.prompt.line);
 		shell.prompt.line = readline(RED"patate> "END);
 		if (!shell.prompt.line)
-		{
-			printf("exit");
 			return (say_bye(&shell), free(shell.prompt.line), 0);
-		}
-		if (shell.prompt.line[0] && !ft_striswspace(shell.prompt.line))
+		if (shell.prompt.line[0] && !striswspace(shell.prompt.line))
 			add_history(shell.prompt.line);
 		pars(&shell);
 	}

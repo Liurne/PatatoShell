@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/26 14:32:25 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:03:02 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define ERR_MALLOC "patate: malloc failed"
 # define ERR_MANAGE "patate: this option isn't managed\n"
 # define ERR_PATH "patate: "
+# define ERR_CD1 "patate: ft_cd: too many arguments\n"
 
 extern int	g_rvalue;
 
@@ -90,19 +91,22 @@ typedef struct s_data
 int		pars(t_data *shell);
 int		pars_redir(t_cmd *cmd);
 char	*trim(t_data *shell, t_cmd *cmd, char *line);
-int		ft_striswspace(char *str);
+int		striswspace(char *str);
 int		is_emptybpipe(char *line);
 int		manage_quote(char c, t_quote *quote);
 int		is_bracketvalid(char *str, char c, int *tmp);
 int		error_syntax_too_much(char *str, char c);
-int		ft_splitcmds(t_data *prompt, char *line);
+int		splitcmds(t_data *prompt, char *line);
 void	free_cmds(t_data *shell);
-int		ft_splitargs(t_cmd *cmd, char *line);
+int		splitargs(t_cmd *cmd, char *line);
 void	free_dtab(char **tab);
 char	*ft_addchar(char *str, char c);
 char	*get_varname(char *str);
 int		get_len_var(t_data *shell, char *str, int *len);
 int		put_var(t_data *shell, char *str, char *res, int *len_var);
+size_t	strcpy_neg(char *dst, const char *src, size_t size);
+char	get_pos(char c);
+void 	strnegorpos(char *str, char symbol);
 
 /*     environment     */
 void	clear_env(t_data *shell);

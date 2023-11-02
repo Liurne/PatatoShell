@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_splitargs.c                                     :+:      :+:    :+:   */
+/*   splitargs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 static int	count_arg(char *line)
 {
@@ -21,15 +21,15 @@ static int	count_arg(char *line)
 	ft_bzero(&quote, sizeof(t_quote));
 	while (*line)
 	{
-		if (ft_iswhitespace(*line) && !quote.s && !quote.d)
+		if (ft_iswhitespace(get_pos(*line)) && !quote.s && !quote.d)
 		{
-			while(*line && ft_iswhitespace(*line))
+			while(*line && ft_iswhitespace(get_pos(*line)))
 				line++;
 			if(!*line)
 				return (res);
-			if (*line)
-				res++;
+			res++;
 		}
+		manage_quote(get_pos(*line), &quote);
 		line++;
 	}
 	return (res);
@@ -44,10 +44,11 @@ static int alloc_arg(t_cmd *cmd, char *line, int arg)
 	ft_bzero(&quote, sizeof(t_quote));
 	while (line[len] && (!ft_iswhitespace(line[len]) || quote.s || quote.d))
 	{
-		if (manage_quote(line[len], &quote))
+		if (manage_quote(get_pos(line[len]), &quote))
 		{
+			if(line[len] > 0)
+				len--;
 			line++;
-			len--;
 		}
 		len++;
 	}
@@ -66,18 +67,18 @@ int	split_cpy(char *line, char *arg)
 	ft_bzero(&quote, sizeof(t_quote));
 	i = 0;
 	tmp = 0;
-	while (line[tmp] && (!ft_iswhitespace(line[tmp]) || quote.s || quote.d))
+	while (line[tmp] && (!ft_iswhitespace(get_pos(line[tmp])) || quote.s || quote.d))
 	{
-		if(!manage_quote(line[tmp], &quote))
+		if(!manage_quote(get_pos(line[tmp]), &quote) || line[tmp] < 0)
 		{
-			arg[i] = line[tmp];
+			arg[i] = get_pos(line[tmp]);
 			i++;
 		}
 		tmp++;
 	}
 	return (tmp);
 }
-int	ft_splitargs(t_cmd *cmd, char *line)
+int	splitargs(t_cmd *cmd, char *line)
 {
 	int		i;
 
@@ -91,7 +92,7 @@ int	ft_splitargs(t_cmd *cmd, char *line)
 		if (alloc_arg(cmd, line, i))
 			return (1);
 		line += split_cpy(line, cmd->args[i]);
-		while (*line && ft_iswhitespace(*line))
+		while (*line && ft_iswhitespace(get_pos(*line)))
 			line++;
 		i++;
 	}

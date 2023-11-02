@@ -6,11 +6,11 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 16:53:32 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/23 16:56:43 by liurne           ###   ########.fr       */
+/*   Updated: 2023/10/25 15:24:40 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../minishell.h"
 
 int	is_emptybpipe(char *line)
 {

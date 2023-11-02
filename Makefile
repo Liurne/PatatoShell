@@ -6,7 +6,7 @@
 #    By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/10/31 11:57:21 by edecoste         ###   ########.fr        #
+#    Updated: 2023/11/02 16:03:40 by edecoste         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +38,13 @@ SRCS = main.c \
 		src/parsing/parsing.c \
 		src/parsing/redirection.c \
 		src/parsing/expand.c \
-		src/parsing/tools/pars_utils.c \
-		src/parsing/tools/redir_utils.c \
-		src/parsing/tools/expand_utils.c \
-		src/parsing/tools/error_utils.c \
-		src/parsing/tools/ft_splitcmds.c \
-		src/parsing/tools/ft_splitargs.c \
+		src/tools/pars_utils.c \
+		src/tools/redir_utils.c \
+		src/tools/expand_utils.c \
+		src/tools/error_utils.c \
+		src/tools/splitcmds.c \
+		src/tools/splitargs.c \
+		src/tools/strcpy_neg.c \
 		src/execution/execution.c \
 		src/execution/exec_utils.c \
 		src/environment/environment.c \
