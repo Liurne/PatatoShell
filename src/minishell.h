@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/26 17:36:26 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/02 16:03:02 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,21 @@ char	*get_env_var(t_data *shell, char *var);
 /*     exec     */
 int	exec(t_data *shell, t_cmd *cmd);
 char	*get_cmd(t_data *shell, char *cmd);
+
+/*     heredoc     */
+void heredoc(int do_expend, char *eof);
+
+/*     signals     */
+void	prompt_signals(void);
+void	heredoc_signals(void);
+void	unplug_signals(void);
+void	exec_signals(void);
+
+void	prompt_sigint(int sig);
+void	exec_sigint(int sig);
+void	exec_sigquit(int sig);
+void	heredoc_sigint(int sig);
+
 
 //pour les exports le nom devariable commence par _ ou 
 //alphachar puis on peut mettre desn ombres
