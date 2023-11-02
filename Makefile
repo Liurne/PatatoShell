@@ -55,8 +55,7 @@ OBJS = ${SRCS:.c=.o}
 
 HEADER = src/minishell.h
 
-LEAKS = valgrind --show-leak-kinds=all --leak-check=full --show-mismatched-frees=yes --suppressions=ignorerl.txt
-#valgrind --suppressions=ignorerl.txt --leak-check=full --track-fds=yes
+LEAKS = valgrind --suppressions=ignorerl.txt --leak-check=full --track-fds=yes
 
 all:	 libs ${NAME}
 
