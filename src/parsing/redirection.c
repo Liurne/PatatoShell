@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:50:22 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/31 12:04:04 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:46:22 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static int	get_redir(t_cmd *cmd, char *str, char c)
 	if (c == '<' && i == 2)
 	{
 		heredoc(1, word);
-		// printf("heredoc delimiter:'%s'\n", word);
 	}
 	if (c == '>' && i == 1)
 		printf("outfile '%s'\n", word);

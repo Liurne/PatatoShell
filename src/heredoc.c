@@ -6,34 +6,11 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:03:33 by edecoste          #+#    #+#             */
-/*   Updated: 2023/10/31 17:01:38 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:44:46 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// comprendre heredoc : https://linuxize.com/post/bash-heredoc/
-
-void	putendl_fd(char *s, int fd)
-{
-	size_t	i;
-	int		rt_val;
-
-	i = 0;
-	rt_val = 0;
-	if (!s)
-		putendl_fd("(null)", fd);
-	else
-	{
-		while (s[i])
-			i++;
-		rt_val = write(fd, s, i);
-		if (rt_val == -1)
-			return ;
-	}
-	write(fd, "\n", 2);
-	return ;
-}
 
 void	ft_bzero(void *s, size_t n)
 {
@@ -46,22 +23,6 @@ void	ft_bzero(void *s, size_t n)
 		str[i++] = 0;
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while ((unsigned char)s1[i] && (unsigned char)s1[i] == \
-	(unsigned char)s2[i] && n > 0)
-	{
-		n--;
-		i++;
-	}
-	if (n == 0)
-		return (0);
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
 char	*update_string(int i, char *line, char *heredoc)
 {
 	char	*temp;
@@ -69,13 +30,22 @@ char	*update_string(int i, char *line, char *heredoc)
 	if (i == 0)
 	{
 		heredoc = ft_strjoin(line, "\n");
+		if (!heredoc)
+			return (free(line), \
+					ft_dprintf(2, "patate: heredoc ft_strjoin\n"), NULL);
 		free(line);
 	}
 	else
 	{
-		temp = ft_strjoin(heredoc, line); // protecte join
+		temp = ft_strjoin(heredoc, line);
+		if (!temp)
+			return (free(heredoc), free(line), \
+					ft_dprintf(2, "patate: heredoc ft_strjoin\n"), NULL);
 		free(heredoc);
-		heredoc = ft_strjoin(temp, "\n"); // protecte join
+		heredoc = ft_strjoin(temp, "\n");
+		if (!heredoc)
+			return (free(line), free(temp), \
+					ft_dprintf(2, "patate: heredoc ft_strjoin\n"), NULL);
 		free(line);
 		free(temp);
 	}
@@ -99,7 +69,8 @@ void	capt_input(int *here_fd, char *eof)
 		heredoc = update_string(i++, line, heredoc);
 	}
 	ft_dprintf(here_fd[1], heredoc);
-	dup2(here_fd[0], STDIN_FILENO);
+	if (dup2(here_fd[0], STDIN_FILENO) == -1)
+		ft_dprintf(2, "patate: heredoc stdin\n")
 	close(here_fd[1]);
 	close(here_fd[0]);
 	free(heredoc);
@@ -112,10 +83,10 @@ void heredoc(int do_expend, char *eof)
 
 	input = NULL;
 	if (pipe(here_fd) == -1)
-		return (putendl_fd("Error: heredoc pipe\n", 2));
+		return (free(eof), ft_dprintf(2, "patate: heredoc pipe\n"));
 	pid_t pid = fork();
 	if (pid == -1)
-		putendl_fd("Error: fork\n", 2);
+		ft_dprintf(2, "patate: heredoc fork\n");
 	if (pid == 0)
 	{
 		capt_input(here_fd, eof);
