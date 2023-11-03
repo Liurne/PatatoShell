@@ -6,13 +6,13 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:27:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/30 15:59:09 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:43:15 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	is_builtin(t_cmd cmd)
+int	is_builtin(t_cmd *cmd)
 {
-	
+	return (cmd->nb_args);
 }

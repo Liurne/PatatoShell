@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/30 17:44:31 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:40:21 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ int	process(t_data *shell)
 	if (splitcmds(shell, shell->prompt.line))
 		return (2);
 	while (++i < shell->prompt.nb_cmds)
+	{
 		shell->prompt.cmds[i].cmd = expand(shell, &(shell->prompt.cmds[i]),
 				shell->prompt.cmds[i].cmd);
-	i = -1;
-	while (++i < shell->prompt.nb_cmds)
-		pars_redir(&(shell->prompt.cmds[i]));
-	i = -1;
-	while (++i < shell->prompt.nb_cmds)
+		if (!shell->prompt.cmds[i].cmd)
+			return (free_cmds(shell), 2);
+//		if (pars_heredoc(&(shell->prompt.cmds[i])))
+//			return (free_cmds(shell), 2);
 		exec(shell, &(shell->prompt.cmds[i]));
+	}
 	free_cmds(shell);
 	return (0);
 }

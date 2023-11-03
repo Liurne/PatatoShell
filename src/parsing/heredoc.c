@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/30 18:10:07 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:40:32 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,13 @@ static int	get_heredocs(t_cmd *cmd, char *str, char c)
 		if (!word)
 			return (2);
 		//exec heredoc
+		printf("exec here doc\n");
 		free(word);
 	}
 	return (0);
 }
 
-int pars_heredoc(t_cmd *cmd)
+int	pars_heredoc(t_cmd *cmd)
 {
 	int	i;
 
@@ -44,7 +45,8 @@ int pars_heredoc(t_cmd *cmd)
 	while (cmd->cmd[i])
 	{
 		if (cmd->cmd[i] == '<' || cmd->cmd[i] == '>')
-			get_redir(cmd, cmd->cmd + i, *(cmd->cmd + i));
+			if (get_heredocs(cmd, cmd->cmd + i, *(cmd->cmd + i)))
+				return (1);
 		i++;
 	}
 	return (0);

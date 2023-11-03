@@ -6,13 +6,13 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:35:15 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/31 15:46:30 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:40:47 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*get_word(char *str, int *is_quote)
+char	*get_word(char *str, int *is_quote)
 {
 	int		i;
 	t_quote	quote;
@@ -41,38 +41,49 @@ static char	*get_word(char *str, int *is_quote)
 	return (word);
 }
 
-int	set_redir(t_cmd *cmd, char *word, e_redir redir)
+static int	set_redirin(t_cmd *cmd, char *word, t_redir redir)
 {
 	if (redir == INFILE)
 	{
 		if (cmd->infile)
 			close (cmd->infile);
 		cmd->infile = open(word, O_RDONLY);
-		if (!cmd->infile)
-			return (ft_dprintf(2, "patate: no such file or directory: %s"
+		if (cmd->infile == -1)
+			return (ft_dprintf(2, "patate: no such file or directory: %s\n"
 					, word, set_rval(1, NULL)));
 		cmd->redir_in = INFILE;
+		printf("infile '%s'\n", word);
 	}
+	if (redir == HEREDOC)
+	{
+		cmd->redir_in = HEREDOC;
+		printf("heredoc delimiter:'%s'\n", word);
+	}
+	return (0);
+}
+
+static int	set_redirout(t_cmd *cmd, char *word, t_redir redir)
+{
 	if (redir == OUTFILE)
 	{
 		if (cmd->outfile)
 			close (cmd->outfile);
 		cmd->outfile = open(word, O_TRUNC | O_CREAT | O_RDWR, 0000644);
-		if (!cmd->infile)
-			return (ft_dprintf(2, "patate: couldn't create file: %s"
+		if (cmd->outfile == -1)
+			return (ft_dprintf(2, "patate: couldn't create file: %s\n"
 					, word, set_rval(1, NULL)));
+		printf("outfile '%s'\n", word);
 	}
 	if (redir == OUTAPPEND)
 	{
 		if (cmd->outfile)
 			close (cmd->outfile);
 		cmd->outfile = open(word, O_APPEND | O_CREAT | O_RDWR, 0000644);
-		if (!cmd->infile)
-			return (ft_dprintf(2, "patate: couldn't create file: %s"
+		if (cmd->outfile == -1)
+			return (ft_dprintf(2, "patate: couldn't create file: %s\n"
 					, word, set_rval(1, NULL)));
+		printf("outfile append '%s'\n", word);
 	}
-	if (redir == HEREDOC)
-		
 	return (0);
 }
 
@@ -81,9 +92,10 @@ static int	get_redir(t_cmd *cmd, char *str, char c)
 	int		i;
 	char	*word;
 	int		is_quote;
+	int		open_fail;
 
-	(void)cmd;
 	is_quote = 0;
+	open_fail = 0;
 	i = -1;
 	while (str[++i] == c)
 		str[i] = ' ';
@@ -91,15 +103,16 @@ static int	get_redir(t_cmd *cmd, char *str, char c)
 		str++;
 	word = get_word(str + i, &is_quote);
 	if (c == '<' && i == 1)
-		printf("infile '%s'\n", word);
+		open_fail = set_redirin(cmd, word, INFILE);
 	if (c == '<' && i == 2)
-		printf("heredoc delimiter:'%s' is quote ?:%d\n", word, is_quote);
+		open_fail = set_redirin(cmd, word, HEREDOC);
 	if (c == '>' && i == 1)
-		printf("outfile '%s'\n", word);
+		open_fail = set_redirout(cmd, word, OUTFILE);
 	if (c == '>' && i == 2)
-		printf("outfile append '%s'\n", word);
-	free(word);
-	return (0);
+		open_fail = set_redirout(cmd, word, OUTAPPEND);
+	if (open_fail)
+		return (free(word), 1);
+	return (free(word), 0);
 }
 
 int	pars_redir(t_cmd *cmd)
@@ -110,7 +123,8 @@ int	pars_redir(t_cmd *cmd)
 	while (cmd->cmd[i])
 	{
 		if (cmd->cmd[i] == '<' || cmd->cmd[i] == '>')
-			get_redir(cmd, cmd->cmd + i, *(cmd->cmd + i));
+			if (get_redir(cmd, cmd->cmd + i, *(cmd->cmd + i)))
+				return (1);
 		i++;
 	}
 	return (0);

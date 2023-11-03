@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:14:53 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/26 17:49:10 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/03 15:42:57 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	echo_option(char *arg)
 	int	i;
 
 	i = 1;
-	if (arg[0] =='-')
+	if (arg[0] == '-')
 	{
 		while (arg[i] && arg[i] == 'n')
 			i++;
@@ -27,7 +27,7 @@ static int	echo_option(char *arg)
 	return (0);
 }
 
-char *echo_join(char **arg, int endl)
+char	*echo_join(char **arg, int endl)
 {
 	char	*tmp;
 	char	*res;
@@ -59,7 +59,7 @@ int	ft_echo(char **arg)
 	char	*str;
 
 	if (!arg[1])
-		return(ft_dprintf(2, "\n"), 0);
+		return (ft_dprintf(2, "\n"), 0);
 	endl = 1 - echo_option(arg[1]);
 	if (!endl && !arg[2])
 		return (0);

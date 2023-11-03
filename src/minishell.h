@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/31 15:36:06 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:18:43 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ typedef struct s_quote
 	int	d;
 }	t_quote;
 
-enum e_redir
+typedef enum e_redir
 {
 	HEREDOC,
 	INFILE,
 	OUTFILE,
 	OUTAPPEND
-};
+}	t_redir;
 
 typedef struct s_cmd
 {
@@ -74,8 +74,7 @@ typedef struct s_cmd
 	char	**args;
 	int		nb_args;
 	int		built_in;
-	int		redir_in;
-	e_redir	redir_in;
+	t_redir	redir_in;
 	int		infile;
 	int		outfile;
 	int		pipe[2];
@@ -110,7 +109,9 @@ int		is_emptypipe(char *line);
 int		error_syntax(char *str, char c);
 int		is_bracketvalid(char *str, char c, int *tmp);
 char	*expand(t_data *shell, t_cmd *cmd, char *line);
+char	*get_word(char *str, int *is_quote);
 int		pars_redir(t_cmd *cmd);
+int		pars_heredoc(t_cmd *cmd);
 
 /*     environment     */
 int		init_env(t_data *shell, char **envp);

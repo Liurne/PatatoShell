@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 17:56:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/24 16:36:32 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/03 15:41:14 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static char	**get_path(t_data *shell)
 		return (ft_dprintf(2, ERR_MALLOC), NULL);
 	return (res);
 }
+
 char	*get_cmd(t_data *shell, char *cmd)
 {
 	char	*tmp;
@@ -38,11 +39,11 @@ char	*get_cmd(t_data *shell, char *cmd)
 	{
 		tmp = ft_strjoin(paths[i], "/");
 		if (!tmp)
-			return (ft_dprintf(2,ERR_MALLOC), free_dtab(paths), NULL);
+			return (ft_dprintf(2, ERR_MALLOC), free_dtab(paths), NULL);
 		res = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (!res)
-			return (ft_dprintf(2,ERR_MALLOC), free_dtab(paths), NULL);
+			return (ft_dprintf(2, ERR_MALLOC), free_dtab(paths), NULL);
 		if (access(res, X_OK) == 0)
 			return (free_dtab(paths), res);
 		free(res);
