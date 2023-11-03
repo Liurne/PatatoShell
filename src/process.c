@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/03 15:40:21 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/03 18:48:05 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	process(t_data *shell)
 				shell->prompt.cmds[i].cmd);
 		if (!shell->prompt.cmds[i].cmd)
 			return (free_cmds(shell), 2);
-//		if (pars_heredoc(&(shell->prompt.cmds[i])))
-//			return (free_cmds(shell), 2);
+		if (pars_heredoc(&(shell->prompt.cmds[i])))
+			return (free_cmds(shell), 2);
 		exec(shell, &(shell->prompt.cmds[i]));
 	}
 	free_cmds(shell);

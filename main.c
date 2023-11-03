@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/30 14:44:02 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/03 19:03:42 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int ac, char **av, char **envp)
 	set_signal_action();
 	while (ft_strcmp(shell.prompt.line, "exit"))
 	{
+		prompt_signals();
 		if (shell.prompt.line)
 			free(shell.prompt.line);
 		shell.prompt.line = readline(RED"patate> "END);

@@ -6,11 +6,93 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/03 15:40:32 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/03 19:10:16 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*update_string(int i, char *line, char *heredoc)
+{
+	char	*temp;
+
+	if (i == 0)
+	{
+		heredoc = ft_strjoin(line, "\n");
+		if (!heredoc)
+			return (free(line), \
+					ft_dprintf(2, "patate: heredoc ft_strjoin\n"), NULL);
+		free(line);
+	}
+	else
+	{
+		temp = ft_strjoin(heredoc, line);
+		if (!temp)
+			return (free(heredoc), free(line), \
+					ft_dprintf(2, "patate: heredoc ft_strjoin\n"), NULL);
+		free(heredoc);
+		heredoc = ft_strjoin(temp, "\n");
+		if (!heredoc)
+			return (free(line), free(temp), \
+					ft_dprintf(2, "patate: heredoc ft_strjoin\n"), NULL);
+		free(line);
+		free(temp);
+	}
+	return (heredoc);
+}
+
+void	capt_input(int *here_fd, char *eof)
+{
+	char	*line;
+	char	*heredoc;
+	int		i;
+
+	i = 0;
+	heredoc = NULL;
+	line = NULL;
+	heredoc_signals();
+	while (g_rvalue != 130)
+	{
+		if (line)
+			free(line);
+		line = readline(YELLOW"heredoc> "END);
+		if ((ft_strlen(line) > 0 && !ft_strcmp(line, eof)) || !line)
+			break ;
+		heredoc = update_string(i++, line, heredoc);
+	}
+	free(line);
+	ft_dprintf(here_fd[1], heredoc);
+	if (dup2(here_fd[0], STDIN_FILENO) == -1)
+		ft_dprintf(2, "patate: heredoc stdin\n");
+	close(here_fd[1]);
+	close(here_fd[0]);
+	free(heredoc);
+}
+
+int	heredoc(t_cmd *cmd, char *eof, int expand)
+{
+	pid_t	pid;
+
+	if (pipe(cmd->pipe) == -1)
+		return (set_rval(1, ERR_OPIPE));
+	pid = fork();
+	if (pid == -1)
+		return (close(cmd->pipe[0]), close(cmd->pipe[1]),
+			set_rval(1, ERR_FORK));
+	if (!pid)
+	{
+		capt_input(cmd->pipe, eof);
+		if (g_rvalue == 130)
+			return (close(cmd->pipe[0]), close(cmd->pipe[1]),
+				free(eof), exit(130), 130);
+		if (expand)
+		//	expendfonction()
+		return (free(eof), exit(0), 0);
+	}
+	if (pid)
+		waitpid(pid, NULL, 0);
+	return (0);
+}
 
 static int	get_heredocs(t_cmd *cmd, char *str, char c)
 {
@@ -30,7 +112,7 @@ static int	get_heredocs(t_cmd *cmd, char *str, char c)
 		word = get_word(str + i, &is_quote);
 		if (!word)
 			return (2);
-		//exec heredoc
+		heredoc(cmd, word, 1);
 		printf("exec here doc\n");
 		free(word);
 	}

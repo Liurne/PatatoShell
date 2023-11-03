@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/02 15:18:43 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/03 18:34:59 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@
 # define ERR_NEWLINE "patate: syntax error near unexpected token 'newline'\n"
 # define ERR_MALLOC "patate: malloc failed"
 
-# define ERR_PATH "patate: "
+# define ERR_OPIPE "patate: couldn't open the pipe\n"
+# define ERR_FORK "patate: couldn't fork\n"
 # define ERR_CD1 "patate: ft_cd: too many arguments\n"
 
 extern int	g_rvalue;
@@ -97,6 +98,16 @@ typedef struct s_data
 /*     process     */
 int		process(t_data *shell);
 int		set_rval(int val, char *error);
+
+/*     signals     */
+void	prompt_sigint(int sig);
+void	exec_sigint(int sig);
+void	exec_sigquit(int sig);
+void	heredoc_sigint(int sig);
+void	heredoc_signals(void);
+void	unplug_signals(void);
+void	exec_signals(void);
+void	prompt_signals(void);
 
 /*     parsing     */
 int		pars_line(char *line);

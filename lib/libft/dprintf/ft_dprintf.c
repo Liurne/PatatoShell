@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:58:59 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/03 16:52:56 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/03 18:46:47 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ int	ft_dprintf(int fd, const char *str, ...)
 	res = append_str(res, ft_strndup(str, i));
 	if (!res)
 		return (va_end(ap), -1);
-	return (va_end(ap), free(res), write(fd, res, ft_strlen(res)));
+	i = write(fd, res, ft_strlen(res));
+	return (va_end(ap), free(res), i);
 }
