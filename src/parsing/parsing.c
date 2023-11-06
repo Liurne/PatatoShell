@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:29:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/30 15:19:07 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:40:18 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*ft_addchar(char *str, char c)
 		len = ft_strlen(str);
 	res = ft_calloc(len + 2, sizeof(char));
 	if (!res)
-		return (set_rval(2, ERR_MALLOC), NULL);
+		return (set_rval(1, ERR_MALLOC), NULL);
 	if (str && *str)
 		ft_strlcpy(res, str, len + 1);
 	res[len] = c;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:05:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/03 15:41:25 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:53:33 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,11 @@ int	exec_child(t_data *shell, t_cmd *cmd)
 	if (!cmd->exec)
 	{
 		ft_dprintf(2, "patate: command '%s' not found\n", cmd->args[0]);
-		return (free_child(shell, cmd, 0), 1);
+		return (free_child(shell, cmd, 0), set_rval(127, NULL));
 	}
-	if (execve(cmd->exec, cmd->args, shell->env) == -1)
-	{
-		ft_dprintf(2, "patate: command '%s' not found\n", cmd->args[0]);
-		return (free_child(shell, cmd, 0), 1);
-	}
-	return (ft_dprintf(2, "patate: command '%s' not found\n", cmd->args[0]),
-		free_child(shell, cmd, 0), 0);
+	execve(cmd->exec, cmd->args, shell->env);
+	ft_dprintf(2, "patate: command '%s' not found\n", cmd->args[0]);
+	return (free_child(shell, cmd, 0), set_rval(127, NULL));
 }
 
 int	exec(t_data *shell, t_cmd *cmd)

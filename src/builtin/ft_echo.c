@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:14:53 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/03 15:42:57 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:40:59 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ char	*echo_join(char **arg, int endl)
 		if (tmp)
 			free(tmp);
 		if (!res)
-			return (ft_dprintf(2, ERR_MALLOC), NULL);
+			return (set_rval(1, ERR_MALLOC), NULL);
 		if (arg[i + 1])
 		{
 			tmp = ft_strjoin(res, " ");
 			free (res);
 			if (!tmp)
-				return (ft_dprintf(2, ERR_MALLOC), NULL);
+				return (set_rval(1, ERR_MALLOC), NULL);
 		}
 	}
 	return (res);

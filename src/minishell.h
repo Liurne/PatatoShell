@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/03 18:34:59 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:37:31 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@
 # define ERR_SQUOTE "patate: ' isn't closed\n"
 # define ERR_DQUOTE "patate: \" isn't closed\n"
 # define ERR_NEWLINE "patate: syntax error near unexpected token 'newline'\n"
-# define ERR_MALLOC "patate: malloc failed"
+# define ERR_MALLOC "patate: malloc failed\n"
+# define ERR_DUP2 "patate: dup2 failed\n"
 
 # define ERR_OPIPE "patate: couldn't open the pipe\n"
 # define ERR_FORK "patate: couldn't fork\n"

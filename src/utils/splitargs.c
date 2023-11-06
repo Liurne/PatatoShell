@@ -56,7 +56,7 @@ static int	alloc_arg(t_cmd *cmd, char *line, int arg)
 	}
 	cmd->args[arg] = ft_calloc(len + 1, sizeof(char));
 	if (!cmd->args[arg])
-		return (ft_dprintf(2, ERR_MALLOC), free_dtab(cmd->args), 1);
+		return (set_rval(1, ERR_MALLOC), free_dtab(cmd->args), 1);
 	return (0);
 }
 
@@ -89,7 +89,7 @@ int	splitargs(t_cmd *cmd, char *line)
 	cmd->nb_args = count_arg(line) + 1;
 	cmd->args = ft_calloc(cmd->nb_args, sizeof(char *));
 	if (!cmd->args)
-		return (set_rval(2, ERR_MALLOC));
+		return (set_rval(1, ERR_MALLOC));
 	i = 0;
 	while (*line && ft_iswhitespace(*line))
 		line++;

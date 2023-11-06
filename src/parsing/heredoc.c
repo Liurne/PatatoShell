@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/03 19:10:16 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:55:31 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,17 @@ char	*update_string(int i, char *line, char *heredoc)
 	{
 		heredoc = ft_strjoin(line, "\n");
 		if (!heredoc)
-			return (free(line), \
-					ft_dprintf(2, "patate: heredoc ft_strjoin\n"), NULL);
-		free(line);
+			return (set_rval(1, ERR_MALLOC), NULL);
 	}
 	else
 	{
 		temp = ft_strjoin(heredoc, line);
 		if (!temp)
-			return (free(heredoc), free(line), \
-					ft_dprintf(2, "patate: heredoc ft_strjoin\n"), NULL);
+			return (free(heredoc), set_rval(1, ERR_MALLOC), NULL);
 		free(heredoc);
 		heredoc = ft_strjoin(temp, "\n");
 		if (!heredoc)
-			return (free(line), free(temp), \
-					ft_dprintf(2, "patate: heredoc ft_strjoin\n"), NULL);
-		free(line);
+			return (free(temp), set_rval(1,ERR_MALLOC), NULL);
 		free(temp);
 	}
 	return (heredoc);
@@ -63,7 +58,7 @@ void	capt_input(int *here_fd, char *eof)
 	free(line);
 	ft_dprintf(here_fd[1], heredoc);
 	if (dup2(here_fd[0], STDIN_FILENO) == -1)
-		ft_dprintf(2, "patate: heredoc stdin\n");
+		set_rval(1, ERR_DUP2);
 	close(here_fd[1]);
 	close(here_fd[0]);
 	free(heredoc);

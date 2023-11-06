@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 19:13:52 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/27 19:30:39 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:39:54 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	get_len_var(t_data *shell, char *str, int *len)
 	{
 		tmp = ft_itoa(g_rvalue);
 		if (!tmp)
-			return (set_rval(2, ERR_MALLOC));
+			return (set_rval(1, ERR_MALLOC));
 	}
 	else
 		tmp = get_env_var(shell, var);
@@ -130,7 +130,7 @@ char	*expand(t_data *shell, t_cmd *cmd, char *line)
 	j = 0;
 	res = ft_calloc(true_len(shell, line) + 1, sizeof(char));
 	if (!res)
-		return (set_rval(2, ERR_MALLOC), NULL);
+		return (set_rval(1, ERR_MALLOC), NULL);
 	while (line[i])
 	{
 		manage_quote(line[i], &quote);
