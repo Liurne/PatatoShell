@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:03:33 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/02 16:46:17 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:24:53 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	heredoc(int do_expend, char *eof)
 {
 	int		here_fd[2];
 	char	*input;
-	pid_t	pid;
+	pid_t	pid
 
 	input = NULL;
 	if (pipe(here_fd) == -1)
