@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/02 16:03:55 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:22:22 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ int	main(int ac, char **av, char **envp)
 	g_rvalue = 0;
 	if (say_hello(&shell, envp))
 		return (1);
-	while (ft_strcmp(shell.prompt.line, "exit"))
+	while (!shell.prompt.line | ft_strncmp(shell.prompt.line, "exit", 4))
 	{
 		prompt_signals();
 		if (shell.prompt.line)
 			free(shell.prompt.line);
-		shell.prompt.line = readline(RED"patate> "END);
+		shell.prompt.line = readline(PRONPT);
 		if (!shell.prompt.line)
 			return (say_bye(&shell), free(shell.prompt.line), 0);
 		if (shell.prompt.line[0] && !striswspace(shell.prompt.line))
 			add_history(shell.prompt.line);
 		pars(&shell);
 	}
-	return (say_bye(&shell), free(shell.prompt.line), 0);
+	return (ft_exit(&shell, shell.prompt.line));
 }

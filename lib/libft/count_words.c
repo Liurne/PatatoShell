@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   count_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 22:42:54 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/03 14:01:00 by edecoste         ###   ########.fr       */
+/*   Created: 2023/11/03 14:16:46 by edecoste          #+#    #+#             */
+/*   Updated: 2023/11/03 14:17:29 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+int	count_words(char const *s, char c)
 {
-	size_t	i;
+	int	i;
+	int	count;
 
 	i = 0;
-	if (!n || !s1)
-		return (0);
-	while (s1[i] && s2[i] && i < n - 1)
+	count = 0;
+	while (s[i])
 	{
-		if ((s1[i] != s2[i]) && n != 0)
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		i++;
+		while (s[i] == c && s[i])
+			i++;
+		if (s[i] == '\0')
+			break ;
+		while (s[i] != c && s[i])
+			i++;
+		count++;
 	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (count);
 }

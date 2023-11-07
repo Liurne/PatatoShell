@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/02 16:03:02 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/03 15:22:39 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define UNDERLINE "\001\033[4m\002"
 # define DEL_LINE "\001\033[2K\r\002"
 
+# define PRONPT RED"patate> "END
 # define ERR_SYNTAX "patate: syntax error near unexpected token"
 # define ERR_SQUOTE "patate: ' isn't closed\n"
 # define ERR_DQUOTE "patate: \" isn't closed\n"
@@ -129,6 +130,10 @@ void	prompt_sigint(int sig);
 void	exec_sigint(int sig);
 void	exec_sigquit(int sig);
 void	heredoc_sigint(int sig);
+
+/*     exit     */
+int		ft_exit(t_data *shell, char *line);
+
 
 
 //pour les exports le nom devariable commence par _ ou 

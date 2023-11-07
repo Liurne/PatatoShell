@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
+#    By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/15 13:46:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/09/06 00:44:54 by liurne           ###   ########.fr        #
+#    Updated: 2023/11/07 13:46:28 by edecoste         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ NAME = libft.a
 FLAGS = -Wall -Wextra -Werror -I .
 
 SRCS =	ft_atoi.c \
+		ft_atoi_ll.c \
 		ft_bzero.c \
 		ft_calloc.c \
 		ft_isalnum.c \
@@ -77,6 +78,7 @@ SRCS =	ft_atoi.c \
 		ft_lstdelone.c \
 		ft_lstclear.c \
 		ft_lstiter.c \
+		count_words.c \
 		dprintf/ft_dprintf.c \
 		dprintf/args.c
 
