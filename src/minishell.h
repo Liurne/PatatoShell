@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/06 16:37:31 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/08 13:45:53 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,13 +132,15 @@ char	*get_env_var(t_data *shell, char *var);
 
 /*     execution     */
 char	*get_cmd(t_data *shell, char *cmd);
-int		exec(t_data *shell, t_cmd *cmd);
+int		exec(t_data *shell, t_cmd *cmd, unsigned int id_cmd);
 
 /*     utils     */
 int		splitcmds(t_data *shell, char *line);
 void	free_cmds(t_data *shell);
 int		splitargs(t_cmd *cmd, char *line);
 size_t	strcpy_neg(char *dst, const char *src, size_t size);
+
+int exec_tmp(t_data *shell, t_cmd *cmd);
 
 //pour les exports le nom devariable commence par _ ou 
 //alphachar puis on peut mettre desn ombres
