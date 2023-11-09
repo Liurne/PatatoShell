@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:41:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/07 15:16:39 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:24:39 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,13 @@ int	free_tab(int len, char **tab)
 int	valide_number(char *str)
 {
 	long long	temp;
-	// char		*str_cpy;
+	int			number_len;
 
 	temp = ft_atoi_ll(str);
-	// str_cpy = ft_strdup(str);
-	// strlen should skip space and tabs...
-	// printf("1%s\n", str_cpy);
-	// printf("2%s\n", ft_skipws(str_cpy));
-	// printf("3%s\n", str_cpy);
-	if ((temp == 0 || temp == -1) && ft_strlen(str) > 1)
+	while ((str[from] && (str[from] > 8 && str[from] < 14)) || str[from] == ' ')
+		number_len++;
+	number_len = ft_strlen(str) - number_len;
+	if ((temp == 0 || temp == -1) && number_len > 1)
 		return (EXIT_FAILURE);
 	if (!ft_strcmp(str, "0") || temp != 0)
 		return (EXIT_SUCCESS);
@@ -87,21 +85,38 @@ int	is_valide_argv(char *arg, int argc)
 	return (2);
 }
 
+// char	*strdup_ft(char *str)
+// {
+// 	int	from;
+// 	int	to;
+
+// 	from = 0;
+// 	while ((str[from] && (str[from] >= 'a' && str[from] <= 'z')) || (str[from] >= 'A' && str[from] <= 'Z'))
+// 		from++;
+// 	while ((str[from] && (str[from] > 8 && str[from] < 14)) || str[from] == ' ')
+// 		from++;
+// 	printf("from: %d\n", from);
+// 	to = from;
+// 	while ((str[to] && (str[to] < 8 || str[to] > 14)) && str[to] != ' ')
+// 		to++;
+// 	printf("to: %d\n", to);
+// 	return (str);
+	
+// }
+
 // creat a line copy that skip the first word and space after it the line must stop at att the first space after the second part
 // "exit salut coucou" must return "salut"
-int	ft_exit(t_data *shell, char *line)
+int	ft_exit(t_data *shell, char **arg)
 {
 	char **splited_line;
 	int	argc;
 	int return_type;
 
-	splited_line = ft_split2(line, ' ');
-	printf("split[1]: %s\n", splited_line[1]);
-	argc = count_words(line, ' ');
-	return_type = is_valide_argv(splited_line[1], argc);
+	argc = 0;
+	while (arg[argc])
+		argc++;
+	return_type = is_valide_argv(arg[1], argc);
 	if (return_type == 1 || return_type == 2)
 		clear_env(shell);
-	free_tab(count_words(line, ' '), splited_line);
-	free(line);
 	return (g_rvalue);
 }
