@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/03 15:22:39 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:13:52 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,10 @@ void	exec_sigquit(int sig);
 void	heredoc_sigint(int sig);
 
 /*     exit     */
-int		ft_exit(t_data *shell, char *line);
+int	ft_exit(t_data *shell, char **arg);
 
+/*     env     */
+void	ft_env(t_data *shell);
 
 
 //pour les exports le nom devariable commence par _ ou 

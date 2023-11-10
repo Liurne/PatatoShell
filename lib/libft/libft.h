@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:55:56 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/07 14:07:02 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/10 13:36:09 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 int		count_words(char const *s, char c);
-long long	ft_atoi_ll(const char *str);
+long long	ft_atoll(const char *str);
 
 /* -----DPRINTF----- */
 char	*get_arg(const char *str, va_list ap);
