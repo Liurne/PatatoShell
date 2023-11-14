@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/08 12:37:11 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/09 14:05:02 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	say_hello(t_data *shell, char **envp)
 
 void	say_bye(t_data *shell)
 {
-	printf("ok c'est moi\n");
 	clear_env(shell);
 	ft_dprintf(2, "exit");
 	printf(RED"\nbye bye patate!!\n"END);
@@ -66,11 +65,10 @@ int	main(int ac, char **av, char **envp)
 			free(shell.prompt.line);
 		shell.prompt.line = readline(RED"patate> "END);
 		if (!shell.prompt.line)
-			return (printf("ok truc\n"), say_bye(&shell), free(shell.prompt.line), 0);
+			return (printf("EOF has been given\n"), say_bye(&shell), free(shell.prompt.line), 0);
 		if (shell.prompt.line[0] && !striswspace(shell.prompt.line))
 			add_history(shell.prompt.line);
 		process(&shell);
 	}
-	printf("c'est moi\n");
 	return (say_bye(&shell), free(shell.prompt.line), 0);
 }

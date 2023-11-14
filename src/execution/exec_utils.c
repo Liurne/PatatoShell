@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 17:56:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/06 16:47:54 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/14 00:10:58 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,27 @@ char	*get_cmd(t_data *shell, char *cmd)
 		i++;
 	}
 	return (free_dtab(paths), NULL);
+}
+
+int	exec_builtins(t_data *shell, t_cmd *cmd, int pid)
+{
+	if (!ft_strcmp(cmd->args[0], "exit"))
+		ft_exit(shell, cmd, cmd->args, pid);
+	else if (!ft_strcmp(cmd->args[0], "echo"))
+		ft_echo(shell, cmd, pid);
+	else if (!ft_strcmp(cmd->args[0], "pwd"))
+		ft_pwd(shell, cmd, pid);
+	//if (ft_strcmp(arg, "env"))
+
+	//if (ft_strcmp(arg, "cd"))
+
+	//if (ft_strcmp(arg, "export"))
+	
+	//if (ft_strcmp(arg, "unset"))
+
+	else
+		return(0);
+	if (!pid)
+		exit(g_rvalue);
+	return (1);
 }
