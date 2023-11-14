@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:14:53 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/14 13:22:35 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/14 14:49:36 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ int	ft_echo(t_data *shell, t_cmd *cmd, int pid)
 	char	*str;
 
 	if (!cmd->args[1])
-		return (ft_dprintf(2, "\n"), free_child(shell, cmd, pid),
+		return (ft_dprintf(2, "\n"), clear_proc(shell, cmd, pid),
 				set_rval(0, NULL));
 	endl = 1 - echo_option(cmd->args[1]);
 	if (!endl && !cmd->args[2])
-		return (free_child(shell, cmd, pid), set_rval(0, NULL));
+		return (clear_proc(shell, cmd, pid), set_rval(0, NULL));
 	str = echo_join(cmd->args, endl);
-	free_child(shell, cmd, pid);
+	clear_proc(shell, cmd, pid);
 	if (g_rvalue)
 		return (g_rvalue);
 	if (!str && !endl)

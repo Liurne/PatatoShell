@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:41:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/13 16:58:44 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/14 14:49:36 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ int	ft_exit(t_data *shell, t_cmd *cmd, char **arg, int pid)
 	return_type = is_valide_argv(arg[1], argc);
 	if (return_type == 1 || return_type == 2)
 	{
-		free_child(shell, cmd, 0);
+		clear_proc(shell, cmd, 0);
 		exit(g_rvalue);
 	}
-	return (free_child(shell, cmd, pid), set_rval(1, NULL));
+	return (clear_proc(shell, cmd, pid), set_rval(1, NULL));
 }

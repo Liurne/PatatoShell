@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/06 18:17:02 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:16:16 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*update_string(int i, char *line, char *heredoc)
 	return (heredoc);
 }
 
-void	capt_input(int *pipe, char *eof)
+void	capt_input(int *pipe, char *eof, int expand)
 {
 	char	*line;
 	char	*heredoc;
@@ -56,9 +56,10 @@ void	capt_input(int *pipe, char *eof)
 		heredoc = update_string(i++, line, heredoc);
 	}
 	free(line);
+	(void)expand;
+	//if (expand)
+	//	expendfonction()
 	ft_dprintf(pipe[1], heredoc);
-	if (dup2(pipe[0], STDIN_FILENO) == -1)
-		set_rval(1, ERR_DUP2);
 	close(pipe[1]);
 	close(pipe[0]);
 	free(heredoc);
@@ -67,6 +68,7 @@ void	capt_input(int *pipe, char *eof)
 int	heredoc(t_cmd *cmd, char *eof, int expand)
 {
 	pid_t	pid;
+	int		rval;
 
 	if (pipe(cmd->pipe) == -1)
 		return (set_rval(1, ERR_OPIPE));
@@ -76,17 +78,15 @@ int	heredoc(t_cmd *cmd, char *eof, int expand)
 			set_rval(1, ERR_FORK));
 	if (!pid)
 	{
-		capt_input(cmd->pipe, eof);
+		capt_input(cmd->pipe, eof, expand);
 		free (eof);
 		if (g_rvalue)
 			exit(g_rvalue);
-		if (expand)
-		//	expendfonction()
 		exit(g_rvalue);
 	}
-	if (pid)
-		waitpid(pid, NULL, 0);
-	return (0);
+	close(cmd->pipe[1]);
+	waitpid(pid, &rval, 0);
+	return (set_rval(rval, NULL));
 }
 
 static int	get_heredocs(t_cmd *cmd, char *str, char c)

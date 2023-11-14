@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/14 00:10:13 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/14 19:18:19 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ int	process(t_data *shell)
 			return (free_cmds(shell), 2);
 		//if (pars_heredoc(&(shell->prompt.cmds[i])))
 		//	return (free_cmds(shell), 2);
-		if (i)
-			exec(shell, &(shell->prompt.cmds[i]), shell->prompt.cmds[i - 1].pipe, i);
-		else
-			exec(shell, &(shell->prompt.cmds[i]), NULL, i);
+		exec(shell, &(shell->prompt.cmds[i]));
 	}
 	free_cmds(shell);
 	return (0);

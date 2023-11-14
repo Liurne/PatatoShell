@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:35:15 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/03 15:40:47 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/14 17:44:29 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ static int	set_redirin(t_cmd *cmd, char *word, t_redir redir)
 	}
 	if (redir == HEREDOC)
 	{
+		if (cmd->infile)
+			close (cmd->infile);
+		cmd->infile = cmd->pipe[0];
 		cmd->redir_in = HEREDOC;
 		printf("heredoc delimiter:'%s'\n", word);
 	}

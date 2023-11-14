@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/14 12:09:13 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/14 18:50:15 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,16 @@ typedef enum e_redir
 
 typedef struct s_cmd
 {
-	char	*cmd;
-	char	*exec;
-	char	**args;
-	int		nb_args;
-	int		built_in;
-	t_redir	redir_in;
-	int		infile;
-	int		outfile;
-	int		pipe[2];
+	unsigned int	id;
+	char			*cmd;
+	char			*exec;
+	char			**args;
+	int				nb_args;
+	int				built_in;
+	t_redir			redir_in;
+	int				infile;
+	int				outfile;
+	int				pipe[2];
 }	t_cmd;
 
 typedef struct s_line
@@ -134,9 +135,9 @@ char		*get_env_var(t_data *shell, char *var);
 
 /*     execution     */
 char		*get_cmd(t_data *shell, char *cmd);
-int			exec(t_data *shell, t_cmd *cmd, int *fd, unsigned int id_cmd);
+int			exec(t_data *shell, t_cmd *cmd);
 int			exec_builtins(t_data *shell, t_cmd *cmd, int pid);
-void		free_child(t_data *shell, t_cmd *cmd, int pid);
+void		clear_proc(t_data *shell, t_cmd *cmd, int pid);
 
 /*     utils     */
 int			splitcmds(t_data *shell, char *line);
