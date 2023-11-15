@@ -50,31 +50,6 @@ int	exec_child(t_data *shell, t_cmd *cmd)
 	return (free_child(shell, cmd, 0), set_rval(127, NULL));
 }
 
-char	*read_file(int fd)
-{
-	char	buff[43];
-	int		rbytes;
-	char	*str;
-
-	rbytes = 1;
-	str = NULL;
-	while (rbytes == 42)
-	{
-		rbytes = read(fd, buff, 42);
-		if (rbytes == -1)
-		{
-			if (str)
-				free(str);
-			str = NULL;
-			break;
-		}
-		buff[rbytes] = '\0';
-		str = ft_strjoin(str, buff);
-	}
-	printf("prout\n");
-	return (str);
-}
-
 int exec_tmp(t_data*shell, t_cmd *cmd)
 {
 	pid_t	pid;
@@ -90,8 +65,10 @@ int exec_tmp(t_data*shell, t_cmd *cmd)
 	{
 		free_child(shell, cmd, 0);
 		dprintf(2, "gosse : pipef in: %d, pipefd out: %d\n",fd[1] ,fd[0]);
-		int zub = dprintf(fd[1], "bichour\n");
+		int zub = dprintf(fd[1], "\e[33mJe suis ton pere mwahahaha!\n\e[0m");
 		dprintf(2, "zub value:%d\n", zub);
+		//if(dup2(fd[0], STDOUT_FILENO) == -1)
+		//	printf('dup failed\n');
 		close(fd[0]);
 		close(fd[1]);
 		exit(111);
@@ -102,21 +79,21 @@ int exec_tmp(t_data*shell, t_cmd *cmd)
 		dprintf(2, "dar again: pipef in: %d, pipefd out: %d\n",fd[1] ,fd[0]);
 		str = NULL;
 		free_child(shell, cmd, 1);
+		int stat;
+
+		stat = 0;
+		//waitpid(pid, &stat, 0);
+		ft_dprintf(2, "child exit status: %d",WEXITSTATUS(stat));
 		//if(dup2(fd[0], STDIN_FILENO) == -1)
 		//	printf("fail dup2 main");
 		printf("merde\n");
-		int i = read(fd[0], str, 2048);
+		int i = read(STDOUT_FILENO, str, 2048);
 		ft_dprintf(2, "read ret val: %d\n", i);
 		if (str)
 			ft_dprintf(2, "read red: %s\n", str);
 		else
 			ft_dprintf(2, "read don't red\n");
 	}
-	int stat;
-
-	stat = 0;
-	waitpid(pid, &stat, 0);
-	ft_dprintf(2, "child exit status: %d",WEXITSTATUS(stat));
 	//close(fd[0]);
 	//close(fd[1]);
 	return (0);
