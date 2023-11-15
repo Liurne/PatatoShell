@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 17:56:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/14 00:10:58 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/15 13:37:00 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	exec_builtins(t_data *shell, t_cmd *cmd, int pid)
 	//if (ft_strcmp(arg, "export"))
 	
 	//if (ft_strcmp(arg, "unset"))
-
 	else
 		return(0);
 	if (!pid)

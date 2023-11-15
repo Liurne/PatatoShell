@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/14 19:16:16 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/15 16:02:40 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,10 @@ int	heredoc(t_cmd *cmd, char *eof, int expand)
 	{
 		capt_input(cmd->pipe, eof, expand);
 		free (eof);
-		if (g_rvalue)
-			exit(g_rvalue);
 		exit(g_rvalue);
 	}
-	close(cmd->pipe[1]);
 	waitpid(pid, &rval, 0);
+	close(cmd->pipe[1]);
 	return (set_rval(rval, NULL));
 }
 
@@ -97,9 +95,9 @@ static int	get_heredocs(t_cmd *cmd, char *str, char c)
 
 	(void)cmd;
 	is_quote = 0;
-	i = -1;
-	while (str[++i] == c)
-		str[i] = ' ';
+	i = 0;
+	while (str[i] == c)
+		i++;
 	while (*(str + i) && ft_iswhitespace(get_pos(*(str + i))))
 		str++;
 	if (c == '<' && i == 2)
@@ -107,6 +105,8 @@ static int	get_heredocs(t_cmd *cmd, char *str, char c)
 		word = get_word(str + i, &is_quote);
 		if (!word)
 			return (2);
+		if (cmd->pipe[0])
+			close(cmd->pipe[0]);
 		heredoc(cmd, word, 1);
 		free(word);
 	}
@@ -120,7 +120,7 @@ int	pars_heredoc(t_cmd *cmd)
 	i = 0;
 	while (cmd->cmd[i])
 	{
-		if (cmd->cmd[i] == '<' || cmd->cmd[i] == '>')
+		if (cmd->cmd[i] == '<' && cmd->cmd[i + 1] == '<')
 			if (get_heredocs(cmd, cmd->cmd + i, *(cmd->cmd + i)))
 				return (1);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/14 18:50:15 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/14 19:55:27 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_quote
 
 typedef enum e_redir
 {
+	NONE,
 	HEREDOC,
 	INFILE,
 	OUTFILE,

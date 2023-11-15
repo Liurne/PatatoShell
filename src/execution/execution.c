@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/14 19:22:18 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/15 16:00:55 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,22 @@ int	child_proc(t_data *shell, t_cmd *cmd)
 
 int	exec(t_data *shell, t_cmd *cmd)
 {
+	set_rval(0, NULL);
 	if (pars_redir(cmd))
 		return (clear_proc(shell, cmd, 1), 1);
 	if (striswspace(cmd->cmd))
 		return (clear_proc(shell, cmd, 1), 0);
 	if (splitargs(cmd, cmd->cmd))
 		return (clear_proc(shell, cmd, 1), 1);
-	if (shell->prompt.nb_cmds == 1 && exec_builtins(shell, cmd, 1))
-		return (0);
+	//if (shell->prompt.nb_cmds == 1 && exec_builtins(shell, cmd, 1))
+	//	return (0);
+	printf("%d\n", cmd->redir_in);
 	if (cmd->redir_in == HEREDOC)
 	{
 		cmd->infile = cmd->pipe[0];
-		close(cmd->pipe[0]);
+		printf("%d\n", cmd->infile);
 	}
+	
 	child_proc(shell, cmd);
 	clear_proc(shell, cmd, 1);
 	return (0);

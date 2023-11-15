@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:35:15 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/14 17:44:29 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/15 16:03:27 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,10 @@ int	pars_redir(t_cmd *cmd)
 	while (cmd->cmd[i])
 	{
 		if (cmd->cmd[i] == '<' || cmd->cmd[i] == '>')
+		{
 			if (get_redir(cmd, cmd->cmd + i, *(cmd->cmd + i)))
 				return (1);
+		}
 		i++;
 	}
 	return (0);
