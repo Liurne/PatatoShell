@@ -6,7 +6,7 @@
 #    By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/11/03 18:22:48 by jcoquard         ###   ########.fr        #
+#    Updated: 2023/11/15 17:17:34 by jcoquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,14 +44,17 @@ SRCS = main.c \
 		src/utils/splitcmds.c \
 		src/utils/splitargs.c \
 		src/utils/strcpy_neg.c \
+		src/utils/ft_atoll.c \
+		src/utils/geteof.c \
+		src/utils/strpos.c \
 		src/execution/execution.c \
 		src/execution/exec_utils.c \
 		src/environment/environment.c \
 		src/signals/signals_handlers.c \
 		src/signals/signals_hub.c \
-		src/builtin/builtin.c \
 		src/builtin/ft_pwd.c \
-		src/builtin/ft_echo.c 
+		src/builtin/ft_echo.c \
+		src/builtin/ft_exit.c \
 #		src/builtin/ft_cd
 
 OBJS = ${SRCS:.c=.o}

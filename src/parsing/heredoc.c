@@ -6,13 +6,13 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/06 18:17:02 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:28:59 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*update_string(int i, char *line, char *heredoc)
+static char	*update_string(int i, char *line, char *heredoc)
 {
 	char	*temp;
 
@@ -36,7 +36,7 @@ char	*update_string(int i, char *line, char *heredoc)
 	return (heredoc);
 }
 
-void	capt_input(int *pipe, char *eof)
+static void	capt_input(t_data *shell, int *pipe, char *eof, int is_expand)
 {
 	char	*line;
 	char	*heredoc;
@@ -56,18 +56,21 @@ void	capt_input(int *pipe, char *eof)
 		heredoc = update_string(i++, line, heredoc);
 	}
 	free(line);
-	ft_dprintf(pipe[1], heredoc);
-	if (dup2(pipe[0], STDIN_FILENO) == -1)
-		set_rval(1, ERR_DUP2);
-	close(pipe[1]);
-	close(pipe[0]);
-	free(heredoc);
+	if (is_expand && heredoc)
+		heredoc = expand(shell, heredoc);
+	ft_dprintf(pipe[1], strpos(heredoc));
+	return(close(pipe[1]), close(pipe[0]), free(heredoc));
 }
 
-int	heredoc(t_cmd *cmd, char *eof, int expand)
+static int	heredoc(t_data *shell, t_cmd *cmd, char *eof, int expand)
 {
 	pid_t	pid;
+	int		rval;
 
+	if (cmd->pipe[0])
+		close(cmd->pipe[0]);
+	if (cmd->pipe[1])
+		close(cmd->pipe[1]);
 	if (pipe(cmd->pipe) == -1)
 		return (set_rval(1, ERR_OPIPE));
 	pid = fork();
@@ -76,20 +79,16 @@ int	heredoc(t_cmd *cmd, char *eof, int expand)
 			set_rval(1, ERR_FORK));
 	if (!pid)
 	{
-		capt_input(cmd->pipe, eof);
+		capt_input(shell, cmd->pipe, eof, expand);
 		free (eof);
-		if (g_rvalue)
-			exit(g_rvalue);
-		if (expand)
-		//	expendfonction()
 		exit(g_rvalue);
 	}
-	if (pid)
-		waitpid(pid, NULL, 0);
-	return (0);
+	waitpid(pid, &rval, 0);
+	close(cmd->pipe[1]);
+	return (set_rval(rval, NULL));
 }
 
-static int	get_heredocs(t_cmd *cmd, char *str, char c)
+static int	get_heredocs(t_data *shell, t_cmd *cmd, char *str, char c)
 {
 	int		i;
 	char	*word;
@@ -97,31 +96,33 @@ static int	get_heredocs(t_cmd *cmd, char *str, char c)
 
 	(void)cmd;
 	is_quote = 0;
-	i = -1;
-	while (str[++i] == c)
-		str[i] = ' ';
+	i = 0;
+	while (str[i] == c)
+		i++;
 	while (*(str + i) && ft_iswhitespace(get_pos(*(str + i))))
 		str++;
 	if (c == '<' && i == 2)
 	{
-		word = get_word(str + i, &is_quote);
+		word = geteof(str + i, &is_quote);
 		if (!word)
 			return (2);
-		heredoc(cmd, word, 1);
+		if (cmd->pipe[0])
+			close(cmd->pipe[0]);
+		heredoc(shell, cmd, word, 1);
 		free(word);
 	}
 	return (0);
 }
 
-int	pars_heredoc(t_cmd *cmd)
+int	pars_heredoc(t_data *shell, t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
 	while (cmd->cmd[i])
 	{
-		if (cmd->cmd[i] == '<' || cmd->cmd[i] == '>')
-			if (get_heredocs(cmd, cmd->cmd + i, *(cmd->cmd + i)))
+		if (cmd->cmd[i] == '<' && cmd->cmd[i + 1] == '<')
+			if (get_heredocs(shell, cmd, cmd->cmd + i, *(cmd->cmd + i)))
 				return (1);
 		i++;
 	}

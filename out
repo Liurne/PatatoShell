@@ -1,0 +1,10 @@
+ignorerl.txt
+lib
+main.c
+main.o
+Makefile
+minishell
+old
+out
+README.md
+src

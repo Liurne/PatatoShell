@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 19:13:52 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/07 11:10:50 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/15 17:01:57 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static int	true_len(t_data *shell, char *cmd)
 	return (len);
 }
 
-char	*expand(t_data *shell, t_cmd *cmd, char *line)
+char	*expand(t_data *shell, char *line)
 {
 	char	*res;
 	t_quote	quote;
@@ -135,12 +135,12 @@ char	*expand(t_data *shell, t_cmd *cmd, char *line)
 	{
 		manage_quote(line[i], &quote);
 		if (line[i] == '$' && !quote.s)
-			line += put_var(shell, line + i, res, &j);
+			i+= put_var(shell, line + i, res, &j);
 		else
 			res[j] = line[i];
 		j++;
 		i++;
 	}
-	free(cmd->cmd);
+	free(line);
 	return (res);
 }

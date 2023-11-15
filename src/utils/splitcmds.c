@@ -87,6 +87,7 @@ int	splitcmds(t_data *shell, char *line)
 	j = 0;
 	while (i < shell->prompt.nb_cmds && j < (int)ft_strlen(line))
 	{
+		shell->prompt.cmds[i].id = i;
 		tmp = find_semicolon(line + j);
 		if (tmp == -1)
 			shell->prompt.cmds[i].cmd = ft_strndup(line + j,
