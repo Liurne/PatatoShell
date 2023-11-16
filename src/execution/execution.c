@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/15 17:54:04 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:18:31 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //pour les builtin sans fork faire que cd et exit sinon probeleme de heredoc
+//penser au fait que ctrl \ doit quitter les cat sans outfile!!
+//si cmd not found verif valeur de retour
+//verifier mon syteme de quote
+//heredoc ce lance pas forcement
+//signaux douteux dans le heredoc
 
 void	clear_proc(t_data *shell, t_cmd *cmd, int pid)
 {
@@ -86,6 +91,7 @@ int	child_proc(t_data *shell, t_cmd *cmd)
 	if (cmd->id + 1 < shell->prompt.nb_cmds && !shell->prompt.cmds[cmd->id + 1].infile)
 		shell->prompt.cmds[cmd->id + 1].infile = cmd->pipe[0];
 	waitpid(pid, &rval, 0);
+	printf("rval %d", rval);
 	return(set_rval(rval, NULL));
 }
 
