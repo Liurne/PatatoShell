@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/15 17:54:04 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/16 16:18:57 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	clear_proc(t_data *shell, t_cmd *cmd, int pid)
 	}
 }
 
-int	child_exec(t_data *shell, t_cmd *cmd)
+static int	child_exec(t_data *shell, t_cmd *cmd)
 {
 	exec_builtins(shell, cmd, 0);
 	if (cmd->args[0][0] == '.' || cmd->args[0][0] == '/')
@@ -62,10 +62,20 @@ int	child_exec(t_data *shell, t_cmd *cmd)
 	return (clear_proc(shell, cmd, 0), set_rval(127, NULL));
 }
 
-int	child_proc(t_data *shell, t_cmd *cmd)
+static int wait_child(pid_t pid)
+{
+	int	rval;
+
+	rval = 0;
+	if (waitpid(pid, &rval, WUNTRACED) == -1)
+		return (set_rval(1, NULL));
+	else if (WIFEXITED(rval))
+		 set_rval(WEXITSTATUS(rval), NULL);
+	return (g_rvalue);
+}
+static int	child_proc(t_data *shell, t_cmd *cmd)
 {
 	pid_t	pid;
-	int		rval;
 
 	if (pipe(cmd->pipe) == -1)
 		return (clear_proc(shell, cmd, 1), set_rval(1, ERR_OPIPE));
@@ -85,8 +95,7 @@ int	child_proc(t_data *shell, t_cmd *cmd)
 	}
 	if (cmd->id + 1 < shell->prompt.nb_cmds && !shell->prompt.cmds[cmd->id + 1].infile)
 		shell->prompt.cmds[cmd->id + 1].infile = cmd->pipe[0];
-	waitpid(pid, &rval, 0);
-	return(set_rval(rval, NULL));
+	return(wait_child(pid));
 }
 
 int	exec(t_data *shell, t_cmd *cmd)
