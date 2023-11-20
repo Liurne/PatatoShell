@@ -6,13 +6,12 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/20 18:07:15 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/20 18:23:17 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//pour les builtin sans fork faire que cd et exit sinon probeleme de heredoc
 //penser au fait que ctrl \ doit quitter les cat sans outfile!!
 //si cmd not found verif valeur de retour
 //verifier mon syteme de quote
@@ -37,7 +36,8 @@ void	clear_proc(t_data *shell, t_cmd *cmd, int pid)
 			close(cmd->pipe[0]);
 		free(shell->prompt.line);
 		free_cmds(shell);
-		free_dtab(shell->env);
+		if (shell->env)
+			free_dtab(shell->env);
 	}
 }
 
