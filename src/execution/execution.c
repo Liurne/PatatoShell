@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/16 15:18:31 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/20 13:04:12 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	child_proc(t_data *shell, t_cmd *cmd)
 	if (cmd->id + 1 < shell->prompt.nb_cmds && !shell->prompt.cmds[cmd->id + 1].infile)
 		shell->prompt.cmds[cmd->id + 1].infile = cmd->pipe[0];
 	waitpid(pid, &rval, 0);
-	printf("rval %d", rval);
 	return(set_rval(rval, NULL));
 }
 

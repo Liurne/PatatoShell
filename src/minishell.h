@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/15 17:18:39 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/17 15:12:24 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int			pars_heredoc(t_data *shell, t_cmd *cmd);
 int			init_env(t_data *shell, char **envp);
 void		clear_env(t_data *shell);
 char		*get_env_var(t_data *shell, char *var);
+int			del_var(t_data *shell, char *var);
 
 /*     execution     */
 char		*get_cmd(t_data *shell, char *cmd);

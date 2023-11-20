@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 17:30:43 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/17 11:24:13 by liurne           ###   ########.fr       */
+/*   Created: 2023/11/17 14:31:00 by liurne            #+#    #+#             */
+/*   Updated: 2023/11/17 15:10:34 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	cd_changevar(char *new)
+int	ft_unset(t_data *shell, t_cmd *cmd, int pid)
 {
-	
-}
-int	ft_cd(char *arg)
-{
-	if (arg[2])
-		return (/*ft_dprintf(2, ERR_CD1),*/ 1);
-	return (0);
+	int	i;
+
+	i = 1;
+	while (i < cmd->nb_args)
+	{
+		if (get_env_var(shell, cmd->args[i]))
+			if (del_var(shell, cmd->args[i]))
+				return (1);
+		i++;
+	}
+	clear_proc(shell, cmd, pid);
+	if (!pid)
+		exit(g_rvalue);
+	return (g_rvalue);
 }
