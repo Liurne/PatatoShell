@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 17:14:17 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/15 17:28:41 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:24:08 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ char	*strpos(char *str)
 			str[i] = str[i] * -1;
 		i++;
 	}
-	return(str);
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 19:13:52 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/15 17:01:57 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/16 17:26:27 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ char	*expand(t_data *shell, char *line)
 	{
 		manage_quote(line[i], &quote);
 		if (line[i] == '$' && !quote.s)
-			i+= put_var(shell, line + i, res, &j);
+			i += put_var(shell, line + i, res, &j);
 		else
 			res[j] = line[i];
 		j++;

@@ -6,13 +6,18 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/16 16:18:57 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:17:28 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //pour les builtin sans fork faire que cd et exit sinon probeleme de heredoc
+//penser au fait que ctrl \ doit quitter les cat sans outfile!!
+//si cmd not found verif valeur de retour
+//verifier mon syteme de quote
+//heredoc ce lance pas forcement
+//signaux douteux dans le heredoc
 
 void	clear_proc(t_data *shell, t_cmd *cmd, int pid)
 {
@@ -26,10 +31,10 @@ void	clear_proc(t_data *shell, t_cmd *cmd, int pid)
 		close(cmd->outfile);
 	if (cmd->pipe[1])
 		close(cmd->pipe[1]);
-	if (cmd->pipe[0])
-		close(cmd->pipe[0]);
 	if (!pid)
 	{
+		if (cmd->pipe[0])
+			close(cmd->pipe[0]);
 		free(shell->prompt.line);
 		free_cmds(shell);
 		free_dtab(shell->env);
@@ -45,10 +50,12 @@ static int	child_exec(t_data *shell, t_cmd *cmd)
 			execve(cmd->args[0], cmd->args, shell->env);
 		else
 		{
-			ft_dprintf(2, "patate: no such file or directory: '%s'\n", cmd->args[0]);
+			ft_dprintf(2, "patate: no such file or directory: '%s'\n",
+				cmd->args[0]);
 			return (clear_proc(shell, cmd, 0), set_rval(127, NULL));
 		}
-		ft_dprintf(2, "patate: no such file or directory: '%s'\n", cmd->args[0]);
+		ft_dprintf(2, "patate: no such file or directory: '%s'\n",
+			cmd->args[0]);
 		return (clear_proc(shell, cmd, 0), set_rval(127, NULL));
 	}
 	cmd->exec = get_cmd(shell, cmd->args[0]);
@@ -62,7 +69,7 @@ static int	child_exec(t_data *shell, t_cmd *cmd)
 	return (clear_proc(shell, cmd, 0), set_rval(127, NULL));
 }
 
-static int wait_child(pid_t pid)
+static int	wait_child(pid_t pid)
 {
 	int	rval;
 
@@ -70,9 +77,10 @@ static int wait_child(pid_t pid)
 	if (waitpid(pid, &rval, WUNTRACED) == -1)
 		return (set_rval(1, NULL));
 	else if (WIFEXITED(rval))
-		 set_rval(WEXITSTATUS(rval), NULL);
+		set_rval(WEXITSTATUS(rval), NULL);
 	return (g_rvalue);
 }
+
 static int	child_proc(t_data *shell, t_cmd *cmd)
 {
 	pid_t	pid;
@@ -82,20 +90,21 @@ static int	child_proc(t_data *shell, t_cmd *cmd)
 	pid = fork();
 	if (pid == -1)
 		return (clear_proc(shell, cmd, 1), set_rval(1, ERR_FORK));
-	if(!pid)
+	if (!pid)
 	{
 		if (cmd->infile && dup2(cmd->infile, STDIN_FILENO) == -1)
 			printf("dup2 in failed\n");
 		if (cmd->outfile && dup2(cmd->outfile, STDOUT_FILENO) == -1)
 			printf("dup2 out failed\n");
 		else if (cmd->id < shell->prompt.nb_cmds - 1
-				&& dup2(cmd->pipe[1], STDOUT_FILENO) == -1)
-				printf("dup2 out failed\n");
+			&& dup2(cmd->pipe[1], STDOUT_FILENO) == -1)
+			printf("dup2 out failed\n");
 		exit(child_exec(shell, cmd));
 	}
-	if (cmd->id + 1 < shell->prompt.nb_cmds && !shell->prompt.cmds[cmd->id + 1].infile)
+	if (cmd->id + 1 < shell->prompt.nb_cmds
+		&& !shell->prompt.cmds[cmd->id + 1].infile)
 		shell->prompt.cmds[cmd->id + 1].infile = cmd->pipe[0];
-	return(wait_child(pid));
+	return (wait_child(pid));
 }
 
 int	exec(t_data *shell, t_cmd *cmd)
@@ -107,8 +116,11 @@ int	exec(t_data *shell, t_cmd *cmd)
 		return (clear_proc(shell, cmd, 1), 0);
 	if (splitargs(cmd, cmd->cmd))
 		return (clear_proc(shell, cmd, 1), 1);
-	//if (shell->prompt.nb_cmds == 1 && exec_builtins(shell, cmd, 1))
-	//	return (0);
+	if (shell->prompt.nb_cmds == 1)
+	{
+		if (!ft_strcmp(cmd->args[0], "exit"))
+			return (ft_exit(shell, cmd, cmd->args, 1));
+	}
 	if (cmd->redir_in == HEREDOC)
 		cmd->infile = cmd->pipe[0];
 	child_proc(shell, cmd);
