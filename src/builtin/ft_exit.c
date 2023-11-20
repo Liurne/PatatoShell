@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:41:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/14 14:49:36 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/16 17:22:23 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	valide_number(char *str)
 
 	temp = ft_atoll(str);
 	nb_len = 0;
-	while ((str[nb_len] && (str[nb_len] > 8 && str[nb_len] < 14)) || str[nb_len] == ' ')
+	while ((str[nb_len] && (str[nb_len] > 8 && str[nb_len] < 14))
+		|| str[nb_len] == ' ')
 		nb_len++;
 	nb_len = ft_strlen(str) - nb_len;
 	if ((temp == 0 || temp == -1) && nb_len > 1)
@@ -39,7 +40,7 @@ int	is_valide_argv(char *arg, int argc)
 	}
 	else if (!valide_number(arg) && argc > 2)
 	{
-//		ft_dprintf(2, "exit\n%sexit: too many arguments", PRONPT);
+		ft_dprintf(2, "exit\nbash: exit: too many arguments\n");
 		return (0);
 	}
 	else if (!valide_number(arg) && argc == 2)
@@ -49,7 +50,7 @@ int	is_valide_argv(char *arg, int argc)
 		return (1);
 	}
 	g_rvalue = 2;
-//	printf("exit\n%sexit: %s: numeric argument required\n", PRONPT, arg);
+	ft_dprintf(2, "exit\npatate: exit: %s: numeric argument required\n", arg);
 	return (2);
 }
 

@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:30:43 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/17 11:24:13 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/20 18:06:51 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ int	cd_changevar(char *new)
 int	ft_cd(char *arg)
 {
 	if (arg[2])
-		return (/*ft_dprintf(2, ERR_CD1),*/ 1);
+		return (1);
 	return (0);
 }

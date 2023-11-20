@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 17:56:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/15 13:37:00 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/20 13:45:12 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,16 @@ int	exec_builtins(t_data *shell, t_cmd *cmd, int pid)
 {
 	if (!ft_strcmp(cmd->args[0], "exit"))
 		ft_exit(shell, cmd, cmd->args, pid);
-	else if (!ft_strcmp(cmd->args[0], "echo"))
+	else if (!ft_strcmp(cmd->args[0], "echo") && !pid)
 		ft_echo(shell, cmd, pid);
-	else if (!ft_strcmp(cmd->args[0], "pwd"))
+	else if (!ft_strcmp(cmd->args[0], "pwd") && !pid)
 		ft_pwd(shell, cmd, pid);
-	//if (ft_strcmp(arg, "env"))
-
-	//if (ft_strcmp(arg, "cd"))
-
-	//if (ft_strcmp(arg, "export"))
-	
-	//if (ft_strcmp(arg, "unset"))
+	else if (!ft_strcmp(cmd->args[0], "env") && !pid)
+		ft_env(shell, cmd, pid);
+	else if (!ft_strcmp(cmd->args[0], "unset"))
+		ft_unset(shell, cmd, pid);
 	else
-		return(0);
+		return (0);
 	if (!pid)
 		exit(g_rvalue);
 	return (1);

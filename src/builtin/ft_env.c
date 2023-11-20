@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:09:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/17 16:47:08 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/20 13:54:37 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,6 @@ void	ft_env(t_data *shell, t_cmd *cmd, int pid)
 	while (shell->env[++i])
 		if (ft_strchr(shell->env[i], '='))
 			printf("%s\n", shell->env[i]);
-	return (set_rval(0, NULL);)
+	clear_proc(shell, cmd, pid);
+	set_rval(0, NULL);
 }

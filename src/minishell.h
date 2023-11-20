@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/17 15:12:24 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/20 18:00:31 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int			init_env(t_data *shell, char **envp);
 void		clear_env(t_data *shell);
 char		*get_env_var(t_data *shell, char *var);
 int			del_var(t_data *shell, char *var);
+int			len_env(char **env);
 
 /*     execution     */
 char		*get_cmd(t_data *shell, char *cmd);
@@ -153,6 +154,8 @@ char		*strpos(char *str);
 int			ft_exit(t_data *shell, t_cmd *cmd, char **arg, int pid);
 int			ft_pwd(t_data *shell, t_cmd *cmd, int pid);
 int			ft_echo(t_data *shell, t_cmd *cmd, int pid);
+void		ft_env(t_data *shell, t_cmd *cmd, int pid);
+int			ft_unset(t_data *shell, t_cmd *cmd, int pid);
 
 //pour les exports le nom devariable commence par _ ou 
 //alphachar puis on peut mettre desn ombres

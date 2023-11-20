@@ -6,7 +6,7 @@
 #    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/11/17 14:33:20 by liurne           ###   ########.fr        #
+#    Updated: 2023/11/20 18:05:03 by liurne           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,12 +50,14 @@ SRCS = main.c \
 		src/execution/execution.c \
 		src/execution/exec_utils.c \
 		src/environment/environment.c \
+		src/environment/env_utils.c \
 		src/signals/signals_handlers.c \
 		src/signals/signals_hub.c \
 		src/builtin/ft_pwd.c \
 		src/builtin/ft_echo.c \
 		src/builtin/ft_exit.c \
-		src/builtin/ft_unset.c
+		src/builtin/ft_unset.c \
+		src/builtin/ft_env.c
 #		src/builtin/ft_cd
 
 OBJS = ${SRCS:.c=.o}

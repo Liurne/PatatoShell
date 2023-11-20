@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:03:11 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/17 15:11:33 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/20 18:03:57 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,28 @@ void	clear_env(t_data *shell)
 
 int	del_var(t_data *shell, char *var)
 {
-	int	i;
-	int	len;
+	int		i;
+	int		j;
+	int		len;
+	char	**tmp;
 
-	i = 0;
-	while (shell->env && shell->env[i])
-		i++;
-	shell->env = (char **)ft_calloc(i, sizeof(char *));
-	if (!shell->env)
+	tmp = (char **)ft_calloc(len_env(shell->env), sizeof(char *));
+	if (!tmp)
 		return (set_rval(1, ERR_MALLOC));
-	i = 0;
+	i = -1;
+	j = 0;
 	len = ft_strlen(var);
-	while (shell->env[i])
+	while (shell->env[++i])
 	{
 		if (!ft_strnstr(shell->env[i], var, len) || shell->env[i][len] != '=')
-			shell->env[i] = ft_strdup(shell->env[i]);
-		if (!shell->env[i])
-			return (clear_env(shell), set_rval(1, ERR_MALLOC));
-		i++;
+		{
+			tmp[j] = ft_strdup(shell->env[i]);
+			if (!tmp[j])
+				return (clear_env(shell), free_dtab(tmp), set_rval(1, ERR_MALLOC));
+			j++;
+		}
 	}
-	shell->env[i] = NULL;
-	return (0);
+	return (clear_env(shell), shell->env = tmp, set_rval(0, NULL));
 }
 
 int	init_env(t_data *shell, char **envp)
@@ -70,7 +71,6 @@ int	init_env(t_data *shell, char **envp)
 			return (clear_env(shell), set_rval(1, ERR_MALLOC));
 		i++;
 	}
-	shell->env[i] = NULL;
 	return (0);
 }
 
@@ -81,6 +81,8 @@ char	*get_env_var(t_data *shell, char *var)
 
 	i = -1;
 	len = ft_strlen(var);
+	if (!shell->env)
+		return (NULL);
 	while (shell->env[++i])
 	{
 		if (ft_strnstr(shell->env[i], var, len) && shell->env[i][len] == '=')

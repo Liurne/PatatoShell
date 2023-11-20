@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strpos.c                                           :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 17:14:17 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/16 17:24:08 by jcoquard         ###   ########.fr       */
+/*   Created: 2023/11/20 17:58:51 by liurne            #+#    #+#             */
+/*   Updated: 2023/11/20 18:00:11 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*strpos(char *str)
+int	len_env(char **env)
 {
 	int	i;
 
-	if (!str)
-		return (NULL);
 	i = 0;
-	while (str[i])
-	{
-		if (str[i] < 0)
-			str[i] = str[i] * -1;
+	while (env[i])
 		i++;
-	}
-	return (str);
+	return (i);
 }
