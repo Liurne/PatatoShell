@@ -6,13 +6,11 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/21 17:42:27 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/21 17:45:28 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "src/minishell.h"
-
-#include <stdio.h>
 
 int	g_rvalue;
 
