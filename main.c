@@ -6,31 +6,15 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/20 18:12:05 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/20 19:09:30 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "src/minishell.h"
 
-#include <signal.h>
 #include <stdio.h>
 
 int	g_rvalue;
-
-void	sigint_handler(int signal)
-{
-	if (signal == SIGINT)
-		printf(RED"\npatate> "END);
-}
-
-void	set_signal_action(void)
-{
-	struct sigaction	sa;
-
-	ft_bzero(&sa, sizeof(sa));
-	sa.sa_handler = &sigint_handler;
-	sigaction(SIGINT, &sa, NULL);
-}
 
 int	say_hello(t_data *shell, char **envp)
 {
@@ -57,7 +41,6 @@ int	main(int ac, char **av, char **envp)
 	g_rvalue = 0;
 	if (say_hello(&shell, envp))
 		return (1);
-	set_signal_action();
 	while (ft_strcmp(shell.prompt.line, "exit"))
 	{
 		prompt_signals();
