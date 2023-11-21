@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:58:59 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/19 18:52:35 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/03 18:46:47 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,25 @@ static char	*append_str(char *s1, char *s2)
 	return (res);
 }
 
+char	*init(long int *i)
+{
+	*i = -1;
+	return (NULL);
+}
+
 int	ft_dprintf(int fd, const char *str, ...)
 {
 	va_list		ap;
 	long int	i;
 	char		*res;
 
-	i = -1;
 	if (!str)
 		return (0);
-	if (write(1, 0, 0) == -1)
+	if (write(fd, 0, 0) == -1)
 		return (-1);
-	res = NULL;
+	res = init(&i);
 	va_start(ap, str);
-	while (str[++i])
+	while (str && str[++i])
 	{
 		if (str[i] == '%' && *(str + i + 1))
 		{
@@ -54,5 +59,5 @@ int	ft_dprintf(int fd, const char *str, ...)
 	if (!res)
 		return (va_end(ap), -1);
 	i = write(fd, res, ft_strlen(res));
-	return (va_end(ap), free(res), (int)i);
+	return (va_end(ap), free(res), i);
 }

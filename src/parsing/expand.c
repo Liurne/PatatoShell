@@ -3,34 +3,114 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 15:41:32 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/19 18:28:53 by liurne           ###   ########.fr       */
+/*   Created: 2023/10/27 19:13:52 by jcoquard          #+#    #+#             */
+/*   Updated: 2023/11/16 17:26:27 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//virer tout les espaces en trop
-//faire les expands
-//faire le $?
-//virer les quotes ferme
+char	*get_varname(char *str)
+{
+	char	*word;
+
+	word = NULL;
+	if (!*str || *str == '$' || ft_iswhitespace(*str))
+	{
+		word = ft_addchar(word, '$');
+		return (word);
+	}
+	if (*str == '?')
+	{
+		word = ft_addchar(word, '?');
+		return (word);
+	}
+	while (*str && (!ft_iswhitespace(*str) && *str != '\''
+			&& *str != '"' && *str != '$'))
+	{
+		word = ft_addchar(word, *str);
+		if (!word)
+			return (NULL);
+		str++;
+	}
+	return (word);
+}
+
+int	get_len_var(t_data *shell, char *str, int *len)
+{
+	char	*var;
+	char	*tmp;
+	int		res;
+
+	var = get_varname(str + 1);
+	if (!var)
+		return (-1);
+	if (*var == '$')
+		return (free(var), 1);
+	res = ft_strlen(var) + 1;
+	if (*var == '?')
+	{
+		tmp = ft_itoa(g_rvalue);
+		if (!tmp)
+			return (set_rval(1, ERR_MALLOC));
+	}
+	else
+		tmp = get_env_var(shell, var);
+	if (!tmp)
+		return (free(var), res);
+	*len = *len + ft_strlen(tmp);
+	if (*var == '?')
+		free(tmp);
+	free(var);
+	return (res);
+}
+
+int	put_var(t_data *shell, char *str, char *dst, int *i)
+{
+	char	*var;
+	char	*tmp;
+	int		res;
+
+	var = get_varname(str + 1);
+	dst += *i;
+	if (!var)
+		return (0);
+	if (*var == '$')
+		return (*dst = '$', free(var), 0);
+	res = ft_strlen(var);
+	if (*var == '?')
+		tmp = ft_itoa(g_rvalue);
+	else
+		tmp = get_env_var(shell, var);
+	if (!tmp)
+		return ((*i)--, free(var), res);
+	*i += ft_strlen(tmp) - 1;
+	strcpy_neg(dst, tmp, ft_strlen(tmp) + 1);
+	if (*var == '?')
+		free(tmp);
+	return (free(var), res);
+}
 
 static int	true_len(t_data *shell, char *cmd)
 {
 	int		len;
+	int		tmp;
 	t_quote	quote;
 
 	len = 0;
 	ft_bzero(&quote, sizeof(t_quote));
-	while (*cmd && ft_iswhitespace(*cmd))
-		cmd++;
 	while (*cmd)
 	{
 		manage_quote(*cmd, &quote);
 		if (*cmd == '$' && !quote.s)
-			cmd += get_len_var(shell, cmd, &len);
+		{
+			tmp = get_len_var(shell, cmd, &len);
+			if (tmp == -1)
+				return (-1);
+			cmd += tmp;
+		}
 		else
 			cmd++;
 		len++;
@@ -38,7 +118,7 @@ static int	true_len(t_data *shell, char *cmd)
 	return (len);
 }
 
-char	*trim(t_data *shell, t_cmd *cmd, char *line)
+char	*expand(t_data *shell, char *line)
 {
 	char	*res;
 	t_quote	quote;
@@ -50,19 +130,17 @@ char	*trim(t_data *shell, t_cmd *cmd, char *line)
 	j = 0;
 	res = ft_calloc(true_len(shell, line) + 1, sizeof(char));
 	if (!res)
-		return (ft_dprintf(2, ERR_MALLOC), NULL);
-	while (*line && ft_iswhitespace(*line))
-		line++;
+		return (set_rval(1, ERR_MALLOC), NULL);
 	while (line[i])
 	{
 		manage_quote(line[i], &quote);
 		if (line[i] == '$' && !quote.s)
-			line += put_var(shell, line + i, res, &j);
+			i += put_var(shell, line + i, res, &j);
 		else
 			res[j] = line[i];
 		j++;
 		i++;
 	}
-	free(cmd->cmd);
+	free(line);
 	return (res);
 }

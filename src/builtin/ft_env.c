@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redir_utils.c                                      :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/10 13:46:58 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/26 17:45:59 by liurne           ###   ########.fr       */
+/*   Created: 2023/11/10 14:09:12 by edecoste          #+#    #+#             */
+/*   Updated: 2023/11/20 13:54:37 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*ft_addchar(char *str, char c)
+void	ft_env(t_data *shell, t_cmd *cmd, int pid)
 {
-	int		len;
-	char	*res;
+	int	i;
 
-	len = 0;
-	if (str && *str)
-		len = ft_strlen(str);
-	res = ft_calloc(len + 2, sizeof(char));
-	if (!res)
-		return (ft_dprintf(2, "%s", ERR_MALLOC), NULL);
-	if (str && *str)
-		ft_strlcpy(res, str, len + 1);
-	res[len] = c;
-	if (str && *str)
-		free (str);
-	return (res);
+	i = -1;
+	while (shell->env[++i])
+		if (ft_strchr(shell->env[i], '='))
+			printf("%s\n", shell->env[i]);
+	clear_proc(shell, cmd, pid);
+	set_rval(0, NULL);
 }

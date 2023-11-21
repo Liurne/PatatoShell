@@ -5,62 +5,87 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 17:53:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/24 17:28:00 by liurne           ###   ########.fr       */
+/*   Created: 2023/10/27 17:29:29 by jcoquard          #+#    #+#             */
+/*   Updated: 2023/11/14 19:35:17 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
-//Mettre un pointeur sur env dans les cmd!!
-
-int	find_error(char *line)
+int	pars_line(char *line)
 {
 	t_quote	quote;
 	int		tmp;
 
 	ft_bzero(&quote, sizeof(t_quote));
-	if (is_emptybpipe(line))
-		return (ft_dprintf(2, ERR_PIPE1), g_rvalue = 2, 2);
+	while (*line && ft_iswhitespace(*line))
+		line++;
+	if (*line == '|')
+		return (set_rval(2, ERR_PIPE));
 	while (*line)
 	{
 		tmp = 1;
 		manage_quote(*line, &quote);
-		if (*line == '|' && !quote.s && !quote.d && (!*(line + 1)
-				|| striswspace(line + 1)))
-			return (ft_dprintf(2, ERR_PIPE2), g_rvalue = 2, 2);
+		if (*line == '|' && !quote.s && !quote.d && is_emptypipe(line))
+			return (set_rval(2, ERR_PIPE));
 		if ((*line == '<' || *line == '>')
 			&& is_bracketvalid(line, *line, &tmp) && !quote.s && !quote.d)
 			return (2);
 		line += tmp;
 	}
 	if (quote.s)
-		return (ft_dprintf(2, ERR_SQUOTE), g_rvalue = 2, 2);
+		return (set_rval(2, ERR_SQUOTE));
 	if (quote.d)
-		return (ft_dprintf(2, ERR_DQUOTE), g_rvalue = 2, 2);
+		return (set_rval(2, ERR_DQUOTE));
 	return (0);
 }
 
-int	pars(t_data *shell)
+int	manage_quote(char c, t_quote *quote)
 {
-	unsigned int	i;
+	if (c == '\'' && !quote->d)
+		quote->s = -(quote->s) + 1;
+	if (c == '"' && !quote->s)
+		quote->d = -(quote->d) + 1;
+	if ((c == '\'' && !quote->d) || (c == '"' && !quote->s))
+		return (1);
+	return (0);
+}
+
+void	free_dtab(char **tab)
+{
+	int	i;
 
 	i = 0;
-	if (striswspace(shell->prompt.line))
-		return (0);
-	if (find_error(shell->prompt.line))
-		return (2);
-	if (splitcmds(shell, shell->prompt.line))
-		return (1);
-	while (i < shell->prompt.nb_cmds)
+	while (tab[i])
 	{
-		shell->prompt.cmds[i].cmd = trim(shell, &(shell->prompt.cmds[i]),
-				shell->prompt.cmds[i].cmd);
-		pars_redir(&(shell->prompt.cmds[i]));
+		free(tab[i]);
 		i++;
 	}
-	exec(shell, &(shell->prompt.cmds[0]));
-	free_cmds(shell);
-	return (0);
+	free(tab);
+}
+
+char	get_pos(char c)
+{
+	if (c < 0)
+		return (-c);
+	return (c);
+}
+
+char	*ft_addchar(char *str, char c)
+{
+	int		len;
+	char	*res;
+
+	len = 0;
+	if (str && *str)
+		len = ft_strlen(str);
+	res = ft_calloc(len + 2, sizeof(char));
+	if (!res)
+		return (set_rval(1, ERR_MALLOC), NULL);
+	if (str && *str)
+		ft_strlcpy(res, str, len + 1);
+	res[len] = c;
+	if (str && *str)
+		free (str);
+	return (res);
 }

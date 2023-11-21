@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 17:30:43 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/20 18:06:51 by liurne           ###   ########.fr       */
+/*   Created: 2023/11/20 17:58:51 by liurne            #+#    #+#             */
+/*   Updated: 2023/11/20 18:00:11 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	cd_changevar(char *new)
+int	len_env(char **env)
 {
-	
-}
-int	ft_cd(char *arg)
-{
-	if (arg[2])
-		return (1);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	return (i);
 }

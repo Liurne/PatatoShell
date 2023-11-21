@@ -16,26 +16,28 @@ static int	count_arg(char *line)
 {
 	int		res;
 	t_quote	quote;
-	
+
 	res = 1;
 	ft_bzero(&quote, sizeof(t_quote));
+	while (*line && ft_iswhitespace(*line))
+		line++;
 	while (*line)
 	{
 		if (ft_iswhitespace(get_pos(*line)) && !quote.s && !quote.d)
 		{
-			while(*line && ft_iswhitespace(get_pos(*line)))
+			while (*line && ft_iswhitespace(get_pos(*line)))
 				line++;
-			if(!*line)
+			if (!*line)
 				return (res);
 			res++;
 		}
-		manage_quote(get_pos(*line), &quote);
+		manage_quote(*line, &quote);
 		line++;
 	}
 	return (res);
 }
 
-static int alloc_arg(t_cmd *cmd, char *line, int arg)
+static int	alloc_arg(t_cmd *cmd, char *line, int arg)
 {
 	int		len;
 	t_quote	quote;
@@ -44,9 +46,9 @@ static int alloc_arg(t_cmd *cmd, char *line, int arg)
 	ft_bzero(&quote, sizeof(t_quote));
 	while (line[len] && (!ft_iswhitespace(line[len]) || quote.s || quote.d))
 	{
-		if (manage_quote(get_pos(line[len]), &quote))
+		if (manage_quote(line[len], &quote))
 		{
-			if(line[len] > 0)
+			if (line[len] > 0)
 				len--;
 			line++;
 		}
@@ -54,11 +56,11 @@ static int alloc_arg(t_cmd *cmd, char *line, int arg)
 	}
 	cmd->args[arg] = ft_calloc(len + 1, sizeof(char));
 	if (!cmd->args[arg])
-		return (ft_dprintf(2, ERR_MALLOC), free_dtab(cmd->args), 1);
+		return (set_rval(1, ERR_MALLOC), free_dtab(cmd->args), 1);
 	return (0);
 }
 
-int	split_cpy(char *line, char *arg)
+static int	split_cpy(char *line, char *arg)
 {
 	t_quote	quote;
 	int		tmp;
@@ -67,9 +69,10 @@ int	split_cpy(char *line, char *arg)
 	ft_bzero(&quote, sizeof(t_quote));
 	i = 0;
 	tmp = 0;
-	while (line[tmp] && (!ft_iswhitespace(get_pos(line[tmp])) || quote.s || quote.d))
+	while (line[tmp] && (!ft_iswhitespace(get_pos(line[tmp])) || quote.s
+			|| quote.d))
 	{
-		if(!manage_quote(get_pos(line[tmp]), &quote) || line[tmp] < 0)
+		if (!manage_quote(line[tmp], &quote) || line[tmp] < 0)
 		{
 			arg[i] = get_pos(line[tmp]);
 			i++;
@@ -78,6 +81,7 @@ int	split_cpy(char *line, char *arg)
 	}
 	return (tmp);
 }
+
 int	splitargs(t_cmd *cmd, char *line)
 {
 	int		i;
@@ -85,12 +89,14 @@ int	splitargs(t_cmd *cmd, char *line)
 	cmd->nb_args = count_arg(line) + 1;
 	cmd->args = ft_calloc(cmd->nb_args, sizeof(char *));
 	if (!cmd->args)
-		return (ft_dprintf(2, ERR_MALLOC), 1);
+		return (set_rval(1, ERR_MALLOC));
 	i = 0;
+	while (*line && ft_iswhitespace(*line))
+		line++;
 	while (i < cmd->nb_args && *line)
 	{
 		if (alloc_arg(cmd, line, i))
-			return (1);
+			return (2);
 		line += split_cpy(line, cmd->args[i]);
 		while (*line && ft_iswhitespace(get_pos(*line)))
 			line++;

@@ -6,20 +6,21 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:27:40 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/26 17:47:36 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/14 14:49:36 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_pwd()
+int	ft_pwd(t_data *shell, t_cmd *cmd, int pid)
 {
 	char	*buff;
-	
+
 	buff = getcwd(NULL, 0);
+	clear_proc(shell, cmd, pid);
 	if (!buff)
-		return (ft_dprintf(2, "patate: sorry but you're lost\n"), 1);
+		return (ft_dprintf(2, ERR_LOST), 1);
 	printf("%s\n", buff);
 	free(buff);
-	return (0);
+	return (set_rval(0, NULL));
 }

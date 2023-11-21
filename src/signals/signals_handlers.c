@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handlers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 14:26:35 by edecoste          #+#    #+#             */
-/*   Updated: 2023/10/27 13:37:42 by edecoste         ###   ########.fr       */
+/*   Created: 2023/11/03 18:20:04 by jcoquard          #+#    #+#             */
+/*   Updated: 2023/11/16 17:24:59 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

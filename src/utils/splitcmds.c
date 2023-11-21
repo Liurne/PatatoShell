@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   splitcmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 17:48:14 by liurne            #+#    #+#             */
-/*   Updated: 2023/10/24 14:22:20 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:06:47 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,15 @@
 
 static unsigned int	count_cmd(char *line)
 {
-	int	res;
-	int	quote;
-	int	dquote;
+	int		res;
+	t_quote	quote;
 
+	ft_bzero(&quote, sizeof(t_quote));
 	res = 1;
-	quote = 0;
-	dquote = 0;
 	while (*line)
 	{
-		if (*line == '\'' && !dquote)
-			quote = -quote + 1;
-		if (*line == '"' && !quote)
-			dquote = -dquote + 1;
-		if (*line == '|' && !quote && !dquote)
+		manage_quote(*line, &quote);
+		if (*line == '|' && !quote.s && !quote.d)
 			res++;
 		line++;
 	}
@@ -38,20 +33,15 @@ static unsigned int	count_cmd(char *line)
 
 static int	find_semicolon(char *line)
 {
-	int	quote;
-	int	dquote;
-	int	i;
+	t_quote	quote;
+	int		i;
 
+	ft_bzero(&quote, sizeof(t_quote));
 	i = 0;
-	quote = 0;
-	dquote = 0;
 	while (line[i])
 	{
-		if (line[i] == '\'' && !dquote)
-			quote = -quote + 1;
-		if (line[i] == '"' && !quote)
-			dquote = -dquote + 1;
-		if (line[i] == '|' && !quote && !dquote)
+		manage_quote(line[i], &quote);
+		if (line[i] == '|' && !quote.s && !quote.d)
 			return (i);
 		i++;
 	}
@@ -62,11 +52,11 @@ static int	alloc_cmds(t_data *shell, char *line)
 {
 	shell->prompt.nb_cmds = count_cmd(line);
 	if (!shell->prompt.nb_cmds)
-		return (ft_dprintf(2, ERR_PIPE1), 2);
+		return (set_rval(2, ERR_PIPE));
 	shell->prompt.cmds = (t_cmd *)ft_calloc(shell->prompt.nb_cmds,
 			sizeof(t_cmd));
 	if (!shell->prompt.cmds)
-		return (ft_dprintf(2, ERR_MALLOC), 1);
+		return (set_rval(1, ERR_MALLOC));
 	return (0);
 }
 
@@ -97,6 +87,7 @@ int	splitcmds(t_data *shell, char *line)
 	j = 0;
 	while (i < shell->prompt.nb_cmds && j < (int)ft_strlen(line))
 	{
+		shell->prompt.cmds[i].id = i;
 		tmp = find_semicolon(line + j);
 		if (tmp == -1)
 			shell->prompt.cmds[i].cmd = ft_strndup(line + j,
