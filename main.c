@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/20 19:09:30 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/21 17:42:27 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **envp)
 			free(shell.prompt.line);
 		shell.prompt.line = readline(RED"patate> "END);
 		if (!shell.prompt.line)
-			return (printf("EOF been given\n"), say_bye(&shell), free(shell.prompt.line), 0);
+			return (say_bye(&shell), free(shell.prompt.line), 0);
 		if (shell.prompt.line[0] && !striswspace(shell.prompt.line))
 			add_history(shell.prompt.line);
 		process(&shell);

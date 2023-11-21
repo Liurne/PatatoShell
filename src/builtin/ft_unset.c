@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:31:00 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/17 15:10:34 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/21 16:55:21 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_unset(t_data *shell, t_cmd *cmd, int pid)
 	i = 1;
 	while (i < cmd->nb_args)
 	{
-		if (get_env_var(shell, cmd->args[i]))
+		if (is_var(shell->env, cmd->args[i]))
 			if (del_var(shell, cmd->args[i]))
 				return (1);
 		i++;

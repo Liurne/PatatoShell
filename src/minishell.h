@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/20 18:00:31 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/21 17:38:58 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@
 
 # define ERR_OPIPE "patate: couldn't open the pipe\n"
 # define ERR_FORK "patate: couldn't fork\n"
-# define ERR_CD1 "patate: ft_cd: too many arguments\n"
+# define ERR_CD1 "patate: ft_cd: string not in pwd:"
+# define ERR_CD2 "patate: ft_cd: too many arguments\n"
+# define ERR_CD3 "patate: ft_cd: Don't know the way home :'(\n"
 
 # define ERR_LOST "patate: sorry but you're lost\n"
 
@@ -134,6 +136,9 @@ void		clear_env(t_data *shell);
 char		*get_env_var(t_data *shell, char *var);
 int			del_var(t_data *shell, char *var);
 int			len_env(char **env);
+char		*new_env_var(char *var, char *value);
+int			add_var(t_data *shell, char *var, char *value);
+int			is_var(char **env, char *var);
 
 /*     execution     */
 char		*get_cmd(t_data *shell, char *cmd);
@@ -156,6 +161,7 @@ int			ft_pwd(t_data *shell, t_cmd *cmd, int pid);
 int			ft_echo(t_data *shell, t_cmd *cmd, int pid);
 void		ft_env(t_data *shell, t_cmd *cmd, int pid);
 int			ft_unset(t_data *shell, t_cmd *cmd, int pid);
+int			ft_cd(t_data *shell, t_cmd *cmd, int pid);
 
 //pour les exports le nom devariable commence par _ ou 
 //alphachar puis on peut mettre desn ombres

@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:20:04 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/16 17:24:59 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/21 17:38:11 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	heredoc_sigint(int sig)
 {
 	g_rvalue = 128 + sig;
 	printf("\n");
-	// ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_replace_line("", 0);
 	rl_on_new_line();
 }

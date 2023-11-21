@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
+#    By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/11/20 19:08:44 by liurne           ###   ########.fr        #
+#    Updated: 2023/11/21 13:32:18 by jcoquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,8 @@ SRCS = main.c \
 		src/builtin/ft_echo.c \
 		src/builtin/ft_exit.c \
 		src/builtin/ft_unset.c \
-		src/builtin/ft_env.c
-#		src/builtin/ft_cd
+		src/builtin/ft_env.c \
+		src/builtin/ft_cd.c
 
 OBJS = ${SRCS:.c=.o}
 

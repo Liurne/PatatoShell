@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:58:59 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/03 18:46:47 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/21 17:41:58 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int	ft_dprintf(int fd, const char *str, ...)
 	long int	i;
 	char		*res;
 
-	if (!str)
-		return (0);
-	if (write(fd, 0, 0) == -1)
+	if (!str || write(fd, 0, 0) == -1)
 		return (-1);
 	res = init(&i);
 	va_start(ap, str);
