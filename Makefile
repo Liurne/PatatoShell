@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/11/02 16:03:40 by edecoste         ###   ########.fr        #
+#    Updated: 2023/11/20 19:08:44 by liurne           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,22 +35,30 @@ NAME = minishell
 FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address 
 
 SRCS = main.c \
+		src/process.c \
 		src/parsing/parsing.c \
 		src/parsing/redirection.c \
+		src/parsing/heredoc.c \
 		src/parsing/expand.c \
-		src/tools/pars_utils.c \
-		src/tools/redir_utils.c \
-		src/tools/expand_utils.c \
-		src/tools/error_utils.c \
-		src/tools/splitcmds.c \
-		src/tools/splitargs.c \
-		src/tools/strcpy_neg.c \
+		src/parsing/error.c \
+		src/utils/splitcmds.c \
+		src/utils/splitargs.c \
+		src/utils/strcpy_neg.c \
+		src/utils/ft_atoll.c \
+		src/utils/geteof.c \
+		src/utils/strpos.c \
 		src/execution/execution.c \
 		src/execution/exec_utils.c \
 		src/environment/environment.c \
+		src/environment/env_utils.c \
 		src/signals/signals_handlers.c \
 		src/signals/signals_hub.c \
-		src/heredoc.c
+		src/builtin/ft_pwd.c \
+		src/builtin/ft_echo.c \
+		src/builtin/ft_exit.c \
+		src/builtin/ft_unset.c \
+		src/builtin/ft_env.c
+#		src/builtin/ft_cd
 
 OBJS = ${SRCS:.c=.o}
 

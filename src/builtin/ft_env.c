@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 22:18:56 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/09 14:07:07 by liurne           ###   ########.fr       */
+/*   Created: 2023/11/10 14:09:12 by edecoste          #+#    #+#             */
+/*   Updated: 2023/11/20 13:54:37 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strdup(const char *s)
+void	ft_env(t_data *shell, t_cmd *cmd, int pid)
 {
-	char	*res;
-	size_t	l;
-	size_t	i;
+	int	i;
 
-	l = 0;
-	if (!s)
-		return (NULL);
-	while (s[l])
-		l++;
-	res = (char *)malloc(sizeof(char) * (l + 1));
-	if (res == NULL)
-		return (NULL);
 	i = -1;
-	while (s[++i] && l != 0)
-		res[i] = s[i];
-	res[i] = '\0';
-	return (res);
+	while (shell->env[++i])
+		if (ft_strchr(shell->env[i], '='))
+			printf("%s\n", shell->env[i]);
+	clear_proc(shell, cmd, pid);
+	set_rval(0, NULL);
 }

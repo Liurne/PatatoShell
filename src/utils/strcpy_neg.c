@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   strcpy_neg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 22:18:56 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/09 14:07:07 by liurne           ###   ########.fr       */
+/*   Created: 2023/10/24 16:44:11 by liurne            #+#    #+#             */
+/*   Updated: 2023/10/25 15:25:18 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strdup(const char *s)
+size_t	strcpy_neg(char *dst, const char *src, size_t size)
 {
-	char	*res;
-	size_t	l;
-	size_t	i;
+	size_t	t;
+	size_t	n;
 
-	l = 0;
-	if (!s)
-		return (NULL);
-	while (s[l])
-		l++;
-	res = (char *)malloc(sizeof(char) * (l + 1));
-	if (res == NULL)
-		return (NULL);
-	i = -1;
-	while (s[++i] && l != 0)
-		res[i] = s[i];
-	res[i] = '\0';
-	return (res);
+	t = 0;
+	n = 0;
+	if (size != 0)
+	{
+		while (src[t] != '\0')
+		{
+			if (t < (size - 1))
+			{
+				dst[t] = -src[t];
+				n++;
+			}
+			t++;
+		}
+	}
+	else
+	{
+		while (src[t] != '\0')
+			t++;
+		return (t);
+	}
+	dst[n] = '\0';
+	return (t);
 }

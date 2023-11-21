@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 22:18:56 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/09 14:07:07 by liurne           ###   ########.fr       */
+/*   Created: 2023/11/17 14:31:00 by liurne            #+#    #+#             */
+/*   Updated: 2023/11/17 15:10:34 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strdup(const char *s)
+int	ft_unset(t_data *shell, t_cmd *cmd, int pid)
 {
-	char	*res;
-	size_t	l;
-	size_t	i;
+	int	i;
 
-	l = 0;
-	if (!s)
-		return (NULL);
-	while (s[l])
-		l++;
-	res = (char *)malloc(sizeof(char) * (l + 1));
-	if (res == NULL)
-		return (NULL);
-	i = -1;
-	while (s[++i] && l != 0)
-		res[i] = s[i];
-	res[i] = '\0';
-	return (res);
+	i = 1;
+	while (i < cmd->nb_args)
+	{
+		if (get_env_var(shell, cmd->args[i]))
+			if (del_var(shell, cmd->args[i]))
+				return (1);
+		i++;
+	}
+	clear_proc(shell, cmd, pid);
+	if (!pid)
+		exit(g_rvalue);
+	return (g_rvalue);
 }

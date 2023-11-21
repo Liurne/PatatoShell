@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 22:18:56 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/09 14:07:07 by liurne           ###   ########.fr       */
+/*   Created: 2023/10/25 17:27:40 by liurne            #+#    #+#             */
+/*   Updated: 2023/11/14 14:49:36 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-char	*ft_strdup(const char *s)
+int	ft_pwd(t_data *shell, t_cmd *cmd, int pid)
 {
-	char	*res;
-	size_t	l;
-	size_t	i;
+	char	*buff;
 
-	l = 0;
-	if (!s)
-		return (NULL);
-	while (s[l])
-		l++;
-	res = (char *)malloc(sizeof(char) * (l + 1));
-	if (res == NULL)
-		return (NULL);
-	i = -1;
-	while (s[++i] && l != 0)
-		res[i] = s[i];
-	res[i] = '\0';
-	return (res);
+	buff = getcwd(NULL, 0);
+	clear_proc(shell, cmd, pid);
+	if (!buff)
+		return (ft_dprintf(2, ERR_LOST), 1);
+	printf("%s\n", buff);
+	free(buff);
+	return (set_rval(0, NULL));
 }
