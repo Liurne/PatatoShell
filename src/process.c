@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/22 14:33:25 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/22 15:27:16 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,16 @@ int	process(t_data *shell)
 		return (2);
 	if (splitcmds(shell, shell->prompt.line))
 		return (2);
+	printf("nb cmd: %d\n", shell->prompt.nb_cmds);
 	while (++i < shell->prompt.nb_cmds)
 	{
+		printf("id: %d\n", shell->prompt.cmds[i].id);
 		shell->prompt.cmds[i].cmd = expand(shell, shell->prompt.cmds[i].cmd);
 		if (!shell->prompt.cmds[i].cmd)
 			return (free_cmds(shell), 2);
-		if (pars_heredoc(shell, &(shell->prompt.cmds[i])))
-			return (free_cmds(shell), 2);
-		exec(shell, &(shell->prompt.cmds[i]));
+		//if (pars_heredoc(shell, &(shell->prompt.cmds[i])))
+		//	return (free_cmds(shell), 2);
+		//exec(shell, &(shell->prompt.cmds[i]));
 	}
 	free_cmds(shell);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/16 17:25:37 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:26:46 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ static int	get_heredocs(t_data *shell, t_cmd *cmd, char *str, char c)
 		word = geteof(str + i, &is_quote);
 		if (!word)
 			return (2);
-		if (cmd->pipe[0])
-			close(cmd->pipe[0]);
 		heredoc(shell, cmd, word, 1);
 		free(word);
 	}

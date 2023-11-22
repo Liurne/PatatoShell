@@ -68,7 +68,10 @@ void	free_cmds(t_data *shell)
 	while (i < shell->prompt.nb_cmds)
 	{
 		if (shell->prompt.cmds[i].cmd)
+		{
+			close_child(&(shell->prompt.cmds[i]));
 			free(shell->prompt.cmds[i].cmd);
+		}
 		i++;
 	}
 	free(shell->prompt.cmds);

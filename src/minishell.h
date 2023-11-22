@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/21 17:38:58 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/22 15:20:53 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ char		*get_cmd(t_data *shell, char *cmd);
 int			exec(t_data *shell, t_cmd *cmd);
 int			exec_builtins(t_data *shell, t_cmd *cmd, int pid);
 void		clear_proc(t_data *shell, t_cmd *cmd, int pid);
+void		close_child(t_cmd *cmd);
 
 /*     utils     */
 int			splitcmds(t_data *shell, char *line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/22 14:37:05 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/22 15:20:40 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 //heredoc ce lance pas forcement
 //signaux douteux dans le heredoc
 
-static void	close_child(t_cmd *cmd)
+void	close_child(t_cmd *cmd)
 {
 	if (cmd->infile)
 		close(cmd->infile);
@@ -74,7 +74,7 @@ static int	child_proc(t_data *shell, t_cmd *cmd)
 {
 	pid_t	pid;
 
-	if (pipe(cmd->pipe) == -1)
+	if (cmd->id + 1 < shell->prompt.nb_cmds && pipe(cmd->pipe) == -1)
 		return (clear_proc(shell, cmd, 1), set_rval(1, ERR_OPIPE));
 	pid = fork();
 	if (pid == -1)
