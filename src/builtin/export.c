@@ -6,14 +6,11 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:09:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/22 13:21:06 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/22 13:52:20 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-
-
 
 // DEBUT pas encore teste
 int	add_to_env_end(t_data *shell, char *new_element)
