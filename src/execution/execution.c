@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/20 18:23:17 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/22 14:37:05 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,16 @@
 //heredoc ce lance pas forcement
 //signaux douteux dans le heredoc
 
-void	clear_proc(t_data *shell, t_cmd *cmd, int pid)
+static void	close_child(t_cmd *cmd)
 {
-	if (cmd->args)
-		free_dtab(cmd->args);
-	if (cmd->exec)
-		free(cmd->exec);
 	if (cmd->infile)
 		close(cmd->infile);
 	if (cmd->outfile)
 		close(cmd->outfile);
 	if (cmd->pipe[1])
 		close(cmd->pipe[1]);
-	if (!pid)
-	{
-		if (cmd->pipe[0])
-			close(cmd->pipe[0]);
-		free(shell->prompt.line);
-		free_cmds(shell);
-		if (shell->env)
-			free_dtab(shell->env);
-	}
+	if (cmd->pipe[0])
+		close(cmd->pipe[0]);
 }
 
 static int	child_exec(t_data *shell, t_cmd *cmd)
@@ -99,6 +88,7 @@ static int	child_proc(t_data *shell, t_cmd *cmd)
 		else if (cmd->id < shell->prompt.nb_cmds - 1
 			&& dup2(cmd->pipe[1], STDOUT_FILENO) == -1)
 			printf("dup2 out failed\n");
+		close_child(cmd);
 		exit(child_exec(shell, cmd));
 	}
 	if (cmd->id + 1 < shell->prompt.nb_cmds

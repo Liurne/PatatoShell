@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/15 17:07:37 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/22 14:33:25 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,29 @@ int	set_rval(int val, char *error)
 		ft_dprintf(2, "%s", error);
 	g_rvalue = val;
 	return (val);
+}
+
+void	clear_proc(t_data *shell, t_cmd *cmd, int pid)
+{
+	if (cmd->args)
+		free_dtab(cmd->args);
+	if (cmd->exec)
+		free(cmd->exec);
+	if (cmd->infile)
+		close(cmd->infile);
+	if (cmd->outfile)
+		close(cmd->outfile);
+	if (cmd->pipe[1])
+		close(cmd->pipe[1]);
+	if (!pid)
+	{
+		if (cmd->pipe[0])
+			close(cmd->pipe[0]);
+		free(shell->prompt.line);
+		free_cmds(shell);
+		if (shell->env)
+			free_dtab(shell->env);
+	}
 }
 
 int	process(t_data *shell)
