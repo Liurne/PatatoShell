@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/10 14:13:52 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:22:07 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,9 @@ int	ft_exit(t_data *shell, char **arg);
 
 /*     env     */
 void	ft_env(t_data *shell);
+
+/*     export     */
+void	ft_export(t_data *shell, char **argv, int pid);
 
 
 //pour les exports le nom devariable commence par _ ou 

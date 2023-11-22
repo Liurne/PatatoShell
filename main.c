@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:43 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/10 14:13:08 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/20 13:27:20 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int ac, char **av, char **envp)
 		if (shell.prompt.line[0] && !striswspace(shell.prompt.line))
 			add_history(shell.prompt.line);
 		pars(&shell);
-		ft_env(&shell);
+		ft_export(&shell, ft_split(shell.prompt.line, ' '), 1);
 	}
 	return (ft_exit(&shell, ft_split(shell.prompt.line, ' ')));
 }
