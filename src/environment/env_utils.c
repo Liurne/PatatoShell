@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:58:51 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/21 17:37:45 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/22 13:22:13 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	is_var(char **env, char *var)
 	len = ft_strlen(var);
 	if (!env)
 		return (0);
-	while (env[++i])
+	while (env && env[++i])
 	{
 		if (ft_strnstr(env[i], var, len) && (env[i][len] == '='
 			|| !env[i][len]))

@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:03:11 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/21 17:36:58 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/22 13:21:57 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,7 @@ int	add_var(t_data *shell, char *var, char *value)
 		tmp = (char **)ft_calloc(len_env(shell->env) + 2, sizeof(char *));
 	if (!tmp)
 		return (set_rval(1, ERR_MALLOC));
-	if (!is_var(shell->env, var))
-		tmp[0] = new_env_var(var, value);
+	tmp[0] = new_env_var(var, value);
 	if (!tmp[0])
 		return (clear_env(shell), free_dtab(tmp), set_rval(1, ERR_MALLOC));
 	i = -1;
@@ -77,7 +76,7 @@ int	add_var(t_data *shell, char *var, char *value)
 		if (!ft_strnstr(shell->env[i], var, ft_strlen(var))
 			|| shell->env[i][ft_strlen(var)] != '=')
 			tmp[++j] = ft_strdup(shell->env[i]);
-		if (!tmp[i])
+		if (!tmp[j])
 			return (clear_env(shell), free_dtab(tmp), set_rval(1, ERR_MALLOC));
 	}
 	return (clear_env(shell), shell->env = tmp, set_rval(0, NULL));
