@@ -6,7 +6,7 @@
 /*   By: edecoste <edecoste@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:09:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/22 13:52:20 by edecoste         ###   ########.fr       */
+/*   Updated: 2023/11/22 14:04:38 by edecoste         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int	add_to_env_end(t_data *shell, char *new_element)
 
 int	add_to_env_existing(t_data *shell, char *new_element)
 {
-	
+	(void)shell;
+	(void)new_element;
 	return (EXIT_SUCCESS);
 }
 
@@ -77,12 +78,13 @@ int	alreadyin(t_data *shell, char *new_element)
 	int	i;
 
 	i = 0;
-	while (ft_strchr(shell->env[i]), new_element)
+	while (ft_strchr(shell->env[i], new_element))
 	{
-		/* code */
+		printf("oui");
+		return (EXIT_SUCCESS);
 	}
 	
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 void	ft_export(t_data *shell, char **argv, int pid)
