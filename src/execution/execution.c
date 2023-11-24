@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/22 15:20:40 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:42:55 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,56 @@
 //heredoc ce lance pas forcement
 //signaux douteux dans le heredoc
 
+void	cmds_isclosed(t_data *shell)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < shell->prompt.nb_cmds)
+	{
+		if (shell->prompt.cmds[i].cmd)
+		{
+			if (shell->prompt.cmds[i].infile)
+				ft_dprintf(2, "cmd %d: infile\n", shell->prompt.cmds[i].id);
+			if (shell->prompt.cmds[i].outfile)
+				ft_dprintf(2, "cmd %d: outfile\n", shell->prompt.cmds[i].id);
+			if (shell->prompt.cmds[i].pipe[0])
+				ft_dprintf(2, "cmd %d: pipe 0\n", shell->prompt.cmds[i].id);
+			if (shell->prompt.cmds[i].pipe[1])
+				ft_dprintf(2, "cmd %d: pipe 1\n", shell->prompt.cmds[i].id);
+		}
+		i++;
+	}
+}
+
 void	close_child(t_cmd *cmd)
 {
 	if (cmd->infile)
+	{
+		ft_dprintf(2, "in:%d closed\n", cmd->infile);
 		close(cmd->infile);
+	}
 	if (cmd->outfile)
+	{
+		ft_dprintf(2, "out:%d closed\n", cmd->outfile);
 		close(cmd->outfile);
+	}
 	if (cmd->pipe[1])
+	{
+		ft_dprintf(2, "pipe 1:%d closed\n", cmd->pipe[1]);
 		close(cmd->pipe[1]);
+	}
 	if (cmd->pipe[0])
+	{
+		ft_dprintf(2, "pipe 0:%d closed\n", cmd->pipe[0]);
 		close(cmd->pipe[0]);
+	}
 }
 
 static int	child_exec(t_data *shell, t_cmd *cmd)
 {
+	//close_child(cmd);
+	cmds_isclosed(shell);
 	exec_builtins(shell, cmd, 0);
 	if (cmd->args[0][0] == '.' || cmd->args[0][0] == '/')
 	{

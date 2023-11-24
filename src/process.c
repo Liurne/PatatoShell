@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/22 15:27:16 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/24 13:16:30 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	clear_proc(t_data *shell, t_cmd *cmd, int pid)
 		free_cmds(shell);
 		if (shell->env)
 			free_dtab(shell->env);
+		rl_clear_history();
 	}
 }
 
@@ -61,9 +62,9 @@ int	process(t_data *shell)
 		shell->prompt.cmds[i].cmd = expand(shell, shell->prompt.cmds[i].cmd);
 		if (!shell->prompt.cmds[i].cmd)
 			return (free_cmds(shell), 2);
-		//if (pars_heredoc(shell, &(shell->prompt.cmds[i])))
-		//	return (free_cmds(shell), 2);
-		//exec(shell, &(shell->prompt.cmds[i]));
+		if (pars_heredoc(shell, &(shell->prompt.cmds[i])))
+			return (free_cmds(shell), 2);
+		exec(shell, &(shell->prompt.cmds[i]));
 	}
 	free_cmds(shell);
 	return (0);
