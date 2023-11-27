@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:27:40 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/14 14:49:36 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/24 17:52:49 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_pwd(t_data *shell, t_cmd *cmd, int pid)
+int	ft_pwd(t_data *shell, int pid)
 {
 	char	*buff;
 
 	buff = getcwd(NULL, 0);
-	clear_proc(shell, cmd, pid);
+	clear_proc(shell, pid);
 	if (!buff)
 		return (ft_dprintf(2, ERR_LOST), 1);
 	printf("%s\n", buff);

@@ -69,7 +69,11 @@ void	free_cmds(t_data *shell)
 	{
 		if (shell->prompt.cmds[i].cmd)
 		{
-			close_child(&(shell->prompt.cmds[i]));
+			if (shell->prompt.cmds[i].args)
+				free_dtab(shell->prompt.cmds[i].args);
+			if (shell->prompt.cmds[i].exec)
+				free(shell->prompt.cmds[i].exec);
+			close_cmd(&(shell->prompt.cmds[i]));
 			free(shell->prompt.cmds[i].cmd);
 		}
 		i++;

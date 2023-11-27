@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:35:15 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/15 17:23:11 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:31:32 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	set_redirin(t_cmd *cmd, char *word, t_redir redir)
 	if (redir == INFILE)
 	{
 		if (cmd->infile)
-			close (cmd->infile);
+			ft_close (&(cmd->infile));
 		cmd->infile = open(word, O_RDONLY);
 		if (cmd->infile == -1)
 			return (ft_dprintf(2, "patate: no such file or directory: %s\n"
@@ -53,8 +53,9 @@ static int	set_redirin(t_cmd *cmd, char *word, t_redir redir)
 	if (redir == HEREDOC)
 	{
 		if (cmd->infile)
-			close (cmd->infile);
+			ft_close (&(cmd->infile));
 		cmd->infile = cmd->pipe[0];
+		cmd->pipe[0] = 0;
 		cmd->redir_in = HEREDOC;
 	}
 	return (0);
@@ -65,7 +66,7 @@ static int	set_redirout(t_cmd *cmd, char *word, t_redir redir)
 	if (redir == OUTFILE)
 	{
 		if (cmd->outfile)
-			close (cmd->outfile);
+			ft_close (&(cmd->outfile));
 		cmd->outfile = open(word, O_TRUNC | O_CREAT | O_RDWR, 0000644);
 		if (cmd->outfile == -1)
 			return (ft_dprintf(2, "patate: couldn't create file: %s\n"
@@ -74,7 +75,7 @@ static int	set_redirout(t_cmd *cmd, char *word, t_redir redir)
 	if (redir == OUTAPPEND)
 	{
 		if (cmd->outfile)
-			close (cmd->outfile);
+			ft_close (&(cmd->outfile));
 		cmd->outfile = open(word, O_APPEND | O_CREAT | O_RDWR, 0000644);
 		if (cmd->outfile == -1)
 			return (ft_dprintf(2, "patate: couldn't create file: %s\n"

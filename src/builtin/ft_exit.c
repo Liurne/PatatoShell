@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:41:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/16 17:22:23 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:53:42 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	is_valide_argv(char *arg, int argc)
 	return (2);
 }
 
-int	ft_exit(t_data *shell, t_cmd *cmd, char **arg, int pid)
+int	ft_exit(t_data *shell, char **arg, int pid)
 {
 	int		argc;
 	int		return_type;
@@ -65,8 +65,8 @@ int	ft_exit(t_data *shell, t_cmd *cmd, char **arg, int pid)
 	return_type = is_valide_argv(arg[1], argc);
 	if (return_type == 1 || return_type == 2)
 	{
-		clear_proc(shell, cmd, 0);
+		clear_proc(shell, 0);
 		exit(g_rvalue);
 	}
-	return (clear_proc(shell, cmd, pid), set_rval(1, NULL));
+	return (clear_proc(shell, pid), set_rval(1, NULL));
 }

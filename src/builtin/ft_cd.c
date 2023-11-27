@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:30:43 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/22 13:22:43 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:51:28 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ int	ft_cd(t_data *shell, t_cmd *cmd, int pid)
 	char	*old_path;
 
 	if (cmd->nb_args > 4)
-		return (clear_proc(shell, cmd, pid), set_rval(1, ERR_CD2));
+		return (clear_proc(shell, pid), set_rval(1, ERR_CD2));
 	if (cmd->nb_args == 2)
 	{
 		path = get_env_var(shell, "HOME");
 		if (!path)
-			return (clear_proc(shell, cmd, pid), set_rval(1, ERR_CD3));
+			return (clear_proc(shell, pid), set_rval(1, ERR_CD3));
 	}
 	else
 		path = cmd->args[1];
@@ -48,5 +48,5 @@ int	ft_cd(t_data *shell, t_cmd *cmd, int pid)
 	else
 		cd_udpatevar(shell, old_path);
 	free(old_path);
-	return (clear_proc(shell, cmd, pid), 0);
+	return (clear_proc(shell, pid), 0);
 }

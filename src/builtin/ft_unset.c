@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:31:00 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/21 16:55:21 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:51:16 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_unset(t_data *shell, t_cmd *cmd, int pid)
 				return (1);
 		i++;
 	}
-	clear_proc(shell, cmd, pid);
+	clear_proc(shell, pid);
 	if (!pid)
 		exit(g_rvalue);
 	return (g_rvalue);

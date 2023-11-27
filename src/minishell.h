@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/22 15:20:53 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:54:25 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 
 # define ERR_OPIPE "patate: couldn't open the pipe\n"
 # define ERR_FORK "patate: couldn't fork\n"
+# define ERR_WAITPID "patate: waitpid failed\n"
 # define ERR_CD1 "patate: ft_cd: string not in pwd:"
 # define ERR_CD2 "patate: ft_cd: too many arguments\n"
 # define ERR_CD3 "patate: ft_cd: Don't know the way home :'(\n"
@@ -77,6 +78,7 @@ typedef enum e_redir
 typedef struct s_cmd
 {
 	unsigned int	id;
+	pid_t			pid;
 	char			*cmd;
 	char			*exec;
 	char			**args;
@@ -141,11 +143,12 @@ int			add_var(t_data *shell, char *var, char *value);
 int			is_var(char **env, char *var);
 
 /*     execution     */
+void		ft_close(int *fd);
+void		close_cmd(t_cmd *cmd);
 char		*get_cmd(t_data *shell, char *cmd);
 int			exec(t_data *shell, t_cmd *cmd);
 int			exec_builtins(t_data *shell, t_cmd *cmd, int pid);
-void		clear_proc(t_data *shell, t_cmd *cmd, int pid);
-void		close_child(t_cmd *cmd);
+void		clear_proc(t_data *shell, int pid);
 
 /*     utils     */
 int			splitcmds(t_data *shell, char *line);
@@ -157,10 +160,10 @@ char		*geteof(char *str, int *is_quote);
 char		*strpos(char *str);
 
 /*     builtin     */
-int			ft_exit(t_data *shell, t_cmd *cmd, char **arg, int pid);
-int			ft_pwd(t_data *shell, t_cmd *cmd, int pid);
+int			ft_exit(t_data *shell, char **arg, int pid);
+int			ft_pwd(t_data *shell, int pid);
 int			ft_echo(t_data *shell, t_cmd *cmd, int pid);
-void		ft_env(t_data *shell, t_cmd *cmd, int pid);
+void		ft_env(t_data *shell, int pid);
 int			ft_unset(t_data *shell, t_cmd *cmd, int pid);
 int			ft_cd(t_data *shell, t_cmd *cmd, int pid);
 

@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/24 13:16:30 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:49:42 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,12 @@ int	set_rval(int val, char *error)
 	return (val);
 }
 
-void	clear_proc(t_data *shell, t_cmd *cmd, int pid)
+void	clear_proc(t_data *shell, int pid)
 {
-	if (cmd->args)
-		free_dtab(cmd->args);
-	if (cmd->exec)
-		free(cmd->exec);
-	if (cmd->infile)
-		close(cmd->infile);
-	if (cmd->outfile)
-		close(cmd->outfile);
-	if (cmd->pipe[1])
-		close(cmd->pipe[1]);
 	if (!pid)
 	{
-		if (cmd->pipe[0])
-			close(cmd->pipe[0]);
-		free(shell->prompt.line);
+		if (shell->prompt.line)
+			free(shell->prompt.line);
 		free_cmds(shell);
 		if (shell->env)
 			free_dtab(shell->env);
@@ -64,8 +53,10 @@ int	process(t_data *shell)
 			return (free_cmds(shell), 2);
 		if (pars_heredoc(shell, &(shell->prompt.cmds[i])))
 			return (free_cmds(shell), 2);
-		exec(shell, &(shell->prompt.cmds[i]));
 	}
+	i = -1;
+	while (++i < shell->prompt.nb_cmds)
+		exec(shell, &(shell->prompt.cmds[i]));
 	free_cmds(shell);
 	return (0);
 }

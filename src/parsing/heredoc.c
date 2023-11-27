@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/22 15:26:46 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/24 17:34:11 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ static int	heredoc(t_data *shell, t_cmd *cmd, char *eof, int expand)
 	int		rval;
 
 	if (cmd->pipe[0])
-		close(cmd->pipe[0]);
+		ft_close(&(cmd->pipe[0]));
 	if (cmd->pipe[1])
-		close(cmd->pipe[1]);
+		ft_close(&(cmd->pipe[1]));
 	if (pipe(cmd->pipe) == -1)
 		return (set_rval(1, ERR_OPIPE));
 	pid = fork();
 	if (pid == -1)
-		return (close(cmd->pipe[0]), close(cmd->pipe[1]), free(eof),
-			set_rval(1, ERR_FORK));
+		return (ft_close(&(cmd->pipe[0])), ft_close(&(cmd->pipe[1])),
+			free(eof), set_rval(1, ERR_FORK));
 	if (!pid)
 	{
 		capt_input(shell, cmd->pipe, eof, expand);
@@ -84,7 +84,7 @@ static int	heredoc(t_data *shell, t_cmd *cmd, char *eof, int expand)
 		exit(g_rvalue);
 	}
 	waitpid(pid, &rval, 0);
-	close(cmd->pipe[1]);
+	ft_close(&(cmd->pipe[1]));
 	return (set_rval(rval, NULL));
 }
 
