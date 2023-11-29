@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/29 17:39:23 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/29 18:05:39 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,9 @@ static int	get_heredocs(t_data *shell, t_cmd *cmd, char *str, char c)
 		word = geteof(str + i, &is_quote);
 		if (!word)
 			return (2);
+		unplug_signals();
 		heredoc(shell, cmd, word, 1);
+		prompt_signals();
 		free(word);
 	}
 	return (0);
