@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/24 17:54:25 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/29 13:39:45 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdarg.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/ioctl.h>
 # include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -138,7 +139,7 @@ void		clear_env(t_data *shell);
 char		*get_env_var(t_data *shell, char *var);
 int			del_var(t_data *shell, char *var);
 int			len_env(char **env);
-char		*new_env_var(char *var, char *value);
+char		*new_env_var(char *var, char *value, char *old_value);
 int			add_var(t_data *shell, char *var, char *value);
 int			is_var(char **env, char *var);
 
@@ -158,6 +159,7 @@ size_t		strcpy_neg(char *dst, const char *src, size_t size);
 long long	ft_atoll(const char *str);
 char		*geteof(char *str, int *is_quote);
 char		*strpos(char *str);
+void		put_sortedstr(char **strs, int start, int end);
 
 /*     builtin     */
 int			ft_exit(t_data *shell, char **arg, int pid);
@@ -166,6 +168,7 @@ int			ft_echo(t_data *shell, t_cmd *cmd, int pid);
 void		ft_env(t_data *shell, int pid);
 int			ft_unset(t_data *shell, t_cmd *cmd, int pid);
 int			ft_cd(t_data *shell, t_cmd *cmd, int pid);
+int			ft_export(t_data *shell, t_cmd *cmd, int pid);
 
 //pour les exports le nom devariable commence par _ ou 
 //alphachar puis on peut mettre desn ombres

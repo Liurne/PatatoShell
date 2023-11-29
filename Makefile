@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+         #
+#    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/11/24 13:14:27 by jcoquard         ###   ########.fr        #
+#    Updated: 2023/11/29 13:21:12 by liurne           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ END = \033[0m
 
 NAME = minishell
 
-FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address 
+FLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address 
 
 SRCS = main.c \
 		src/process.c \
@@ -47,6 +47,7 @@ SRCS = main.c \
 		src/utils/ft_atoll.c \
 		src/utils/geteof.c \
 		src/utils/strpos.c \
+		src/utils/put_sortedstr.c \
 		src/execution/execution.c \
 		src/execution/exec_utils.c \
 		src/environment/environment.c \
@@ -58,7 +59,8 @@ SRCS = main.c \
 		src/builtin/ft_exit.c \
 		src/builtin/ft_unset.c \
 		src/builtin/ft_env.c \
-		src/builtin/ft_cd.c
+		src/builtin/ft_cd.c \
+		src/builtin/ft_export.c
 
 OBJS = ${SRCS:.c=.o}
 

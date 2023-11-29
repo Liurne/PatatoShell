@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:35:15 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/24 17:31:32 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/27 13:45:56 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	pars_redir(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	while (cmd->cmd[i])
+	while (cmd->cmd && cmd->cmd[i])
 	{
 		if (cmd->cmd[i] == '<' || cmd->cmd[i] == '>')
 		{

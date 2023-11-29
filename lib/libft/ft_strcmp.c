@@ -6,15 +6,15 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 18:35:35 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/10/19 18:49:44 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/27 17:43:45 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (!s1 && !s2)

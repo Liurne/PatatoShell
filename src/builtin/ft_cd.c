@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:30:43 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/24 17:51:28 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/28 18:33:48 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ int	cd_udpatevar(t_data *shell, char *old_path)
 {
 	char	*path;
 
-	add_var(shell, "OLDPWD", old_path);
+	if (old_path)
+		add_var(shell, "OLDPWD", old_path);
 	path = getcwd(NULL, 0);
 	if (!path)
 		return (set_rval(1, ERR_MALLOC));
 	add_var(shell, "PWD", path);
+	if (!old_path)
+		add_var(shell, "OLDPWD", path);
 	free(path);
 	return (0);
 }

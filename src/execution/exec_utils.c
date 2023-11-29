@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 17:56:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/24 17:54:38 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/29 12:59:15 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ int	exec_builtins(t_data *shell, t_cmd *cmd, int pid)
 		ft_unset(shell, cmd, pid);
 	else if (!ft_strcmp(cmd->args[0], "cd"))
 		ft_cd(shell, cmd, pid);
+	else if (!ft_strcmp(cmd->args[0], "export"))
+	{
+		if (pid && cmd->nb_args == 2)
+			return (0);
+		else
+			ft_export(shell, cmd, pid);
+	}
 	else
 		return (0);
 	if (!pid)

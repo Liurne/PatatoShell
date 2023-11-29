@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/24 17:34:11 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:39:23 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static int	heredoc(t_data *shell, t_cmd *cmd, char *eof, int expand)
 		ft_close(&(cmd->pipe[1]));
 	if (pipe(cmd->pipe) == -1)
 		return (set_rval(1, ERR_OPIPE));
+	set_rval(0, NULL);
 	pid = fork();
 	if (pid == -1)
 		return (ft_close(&(cmd->pipe[0])), ft_close(&(cmd->pipe[1])),
@@ -81,6 +82,7 @@ static int	heredoc(t_data *shell, t_cmd *cmd, char *eof, int expand)
 	{
 		capt_input(shell, cmd->pipe, eof, expand);
 		free (eof);
+		free_cmds(shell);
 		exit(g_rvalue);
 	}
 	waitpid(pid, &rval, 0);

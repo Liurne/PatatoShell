@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_hub.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 18:20:38 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/16 17:24:46 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:44:22 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ void	heredoc_signals(void)
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
+	//printf(" ");
 	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = &heredoc_sigint;
 	sigaction(SIGINT, &sa, NULL);
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
 }

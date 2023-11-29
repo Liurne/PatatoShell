@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/24 17:49:42 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/27 14:07:35 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,15 @@ int	process(t_data *shell)
 		return (2);
 	if (splitcmds(shell, shell->prompt.line))
 		return (2);
-	printf("nb cmd: %d\n", shell->prompt.nb_cmds);
 	while (++i < shell->prompt.nb_cmds)
 	{
-		printf("id: %d\n", shell->prompt.cmds[i].id);
 		shell->prompt.cmds[i].cmd = expand(shell, shell->prompt.cmds[i].cmd);
 		if (!shell->prompt.cmds[i].cmd)
 			return (free_cmds(shell), 2);
 		if (pars_heredoc(shell, &(shell->prompt.cmds[i])))
 			return (free_cmds(shell), 2);
 	}
-	i = -1;
-	while (++i < shell->prompt.nb_cmds)
-		exec(shell, &(shell->prompt.cmds[i]));
+	exec(shell, shell->prompt.cmds);
 	free_cmds(shell);
 	return (0);
 }
