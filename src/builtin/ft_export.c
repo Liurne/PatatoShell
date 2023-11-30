@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:09:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/28 17:05:55 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/29 19:22:19 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ int	ft_export(t_data *shell, t_cmd *cmd, int pid)
 		}
 	}
 	clear_proc(shell, pid);
-	return (0);
+	return (set_rval(0, NULL));
 }

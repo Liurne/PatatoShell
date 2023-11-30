@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/29 18:05:39 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/29 19:18:42 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	heredoc(t_data *shell, t_cmd *cmd, char *eof, int expand)
 	{
 		capt_input(shell, cmd->pipe, eof, expand);
 		free (eof);
-		free_cmds(shell);
+		clear_proc(shell, 0);
 		exit(g_rvalue);
 	}
 	waitpid(pid, &rval, 0);
@@ -108,10 +108,12 @@ static int	get_heredocs(t_data *shell, t_cmd *cmd, char *str, char c)
 		word = geteof(str + i, &is_quote);
 		if (!word)
 			return (2);
+		set_rval(0, NULL);
 		unplug_signals();
-		heredoc(shell, cmd, word, 1);
+		i = heredoc(shell, cmd, word, 1);
 		prompt_signals();
 		free(word);
+		return (i);
 	}
 	return (0);
 }

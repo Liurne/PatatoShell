@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:30:43 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/28 18:33:48 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/29 19:21:48 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ int	ft_cd(t_data *shell, t_cmd *cmd, int pid)
 	else
 		cd_udpatevar(shell, old_path);
 	free(old_path);
-	return (clear_proc(shell, pid), 0);
+	return (clear_proc(shell, pid), set_rval(0, NULL));
 }

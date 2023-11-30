@@ -1,0 +1,10 @@
+lib
+main.c
+main.o
+Makefile
+minishell
+old
+out
+readline_leaks
+README.md
+src

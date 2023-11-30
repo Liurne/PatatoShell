@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:31:00 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/28 18:30:42 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/29 19:23:14 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ int	ft_unset(t_data *shell, t_cmd *cmd, int pid)
 	clear_proc(shell, pid);
 	if (!pid)
 		exit(g_rvalue);
-	return (g_rvalue);
+	return (set_rval(0, NULL));
 }

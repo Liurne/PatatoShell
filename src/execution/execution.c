@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/29 13:32:51 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/29 19:23:48 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ int	exec(t_data *shell, t_cmd *cmds)
 	unsigned int	i;
 
 	i = -1;
-	set_rval(0, NULL);
 	unplug_signals();
+	//set_rval(0, NULL);
 	while (++i < shell->prompt.nb_cmds)
 	{
 		if (pars_redir(&(cmds[i])))

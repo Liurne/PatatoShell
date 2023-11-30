@@ -6,7 +6,7 @@
 /*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:14:53 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/24 17:50:12 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/29 19:10:23 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	echo_option(char *arg)
 	return (0);
 }
 
-char	*echo_join(char **arg, int endl)
+char	*echo_join(char **args, int endl)
 {
 	char	*tmp;
 	char	*res;
@@ -35,14 +35,14 @@ char	*echo_join(char **arg, int endl)
 
 	i = 2 - endl;
 	tmp = NULL;
-	while (arg[i])
+	while (args[i])
 	{
-		res = ft_strjoin(tmp, arg[i]);
+		res = ft_strjoin(tmp, args[i]);
 		if (tmp)
 			free(tmp);
-		if (!res)
+		if (!res && args[i][0])
 			return (set_rval(1, ERR_MALLOC), NULL);
-		if (arg[i + 1])
+		if (args[i + 1])
 		{
 			tmp = ft_strjoin(res, " ");
 			free (res);
@@ -72,7 +72,7 @@ int	ft_echo(t_data *shell, t_cmd *cmd, int pid)
 	if (!str && !endl)
 		return (set_rval(0, NULL));
 	if (!str)
-		return (printf("/n"), set_rval(0, NULL));
+		return (printf("\n"), set_rval(0, NULL));
 	if (endl)
 		return (printf("%s\n", str), free(str), set_rval(0, NULL));
 	return (printf("%s", str), free(str), set_rval(0, NULL));

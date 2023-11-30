@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:05:37 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/29 18:11:17 by liurne           ###   ########.fr       */
+/*   Updated: 2023/11/29 19:17:29 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	process(t_data *shell)
 		if (pars_heredoc(shell, &(shell->prompt.cmds[i])))
 			return (free_cmds(shell), 2);
 	}
-	if (!g_rvalue)
-		exec(shell, shell->prompt.cmds);
+	exec(shell, shell->prompt.cmds);
 	free_cmds(shell);
 	return (0);
 }
