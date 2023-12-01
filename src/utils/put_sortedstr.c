@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 17:11:01 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/28 17:01:36 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/01 13:06:36 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static char	*get_name(char *str)
 int	find_index(char **strs, int start, int end, int min)
 {
 	if (start > end)
-		return min;
+		return (min);
 	if (ft_strcmp(strs[start], strs[min]) < 0)
-		return find_index(strs, start + 1, end, start);
+		return (find_index(strs, start + 1, end, start));
 	else
-		return find_index(strs, start + 1, end, min);
+		return (find_index(strs, start + 1, end, min));
 }
 
 void	put_sortedstr(char **strs, int start, int end)
@@ -49,7 +49,7 @@ void	put_sortedstr(char **strs, int start, int end)
 	char	*var;
 
 	if (start > end)
-		return;
+		return ;
 	min = find_index(strs, start, end, start);
 	tmp = strs[start];
 	strs[start] = strs[min];

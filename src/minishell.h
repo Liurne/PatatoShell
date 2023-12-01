@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/29 13:39:45 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/01 13:05:38 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,8 @@ int			set_rval(int val, char *error);
 
 /*     signals     */
 void		prompt_sigint(int sig);
-void		exec_sigint(int sig);
-void		exec_sigquit(int sig);
 void		heredoc_sigint(int sig);
+void		exec_handler(int sig);
 void		heredoc_signals(void);
 void		unplug_signals(void);
 void		exec_signals(void);

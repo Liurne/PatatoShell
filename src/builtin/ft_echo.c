@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:14:53 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/29 19:10:23 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:53:47 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_echo(t_data *shell, t_cmd *cmd, int pid)
 	int		endl;
 	char	*str;
 
+	set_rval(0, NULL);
 	if (!cmd->args[1])
 		return (ft_dprintf(2, "\n"), clear_proc(shell, pid),
 			set_rval(0, NULL));

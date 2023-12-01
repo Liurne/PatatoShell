@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 16:03:11 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/28 18:29:08 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/01 13:03:43 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	del_var(t_data *shell, char *var)
 	len = ft_strlen(var);
 	while (shell->env && shell->env[++i])
 	{
-		if (!ft_strnstr(shell->env[i], var, len) && 
-			(shell->env[i][len] || shell->env[i][len] != '='))
+		if (!ft_strnstr(shell->env[i], var, len)
+			&& (shell->env[i][len] || shell->env[i][len] != '='))
 		{
 			tmp[j] = ft_strdup(shell->env[i]);
 			if (!tmp[j])
@@ -73,8 +73,9 @@ int	add_var(t_data *shell, char *var, char *value)
 	j = 0;
 	while (shell->env && shell->env[++i])
 	{
-		if (!ft_strnstr(shell->env[i], var, ft_strlen(var)) &&
-			(shell->env[i][ft_strlen(var)] || shell->env[i][ft_strlen(var)] != '='))
+		if (!ft_strnstr(shell->env[i], var, ft_strlen(var))
+			&& (shell->env[i][ft_strlen(var)]
+			|| shell->env[i][ft_strlen(var)] != '='))
 			tmp[++j] = ft_strdup(shell->env[i]);
 		if (!tmp[j])
 			return (free_dtab(tmp), set_rval(1, ERR_MALLOC));

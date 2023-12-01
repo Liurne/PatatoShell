@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:09:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/29 19:22:19 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/12/01 13:07:44 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-// new arg name can only be a alphanumeric char or _ 
-// new arg name can't start by number
-// new arg value should be interpreted if valide like : "salut$USER" = "salutedecoste", "salut$nimportkwa" = "salut"
-// new arg value can contain multiple interpretde value
 
 char	*pars_var(char *arg)
 {
@@ -31,7 +26,8 @@ char	*pars_var(char *arg)
 	{
 		if (!ft_isalnum(*arg) && *arg != '_')
 		{
-			ft_dprintf(2, "patate: export: '%s': not a valid identifier\n", arg);
+			ft_dprintf(2, "patate: export: '%s': not a valid identifier\n",
+				arg);
 			if (word)
 				free(word);
 			return (set_rval(1, NULL), NULL);

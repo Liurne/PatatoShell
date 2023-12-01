@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 17:56:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/29 12:59:15 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/01 13:10:30 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_close(int *fd)
 		*fd = 0;
 	}
 }
+
 static char	**get_path(t_data *shell)
 {
 	char	**res;

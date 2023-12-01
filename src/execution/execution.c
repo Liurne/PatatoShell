@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/29 19:23:48 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/12/01 13:10:13 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,13 @@
 void	close_cmd(t_cmd *cmd)
 {
 	if (cmd->infile)
-	{
-		//ft_dprintf(2, "in:%d closed\n", cmd->infile);
 		ft_close(&(cmd->infile));
-	}
 	if (cmd->outfile)
-	{
-		//ft_dprintf(2, "out:%d closed\n", cmd->outfile);
 		ft_close(&(cmd->outfile));
-	}
 	if (cmd->pipe[1])
-	{
-		//ft_dprintf(2, "pipe 1:%d closed\n", cmd->pipe[1]);
 		ft_close(&(cmd->pipe[1]));
-	}
 	if (cmd->pipe[0])
-	{
-		//ft_dprintf(2, "pipe 0:%d closed\n", cmd->pipe[0]);
 		ft_close(&(cmd->pipe[0]));
-	}
 }
 
 static int	wait_childs(t_data *shell, t_cmd *cmds)
@@ -57,6 +45,8 @@ static int	wait_childs(t_data *shell, t_cmd *cmds)
 			set_rval(1, NULL);
 		else if (WIFEXITED(rval))
 			set_rval(WEXITSTATUS(rval), NULL);
+		else if (WIFSIGNALED(rval))
+			exec_handler(WTERMSIG(rval));
 	}
 	return (g_rvalue);
 }
@@ -124,7 +114,7 @@ int	exec(t_data *shell, t_cmd *cmds)
 
 	i = -1;
 	unplug_signals();
-	//set_rval(0, NULL);
+	set_rval(0, NULL);
 	while (++i < shell->prompt.nb_cmds)
 	{
 		if (pars_redir(&(cmds[i])))
@@ -138,5 +128,5 @@ int	exec(t_data *shell, t_cmd *cmds)
 				return (g_rvalue);
 		child_proc(shell, &(cmds[i]));
 	}
-	return(wait_childs(shell, cmds));
+	return (wait_childs(shell, cmds));
 }

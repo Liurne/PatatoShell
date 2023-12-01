@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:31:00 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/29 19:23:14 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/12/01 13:07:25 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	pars_unset(char *arg)
 	{
 		if (!ft_isalnum(*arg) && *arg != '_')
 		{
-			ft_dprintf(2, "patate: export: '%s': not a valid identifier\n", arg);
+			ft_dprintf(2, "patate: export: '%s': not a valid identifier\n",
+				arg);
 			return (set_rval(1, NULL));
 		}
 		arg++;
