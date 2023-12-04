@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/04 13:24:24 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 15:31:45 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static void	capt_input(t_data *shell, int *pipe, char *eof, int is_expand)
 static int	heredoc(t_data *shell, t_cmd *cmd, char *eof, int expand)
 {
 	pid_t	pid;
-	int		rval;
 
 	if (cmd->pipe[0])
 		ft_close(&(cmd->pipe[0]));
@@ -85,9 +84,9 @@ static int	heredoc(t_data *shell, t_cmd *cmd, char *eof, int expand)
 		clear_proc(shell, 0);
 		exit(g_rvalue);
 	}
-	waitpid(pid, &rval, 0);
+	wait_heredoc(pid);
 	ft_close(&(cmd->pipe[1]));
-	return (set_rval(rval, NULL));
+	return (g_rvalue);
 }
 
 static int	get_heredocs(t_data *shell, t_cmd *cmd, char *str, char c)

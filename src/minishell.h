@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/04 13:14:52 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 15:33:08 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int			is_var(char **env, char *var);
 /*     execution     */
 void		ft_close(int *fd);
 void		close_cmd(t_cmd *cmd);
+void		wait_heredoc(pid_t pid);
 char		*get_cmd(t_data *shell, char *cmd);
 int			exec(t_data *shell, t_cmd *cmd);
 int			exec_builtins(t_data *shell, t_cmd *cmd, int pid);
