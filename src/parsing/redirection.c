@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:35:15 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/04 13:18:03 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 13:25:03 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,16 @@ static int	get_redir(t_cmd *cmd, char *str, char c)
 
 int	pars_redir(t_cmd *cmd)
 {
-	int	i;
-	t_quote quote;
+	int		i;
+	t_quote	quote;
 
 	ft_bzero(&quote, sizeof(t_quote));
 	i = 0;
 	while (cmd->cmd && cmd->cmd[i])
 	{
 		manage_quote(cmd->cmd[i], &quote);
-		if (!quote.s && !quote.d && (cmd->cmd[i] == '<' || cmd->cmd[i] == '>'))
+		if (!quote.s && !quote.d
+			&& (cmd->cmd[i] == '<' || cmd->cmd[i] == '>'))
 		{
 			if (get_redir(cmd, cmd->cmd + i, *(cmd->cmd + i)))
 				return (1);

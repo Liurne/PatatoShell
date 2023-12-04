@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/04 13:20:08 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 13:24:24 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ int	pars_heredoc(t_data *shell, t_cmd *cmd)
 	while (cmd->cmd[i])
 	{
 		manage_quote(cmd->cmd[i], &quote);
-		if (!quote.s && !quote.d && cmd->cmd[i] == '<' && cmd->cmd[i + 1] == '<')
+		if (!quote.s && !quote.d && cmd->cmd[i] == '<'
+			&& cmd->cmd[i + 1] == '<')
 			if (get_heredocs(shell, cmd, cmd->cmd + i, *(cmd->cmd + i)))
 				return (1);
 		i++;
