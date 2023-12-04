@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/12/01 13:10:13 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 13:00:47 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	exec(t_data *shell, t_cmd *cmds)
 
 	i = -1;
 	unplug_signals();
-	set_rval(0, NULL);
 	while (++i < shell->prompt.nb_cmds)
 	{
 		if (pars_redir(&(cmds[i])))

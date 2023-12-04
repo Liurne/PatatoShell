@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:31:00 by liurne            #+#    #+#             */
-/*   Updated: 2023/12/01 13:07:25 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 13:04:20 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	ft_unset(t_data *shell, t_cmd *cmd, int pid)
 	int	i;
 
 	i = 1;
+	set_rval(0, NULL);
 	while (i < cmd->nb_args - 1)
 	{
 		if (!pars_unset(cmd->args[i]) && is_var(shell->env, cmd->args[i]))

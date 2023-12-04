@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/29 19:18:42 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:20:08 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,15 @@ static int	get_heredocs(t_data *shell, t_cmd *cmd, char *str, char c)
 
 int	pars_heredoc(t_data *shell, t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	t_quote	quote;
 
+	ft_bzero(&quote, sizeof(t_quote));
 	i = 0;
 	while (cmd->cmd[i])
 	{
-		if (cmd->cmd[i] == '<' && cmd->cmd[i + 1] == '<')
+		manage_quote(cmd->cmd[i], &quote);
+		if (!quote.s && !quote.d && cmd->cmd[i] == '<' && cmd->cmd[i + 1] == '<')
 			if (get_heredocs(shell, cmd, cmd->cmd + i, *(cmd->cmd + i)))
 				return (1);
 		i++;

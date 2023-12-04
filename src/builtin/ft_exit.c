@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:41:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/11/24 17:53:42 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/12/04 13:14:02 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ int	is_valide_argv(char *arg, int argc)
 	return (2);
 }
 
-int	ft_exit(t_data *shell, char **arg, int pid)
+int	ft_exit(t_data *shell, t_cmd *cmd, char **arg, int pid)
 {
 	int		argc;
 	int		return_type;
 
+	if (cmd->nb_args == 2)
+		exit(g_rvalue);
 	argc = 0;
 	while (arg[argc])
 		argc++;

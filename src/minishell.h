@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/01 13:05:38 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 13:14:52 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ char		*strpos(char *str);
 void		put_sortedstr(char **strs, int start, int end);
 
 /*     builtin     */
-int			ft_exit(t_data *shell, char **arg, int pid);
+int			ft_exit(t_data *shell, t_cmd *cmd, char **arg, int pid);
 int			ft_pwd(t_data *shell, int pid);
 int			ft_echo(t_data *shell, t_cmd *cmd, int pid);
 void		ft_env(t_data *shell, int pid);

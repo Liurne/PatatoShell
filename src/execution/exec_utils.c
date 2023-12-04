@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 17:56:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/12/01 13:10:30 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 13:14:20 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	*get_cmd(t_data *shell, char *cmd)
 int	exec_builtins(t_data *shell, t_cmd *cmd, int pid)
 {
 	if (!ft_strcmp(cmd->args[0], "exit"))
-		ft_exit(shell, cmd->args, pid);
+		ft_exit(shell, cmd, cmd->args, pid);
 	else if (!ft_strcmp(cmd->args[0], "echo") && !pid)
 		ft_echo(shell, cmd, pid);
 	else if (!ft_strcmp(cmd->args[0], "pwd") && !pid)
