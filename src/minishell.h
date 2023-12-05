@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/04 15:33:08 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 15:54:18 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@
 # define ERR_LOST "patate: sorry but you're lost\n"
 
 extern int	g_rvalue;
+
+//echo $"HOME"
+//exit | exit
+//parsing expand identique a export et unset donc a refaire
 
 typedef struct s_quote
 {

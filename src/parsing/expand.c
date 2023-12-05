@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 19:13:52 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/11/16 17:26:27 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/12/05 13:46:29 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,15 @@ char	*get_varname(char *str)
 
 	word = NULL;
 	if (!*str || *str == '$' || ft_iswhitespace(*str))
-	{
-		word = ft_addchar(word, '$');
-		return (word);
-	}
+		return (ft_addchar(word, '$'));
 	if (*str == '?')
-	{
-		word = ft_addchar(word, '?');
-		return (word);
-	}
+		return (ft_addchar(word, '?'));
+	if (*str == '"')
+		return (ft_addchar(word, '"'));
+	if (!ft_isalpha(*str))
+		return (ft_addchar(word, '0'));
 	while (*str && (!ft_iswhitespace(*str) && *str != '\''
-			&& *str != '"' && *str != '$'))
+			&& ft_isalnum(*str) && *str != '"' && *str != '$'))
 	{
 		word = ft_addchar(word, *str);
 		if (!word)
@@ -42,14 +40,12 @@ int	get_len_var(t_data *shell, char *str, int *len)
 {
 	char	*var;
 	char	*tmp;
-	int		res;
 
 	var = get_varname(str + 1);
 	if (!var)
 		return (-1);
-	if (*var == '$')
+	if (*var == '$' || *var == '"' || *var == '0')
 		return (free(var), 1);
-	res = ft_strlen(var) + 1;
 	if (*var == '?')
 	{
 		tmp = ft_itoa(g_rvalue);
@@ -59,19 +55,18 @@ int	get_len_var(t_data *shell, char *str, int *len)
 	else
 		tmp = get_env_var(shell, var);
 	if (!tmp)
-		return (free(var), res);
+		return (free(var), ft_strlen(var) + 1);
 	*len = *len + ft_strlen(tmp);
 	if (*var == '?')
 		free(tmp);
 	free(var);
-	return (res);
+	return (ft_strlen(var) + 1);
 }
 
 int	put_var(t_data *shell, char *str, char *dst, int *i)
 {
 	char	*var;
 	char	*tmp;
-	int		res;
 
 	var = get_varname(str + 1);
 	dst += *i;
@@ -79,18 +74,21 @@ int	put_var(t_data *shell, char *str, char *dst, int *i)
 		return (0);
 	if (*var == '$')
 		return (*dst = '$', free(var), 0);
-	res = ft_strlen(var);
+	if (*var == '"')
+		return (*dst = '"', free(var), 1);
+	if (*var == '0')
+		return (*dst = ' ', free(var), 1);
 	if (*var == '?')
 		tmp = ft_itoa(g_rvalue);
 	else
 		tmp = get_env_var(shell, var);
 	if (!tmp)
-		return ((*i)--, free(var), res);
+		return ((*i)--, free(var), ft_strlen(var));
 	*i += ft_strlen(tmp) - 1;
 	strcpy_neg(dst, tmp, ft_strlen(tmp) + 1);
 	if (*var == '?')
 		free(tmp);
-	return (free(var), res);
+	return (free(var), ft_strlen(var));
 }
 
 static int	true_len(t_data *shell, char *cmd)

@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 17:56:04 by liurne            #+#    #+#             */
-/*   Updated: 2023/12/04 15:32:54 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 15:34:22 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	wait_heredoc(pid_t pid)
 {
 	if (waitpid(pid, &g_rvalue, WUNTRACED) == -1)
-			set_rval(1, NULL);
+		set_rval(1, NULL);
 	else if (WIFEXITED(g_rvalue))
 		set_rval(WEXITSTATUS(g_rvalue), NULL);
 	else if (WIFSIGNALED(g_rvalue))

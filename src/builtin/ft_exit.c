@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:41:12 by edecoste          #+#    #+#             */
-/*   Updated: 2023/12/04 13:14:02 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/04 16:06:32 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ int	ft_exit(t_data *shell, t_cmd *cmd, char **arg, int pid)
 	int		return_type;
 
 	if (cmd->nb_args == 2)
+	{
+		clear_proc(shell, 0);
 		exit(g_rvalue);
+	}
 	argc = 0;
 	while (arg[argc])
 		argc++;
