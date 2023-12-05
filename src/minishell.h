@@ -6,7 +6,7 @@
 /*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/05 16:34:19 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/05 16:44:30 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define ERR_CD1 "patate: ft_cd: string not in pwd:"
 # define ERR_CD2 "patate: ft_cd: too many arguments\n"
 # define ERR_CD3 "patate: ft_cd: Don't know the way home :'(\n"
-# define ERR_OLDPWD "patate: sorry but I don't remember your old path"
+# define ERR_OLDPWD "patate: sorry but I don't remember your old path\n"
 
 # define ERR_LOST "patate: sorry but you're lost\n"
 

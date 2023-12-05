@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
+/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 17:30:43 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/29 19:21:48 by jcoquard         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:44:48 by liurne           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	cd_udpatevar(t_data *shell, char *old_path)
 		add_var(shell, "OLDPWD", old_path);
 	path = getcwd(NULL, 0);
 	if (!path)
-		return (set_rval(1, ERR_MALLOC));
+		return (set_rval(1, ERR_LOST));
 	add_var(shell, "PWD", path);
 	if (!old_path)
 		add_var(shell, "OLDPWD", path);
@@ -45,7 +45,7 @@ int	ft_cd(t_data *shell, t_cmd *cmd, int pid)
 		path = cmd->args[1];
 	old_path = getcwd(NULL, 0);
 	if (!old_path)
-		set_rval(1, ERR_MALLOC);
+		set_rval(1, ERR_OLDPWD);
 	if (chdir(path))
 		perror("patate: ft_cd");
 	else
