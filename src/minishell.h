@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 17:51:40 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/05 16:44:30 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/06 15:30:39 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 # include <stdio.h>
 # include <signal.h>
-# include <stdbool.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdint.h>
@@ -43,6 +42,7 @@
 # define DEL_LINE "\001\033[2K\r\002"
 
 # define ERR_PIPE "patate: syntax error near unexpected token '|'\n"
+# define ERR_TOOPIPE "patate: too many pipe\n"
 # define ERR_OPTION "patate: this option isn't managed\n"
 # define ERR_SQUOTE "patate: ' isn't closed\n"
 # define ERR_DQUOTE "patate: \" isn't closed\n"
@@ -61,10 +61,6 @@
 # define ERR_LOST "patate: sorry but you're lost\n"
 
 extern int	g_rvalue;
-
-//echo $"HOME"
-//exit | exit
-//parsing expand identique a export et unset donc a refaire
 
 typedef struct s_quote
 {
@@ -89,7 +85,6 @@ typedef struct s_cmd
 	char			*exec;
 	char			**args;
 	int				nb_args;
-	int				built_in;
 	t_redir			redir_in;
 	int				infile;
 	int				outfile;
@@ -101,7 +96,6 @@ typedef struct s_line
 	char			*line;
 	t_cmd			*cmds;
 	unsigned int	nb_cmds;
-	bool			heredocs;
 }	t_line;
 
 typedef struct s_data
@@ -203,5 +197,15 @@ int			ft_export(t_data *shell, t_cmd *cmd, int pid);
 //guillemets et quotes, ne pas conter les quote entre guillemet et inversement
 //limite 3333 pipe !!
 //$? a remplacer en valeur de retour pas une variable
+//echo $"HOME"
+//exit | exit
+//parsing expand identique a export et unset donc a refaire
+//penser au fait que ctrl \ doit quitter les cat sans outfile!!
+//si cmd not found verif valeur de retour
+//verifier mon syteme de quote
+//heredoc ce lance pas forcement
+//signaux douteux dans le heredoc
+//bien close les fd 
+//lancer toutes les execs puis les waitpid une fois tout exec
 
 #endif

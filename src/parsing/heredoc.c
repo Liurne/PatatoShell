@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 17:59:29 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/04 15:31:45 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/05 17:30:55 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	capt_input(t_data *shell, int *pipe, char *eof, int is_expand)
 	if (is_expand && heredoc)
 		heredoc = expand(shell, heredoc);
 	ft_dprintf(pipe[1], strpos(heredoc));
-	return (close(pipe[1]), close(pipe[0]), free(heredoc));
+	return (ft_close(&pipe[1]), ft_close(&pipe[0]), free(heredoc));
 }
 
 static int	heredoc(t_data *shell, t_cmd *cmd, char *eof, int expand)

@@ -25,9 +25,9 @@ static unsigned int	count_cmd(char *line)
 		if (*line == '|' && !quote.s && !quote.d)
 			res++;
 		line++;
+		if (res > 3333)
+			return (set_rval(2, ERR_TOOPIPE), 0);
 	}
-	if (res > 3333)
-		return (0);
 	return (res);
 }
 
@@ -52,7 +52,7 @@ static int	alloc_cmds(t_data *shell, char *line)
 {
 	shell->prompt.nb_cmds = count_cmd(line);
 	if (!shell->prompt.nb_cmds)
-		return (set_rval(2, ERR_PIPE));
+		return (2);
 	shell->prompt.cmds = (t_cmd *)ft_calloc(shell->prompt.nb_cmds,
 			sizeof(t_cmd));
 	if (!shell->prompt.cmds)

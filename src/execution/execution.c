@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 17:54:21 by liurne            #+#    #+#             */
-/*   Updated: 2023/12/04 15:23:27 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/06 15:23:19 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//penser au fait que ctrl \ doit quitter les cat sans outfile!!
-//si cmd not found verif valeur de retour
-//verifier mon syteme de quote
-//heredoc ce lance pas forcement
-//signaux douteux dans le heredoc
-//bien close les fd 
-//lancer toutes les execs puis les waitpid une fois tout exec
 
 void	close_cmd(t_cmd *cmd)
 {

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: liurne <liurne@student.42.fr>              +#+  +:+       +#+         #
+#    By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/04 17:47:33 by jcoquard          #+#    #+#              #
-#    Updated: 2023/11/29 13:21:12 by liurne           ###   ########.fr        #
+#    Updated: 2023/12/01 16:35:30 by jcoquard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ END = \033[0m
 
 NAME = minishell
 
-FLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address 
+FLAGS = -Wall -Wextra -Werror -g3
 
 SRCS = main.c \
 		src/process.c \
@@ -66,8 +66,6 @@ OBJS = ${SRCS:.c=.o}
 
 HEADER = src/minishell.h
 
-LEAKS = valgrind --suppressions=ignorerl.txt --leak-check=full --track-fds=yes
-
 all:	 libs ${NAME}
 
 ${NAME}: ${OBJS}
@@ -89,11 +87,6 @@ fclean: clean
 
 re: fclean
 	${MAKE} all
-
-leaks:
-	clear
-	$(MAKE) -j VALGRIND=yes
-	$(LEAKS) ./minishell
 
 sus:
 		@echo "${BLUE}           ⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀        ${END}"

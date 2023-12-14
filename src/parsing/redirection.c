@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 13:35:15 by jcoquard          #+#    #+#             */
-/*   Updated: 2023/12/04 13:25:03 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/06 15:44:02 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,7 @@ static int	set_redirin(t_cmd *cmd, char *word, t_redir redir)
 		cmd->redir_in = INFILE;
 	}
 	if (redir == HEREDOC)
-	{
-		if (cmd->infile)
-			ft_close (&(cmd->infile));
-		cmd->infile = cmd->pipe[0];
-		cmd->pipe[0] = 0;
 		cmd->redir_in = HEREDOC;
-	}
 	return (0);
 }
 
@@ -127,6 +121,13 @@ int	pars_redir(t_cmd *cmd)
 				return (1);
 		}
 		i++;
+	}
+	if (cmd->redir_in == HEREDOC)
+	{
+		if (cmd->infile)
+			ft_close (&(cmd->infile));
+		cmd->infile = cmd->pipe[0];
+		cmd->pipe[0] = 0;
 	}
 	return (0);
 }

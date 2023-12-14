@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 17:58:51 by liurne            #+#    #+#             */
-/*   Updated: 2023/11/28 17:04:23 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/01 15:42:39 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ char	*new_env_var(char *var, char *value, char *old_value)
 		res = ft_strdup(var);
 	else
 	{
-		if (value && *value != '=')
+		if ((value && *value != '=') || (!value && old_value))
 		{
 			tmp = ft_strjoin(var, "=");
 			if (!tmp)
 				return (set_rval(1, ERR_MALLOC), NULL);
-			if (!value)
-				res = ft_strjoin(tmp, old_value);
-			else
+			if (value)
 				res = ft_strjoin(tmp, value);
+			else
+				res = ft_strjoin(tmp, old_value);
 			free(tmp);
 		}
 		else

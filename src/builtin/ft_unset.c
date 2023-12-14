@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: liurne <liurne@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jcoquard <jcoquard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 14:31:00 by liurne            #+#    #+#             */
-/*   Updated: 2023/12/04 13:04:20 by liurne           ###   ########.fr       */
+/*   Updated: 2023/12/06 16:00:35 by jcoquard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ int	pars_unset(char *arg)
 {
 	if (arg && !ft_isalpha(*arg) && *arg != '_')
 	{
-		ft_dprintf(2, "patate: export: '%s': not a valid identifier\n", arg);
+		ft_dprintf(2, "patate: unset: '%s': not a valid identifier\n", arg);
 		return (set_rval(1, NULL));
 	}
 	while (arg && *arg)
 	{
 		if (!ft_isalnum(*arg) && *arg != '_')
 		{
-			ft_dprintf(2, "patate: export: '%s': not a valid identifier\n",
+			ft_dprintf(2, "patate: unset: '%s': not a valid identifier\n",
 				arg);
 			return (set_rval(1, NULL));
 		}
